@@ -30,16 +30,18 @@ Each plugin's `source` in `marketplace.json` is a relative path (`./plugins/<nam
 
 ## Use it
 
+> The marketplace's internal **name** is `dry-marketplace` (used in the `@` install suffix). The GitHub repo / folder is `claude-marketplace`. They differ because Claude Code reserves `claude-*`/`anthropic-*` marketplace names.
+
 **Locally (now):**
 ```
 /plugin marketplace add C:/Users/Dry/github-dry/claude-marketplace
-/plugin install project-initializer@claude-marketplace
+/plugin install project-initializer@dry-marketplace
 ```
 
 **Remotely (once pushed to github.com/PedroHenriqueNS/claude-marketplace):**
 ```
 /plugin marketplace add PedroHenriqueNS/claude-marketplace
-/plugin install marketing-skills@claude-marketplace
+/plugin install marketing-skills@dry-marketplace
 ```
 
 Installed plugin skills are namespaced: `marketing-skills:seo-audit`, `to-prd:to-prd`, etc.
