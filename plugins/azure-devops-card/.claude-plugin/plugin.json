@@ -1,0 +1,7 @@
+{
+  "name": "azure-devops-card",
+  "version": "0.1.0",
+  "description": "Draft Azure DevOps work-item titles and markdown descriptions in Brazilian Portuguese, in the [categoria][FRONTEND|BACKEND] title pattern.",
+  "author": { "name": "PedroHenriqueNS" },
+  "keywords": ["azure-devops", "work-item", "card", "pt-br", "backlog"]
+}

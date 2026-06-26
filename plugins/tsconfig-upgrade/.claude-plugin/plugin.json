@@ -1,0 +1,7 @@
+{
+  "name": "tsconfig-upgrade",
+  "version": "0.1.0",
+  "description": "Safely upgrade tsconfig.json — pre-flight breaking changes, preserve paths/aliases, and handle cascading TS errors (TS2729, TS5090).",
+  "author": { "name": "PedroHenriqueNS" },
+  "keywords": ["typescript", "tsconfig", "upgrade", "nodenext", "strict"]
+}

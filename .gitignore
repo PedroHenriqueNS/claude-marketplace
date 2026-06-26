@@ -1,0 +1,10 @@
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+*.log
+*.tmp
+.vscode/
+.idea/
+
+# Local Claude Code state that shouldn't ship with the marketplace
+.claude/settings.local.json

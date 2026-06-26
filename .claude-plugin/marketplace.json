@@ -1,0 +1,50 @@
+{
+  "name": "claude-marketplace",
+  "owner": {
+    "name": "PedroHenriqueNS"
+  },
+  "plugins": [
+    {
+      "name": "project-initializer",
+      "source": "./plugins/project-initializer",
+      "version": "0.1.0",
+      "description": "Scaffold a new project's living agent documentation — AGENTS.md, CLAUDE.md, and docs/* — with maintenance conventions baked in.",
+      "author": { "name": "PedroHenriqueNS" }
+    },
+    {
+      "name": "to-prd",
+      "source": "./plugins/to-prd",
+      "version": "0.1.0",
+      "description": "Turn the current conversation into a feature-level PRD and publish it to the issue tracker, or fall back to docs/prds/. Reads project-initializer living docs.",
+      "author": { "name": "PedroHenriqueNS" }
+    },
+    {
+      "name": "azure-devops-card",
+      "source": "./plugins/azure-devops-card",
+      "version": "0.1.0",
+      "description": "Draft Azure DevOps work-item titles and markdown descriptions in Brazilian Portuguese, in the [categoria][FRONTEND|BACKEND] title pattern.",
+      "author": { "name": "PedroHenriqueNS" }
+    },
+    {
+      "name": "skill-auditor",
+      "source": "./plugins/skill-auditor",
+      "version": "0.1.0",
+      "description": "Audit and improve your Claude skills against Claude Code best practices — frontmatter, triggering, leanness, progressive disclosure.",
+      "author": { "name": "PedroHenriqueNS" }
+    },
+    {
+      "name": "tsconfig-upgrade",
+      "source": "./plugins/tsconfig-upgrade",
+      "version": "0.1.0",
+      "description": "Safely upgrade tsconfig.json — pre-flight breaking changes, preserve paths/aliases, and handle cascading TS errors (TS2729, TS5090).",
+      "author": { "name": "PedroHenriqueNS" }
+    },
+    {
+      "name": "marketing-skills",
+      "source": "./plugins/marketing-skills",
+      "version": "0.1.0",
+      "description": "41 cross-referencing marketing skills — SEO, AI search (AEO/GEO), CRO, analytics, schema, copywriting, ads, email, social, PR, pricing, and more. Derived from coreyhaines31/marketingskills (see NOTICE).",
+      "author": { "name": "PedroHenriqueNS" }
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "name": "to-prd",
+  "version": "0.1.0",
+  "description": "Turn the current conversation into a feature-level PRD and publish it to the issue tracker, or fall back to docs/prds/. Reads project-initializer living docs.",
+  "author": { "name": "PedroHenriqueNS" },
+  "keywords": ["prd", "product", "spec", "issue-tracker", "planning"]
+}

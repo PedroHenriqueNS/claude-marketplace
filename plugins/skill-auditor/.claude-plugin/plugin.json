@@ -1,0 +1,7 @@
+{
+  "name": "skill-auditor",
+  "version": "0.1.0",
+  "description": "Audit and improve your Claude skills against Claude Code best practices — frontmatter, triggering, leanness, progressive disclosure.",
+  "author": { "name": "PedroHenriqueNS" },
+  "keywords": ["skills", "audit", "best-practices", "claude-code", "review"]
+}

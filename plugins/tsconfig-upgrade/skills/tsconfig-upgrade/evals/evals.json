@@ -1,0 +1,26 @@
+{
+  "skill_name": "tsconfig-upgrade",
+  "evals": [
+    {
+      "id": 1,
+      "name": "modern-template-on-nestjs",
+      "prompt": "I have a NestJS 10 project (TypeORM, KafkaJS, decorators everywhere). My current tsconfig.json is:\n\n```json\n{\n  \"compilerOptions\": {\n    \"module\": \"commonjs\",\n    \"declaration\": true,\n    \"removeComments\": true,\n    \"emitDecoratorMetadata\": true,\n    \"experimentalDecorators\": true,\n    \"allowSyntheticDefaultImports\": true,\n    \"target\": \"ES2021\",\n    \"sourceMap\": true,\n    \"outDir\": \"./dist\",\n    \"baseUrl\": \"./\",\n    \"incremental\": true,\n    \"skipLibCheck\": true,\n    \"strictNullChecks\": false,\n    \"noImplicitAny\": false,\n    \"strictBindCallApply\": false,\n    \"forceConsistentCasingInFileNames\": false,\n    \"noFallthroughCasesInSwitch\": false,\n    \"resolveJsonModule\": true,\n    \"esModuleInterop\": true,\n    \"paths\": {\n      \"@/*\": [\"./src/*\"],\n      \"Tests/*\": [\"test/*\"]\n    }\n  }\n}\n```\n\nUpgrade it based on this modern config:\n\n```json\n{\n  \"compilerOptions\": {\n    \"module\": \"nodenext\",\n    \"moduleResolution\": \"nodenext\",\n    \"resolvePackageJsonExports\": true,\n    \"esModuleInterop\": true,\n    \"isolatedModules\": true,\n    \"declaration\": true,\n    \"removeComments\": true,\n    \"emitDecoratorMetadata\": true,\n    \"experimentalDecorators\": true,\n    \"allowSyntheticDefaultImports\": true,\n    \"target\": \"ES2023\",\n    \"sourceMap\": true,\n    \"outDir\": \"./dist\",\n    \"baseUrl\": \"./\",\n    \"incremental\": true,\n    \"skipLibCheck\": true,\n    \"strictNullChecks\": true,\n    \"forceConsistentCasingInFileNames\": true,\n    \"noImplicitAny\": false,\n    \"strictBindCallApply\": false,\n    \"noFallthroughCasesInSwitch\": false\n  }\n}\n```",
+      "expected_output": "Before editing, the assistant should call out the breaking changes (nodenext module shift, strictNullChecks flip) and offer a categorized choice (safe / safe+strict / full verbatim). Should preserve the `paths` mapping and `resolveJsonModule: true`. Should not silently apply the verbatim template.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "name": "ts5090-after-baseurl-removal",
+      "prompt": "I removed `baseUrl` from my tsconfig and now `yarn build` fails:\n\n```\nerror TS5090: Non-relative paths are not allowed when 'baseUrl' is not set. Did you forget a leading './'?\n\nFound 1 error(s).\n```\n\nMy paths look like:\n```json\n\"paths\": {\n  \"@/*\": [\"./src/*\"],\n  \"src/*\": [\"./src/*\"],\n  \"Tests/*\": [\"test/*\"]\n}\n```\n\nWhat's wrong?",
+      "expected_output": "Should immediately identify that `Tests/*` value is `\"test/*\"` (non-relative) and needs to be `\"./test/*\"`. Should explain that with baseUrl removed, all path values must start with `./`. Should apply the fix.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "name": "ts2729-nestjs-parameter-property",
+      "prompt": "I just bumped my tsconfig target to ES2023 and now this NestJS base class won't compile:\n\n```ts\nimport { Logger } from '@nestjs/common';\n\nexport abstract class BaseOldService<I, O> {\n  protected readonly logger = new Logger(this.name);\n\n  protected constructor(private readonly name: string) {}\n\n  async execute(input: I, output?: O): Promise<void> {\n    this.logger.debug(`func=execute input=${input}`);\n  }\n}\n```\n\nError: `Property 'name' is used before its initialization.`\n\nThis pattern was working fine before. Why is it broken and how do I keep it working without rewriting every base service?",
+      "expected_output": "Should explain that target: ES2022+ flipped the useDefineForClassFields default to true (native class field semantics), and field initializers now run BEFORE parameter property assignments. Should propose adding `useDefineForClassFields: false` to tsconfig as the one-line fix (preferred for NestJS/decorator projects) rather than rewriting every class. Should also mention the alternative (move into constructor body) but recommend the config fix given the codebase scale.",
+      "files": []
+    }
+  ]
+}

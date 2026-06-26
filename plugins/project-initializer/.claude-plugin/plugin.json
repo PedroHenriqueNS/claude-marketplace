@@ -1,0 +1,7 @@
+{
+  "name": "project-initializer",
+  "version": "0.1.0",
+  "description": "Scaffold a new project's living agent documentation — AGENTS.md, CLAUDE.md, and docs/* — with maintenance conventions baked in.",
+  "author": { "name": "PedroHenriqueNS" },
+  "keywords": ["documentation", "scaffolding", "agents-md", "claude-md", "init"]
+}

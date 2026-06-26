@@ -1,0 +1,7 @@
+# Normalize line endings in the repo to LF; check out native on each platform.
+* text=auto
+
+# Skill/plugin content and manifests are text.
+*.md   text
+*.json text
+*.csv  text

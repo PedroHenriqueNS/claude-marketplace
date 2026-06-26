@@ -1,0 +1,15 @@
+Third-party attribution
+========================
+
+The `marketing-skills` plugin (plugins/marketing-skills/) is DERIVED from:
+
+    https://github.com/coreyhaines31/marketingskills
+
+The skill content was recreated from that repository with Claude Code
+best-practices edits applied (removed non-standard frontmatter, persona
+preambles, dead repo-relative links; added tables of contents). All other
+plugins in this marketplace are original.
+
+Before distributing the marketing-skills plugin publicly, review the upstream
+repository's LICENSE and honor its terms (attribution / redistribution
+conditions). This NOTICE records provenance; it is not itself a license grant.

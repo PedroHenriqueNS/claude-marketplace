@@ -1,0 +1,7 @@
+{
+  "name": "marketing-skills",
+  "version": "0.1.0",
+  "description": "41 cross-referencing marketing skills — SEO audit, AI search (AEO/GEO), CRO, analytics, schema, copywriting, ads, email, social, PR, pricing, prospecting, launch, and more. Recreated from github.com/coreyhaines31/marketingskills with Claude Code best practices applied.",
+  "author": { "name": "PedroHenriqueNS" },
+  "keywords": ["marketing", "seo", "ai-seo", "cro", "analytics", "copywriting", "ads", "email", "social", "pricing", "growth"]
+}
