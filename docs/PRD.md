@@ -21,7 +21,7 @@ Claude Code skills and plugins built for personal use tend to live scattered acr
 - Not a public, general-audience marketplace — it's personal, though shareable.
 - No application code, server, build pipeline, or runtime. If a plugin ever needs compiled code, that's a per-plugin concern, not the marketplace's.
 - Not a replacement for upstream sources of derived content (e.g. `marketing-skills` — see [../NOTICE](../NOTICE)).
-- No automated publishing/CI yet (see [ROADMAP.md](./ROADMAP.md)).
+- No automated *publishing* yet (npm/release/tagging). CI *validation* now exists — a compliance + manifest gate on every PR/push (see [ROADMAP.md](./ROADMAP.md) Phase 2).
 
 ## Success metrics
 

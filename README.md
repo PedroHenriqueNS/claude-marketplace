@@ -2,7 +2,7 @@
 
 A personal [Claude Code plugin marketplace](https://code.claude.com/docs/en/plugin-marketplaces) — a monorepo that owns and distributes my Claude Code skills and plugins.
 
-**Owner:** PedroHenriqueNS · **Status:** local-only for now (no remote yet).
+**Owner:** PedroHenriqueNS · **Repo:** [github.com/PedroHenriqueNS/claude-marketplace](https://github.com/PedroHenriqueNS/claude-marketplace) (public) · changes land via PR with a CI validation gate.
 
 ## Plugins
 
@@ -32,23 +32,26 @@ Each plugin's `source` in `marketplace.json` is a relative path (`./plugins/<nam
 
 > The marketplace's internal **name** is `pedrohenriquens` (used in the `@` install suffix). The GitHub repo / folder is `claude-marketplace`. They differ because Claude Code reserves `claude-*`/`anthropic-*` marketplace names.
 
-**Locally (now):**
-```
-/plugin marketplace add C:/Users/Dry/github-dry/claude-marketplace
-/plugin install project-initializer@pedrohenriquens
-```
-
-**Remotely (once pushed to github.com/PedroHenriqueNS/claude-marketplace):**
+**From GitHub:**
 ```
 /plugin marketplace add PedroHenriqueNS/claude-marketplace
 /plugin install marketing-skills@pedrohenriquens
+```
+
+**From a local clone** (e.g. when developing a plugin):
+```
+/plugin marketplace add /path/to/claude-marketplace
+/plugin install project-initializer@pedrohenriquens
 ```
 
 Installed plugin skills are namespaced: `marketing-skills:seo-audit`, `to-prd:to-prd`, etc.
 
 ## Validate after changes
 
+Run the same gate CI runs (`.github/workflows/validate.yml`):
+
 ```
+python3 scripts/check_compliance.py            # version-sync, frontmatter, links, reserved names
 claude plugin validate .                       # the marketplace manifest
 claude plugin validate ./plugins/<name>        # a single plugin + its skills
 ```
