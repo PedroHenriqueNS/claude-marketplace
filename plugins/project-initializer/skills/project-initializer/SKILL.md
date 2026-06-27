@@ -64,7 +64,7 @@ Update relevant docs whenever making changes that affect architecture, features,
 
 ### docs/ folder
 
-**docs/ARCHITECTURE.md** — How the system is structured. Components, data flow, key design decisions, module boundaries. Use mermaid diagrams when they clarify structure.
+**docs/ARCHITECTURE.md** — How the system is structured. Components, data flow, key design decisions, module boundaries. Use Mermaid diagrams for topology, but only where they earn their place — see "Diagramming policy" below. The default for structure is prose, tables, and ASCII trees; a Mermaid diagram is the exception reserved for flows where ordering or branching carries the meaning.
 
 **docs/CONVENTIONS.md** — Canonical home for project coding rules. Every rule that applies across the codebase (naming, call-site patterns, error shapes, banned shortcuts, library choices, branching/PR workflow) goes here. The file is the single source of truth — when AGENTS.md, CLAUDE.md, inline comments, or anyone's private notes contradict it, this file wins. New conventions land HERE in the same PR that establishes them, never buried in commit messages or AI-assistant private memory.
 
@@ -81,6 +81,28 @@ Update relevant docs whenever making changes that affect architecture, features,
 **docs/SUMMARY.md** — Short executive summary. What this project is in 3–5 sentences, current status, top priorities. First doc anyone should read.
 
 **docs/EVENTS.md** — *Conditional, only when the project touches Kafka or RabbitMQ as a producer OR consumer.* Cross-service catalog of every routing key / topic this service **publishes** (with the consumer queues across services that subscribe to each one) **and every routing key / topic this service consumes** (with the producing service identified). See "Conditional file: docs/EVENTS.md" below for the full detection + template.
+
+## Diagramming policy
+
+Diagrams in docs exist to give AI agents *parseable topology*. Mermaid is the only diagram format this skill uses, because it is plain text: it lands in the agent's context window as structured, readable tokens, it diffs cleanly in PRs, and it renders for humans in the repo's markdown viewer. An exported image (PNG/SVG) does none of this for an agent and must never be used in place of Mermaid.
+
+Every ARCHITECTURE.md (and any other doc) created or updated under this skill follows these rules verbatim:
+
+**1. Diagram only what warrants it.** A Mermaid diagram earns its place when the thing it depicts has branching, ordering that matters, or 4+ components whose relationships are not obvious from the code structure — AND is stable enough not to drift within weeks. If it fails any of these, do not diagram it.
+
+**2. Everything else stays in its natural form.** A flow that fits in one sentence without a comma-splice stays prose. Lookup/reference data stays a table. Directory layouts stay ASCII trees (the indentation IS the diagram, and agents parse file paths natively). Converting these to Mermaid makes them worse.
+
+**3. Topology in the diagram, constraints in prose.** A diagram shows what connects to what. It CANNOT carry the rules that matter most to an agent — "must be idempotent", "never retry on 4xx", "return 500 so the platform retries". Every diagram is paired with a short prose "Constraints" list directly below it for the rules the diagram can't express. A diagram is necessary-but-never-sufficient.
+
+**4. Derive strictly from code; never invent.** Nodes and edges come only from what the code actually does. If the code is ambiguous, say so in prose rather than guessing a topology.
+
+**5. Cap complexity.** Max ~7 nodes per diagram. If the flow is bigger, split into an overview diagram plus one diagram per sub-flow — never one dense graph. Escape special characters in labels (angle brackets, colons, slashes) so it renders. Keep node labels to ≤5 words.
+
+**6. Pick the type by intent.** `flowchart TD` for request/processing pipelines and decision branches; `sequenceDiagram` for who-calls-whom-in-what-order (auth handshakes, event flows); `stateDiagram-v2` for entities with defined states and transitions; `erDiagram` for conceptual data models (but the real schema file is usually the better source of truth — use ERDs only for high-level models).
+
+**7. A stale diagram is worse than none.** Because it looks authoritative, a wrong diagram actively misleads the agent. Diagrams are bound by the same living-documentation contract as conventions: when a code change alters a depicted topology, the diagram is updated IN THE SAME COMMIT. This is reinforced in the Documentation maintenance section.
+
+When in doubt, prefer prose. Most architecture is adequately conveyed without a single diagram; the typical well-structured ARCHITECTURE.md needs only one or two.
 
 ## Process
 
@@ -132,6 +154,8 @@ For each file in `TO_CREATE`, write real content — not empty scaffolds. Pull f
 - Answers to clarifying questions
 - Reasonable inferences from the stack (e.g., Next.js → include standard Next.js conventions; Python → include venv/uv/poetry notes based on what's present)
 
+When writing ARCHITECTURE.md, apply the "Diagramming policy" above: identify the one or two flows that genuinely warrant a diagram, render those as Mermaid with a paired Constraints prose list, and leave everything else as prose, tables, or ASCII trees. Do not diagram for the sake of having a diagram.
+
 Mark genuinely unknown sections with `> TODO: [specific question]` so the user knows exactly what to fill in. Do not invent facts to fill gaps.
 
 ### Step 4: Cross-link
@@ -166,6 +190,7 @@ Every AGENTS.md this skill creates must include this exact section verbatim. Thi
 These files are living documents. When you make changes to this project, update the relevant docs in the same commit:
 
 - Architectural change → update `docs/ARCHITECTURE.md`
+- Architectural change that alters a flow depicted in a Mermaid diagram → update that diagram in the SAME commit (a stale diagram misleads agents because it looks authoritative). Diagram topology only; keep constraints in the prose beside it.
 - New feature or feature change → update `docs/FEATURES.md`
 - Discovered a gotcha → add to `docs/PITFALLS.md`
 - Stack change (new dep, version bump, service) → update `docs/STACK.md`
@@ -212,6 +237,12 @@ New conventions land HERE in the same PR that establishes them — never in comm
 ## Testing
 
 > TODO: Document the test layout, runner, and minimum coverage expectations.
+
+---
+
+## Diagramming
+
+> Mermaid only (plain text → agent-readable, diffable, renders for humans; never an exported image). Diagram a flow only when it has branching, ordering that matters, or 4+ non-obvious relationships AND is stable. Otherwise use prose, tables, or ASCII trees. Topology goes in the diagram; constraints ("idempotent", "never retry on 4xx") go in prose beside it. Derive strictly from code, cap ~7 nodes (split bigger flows), and update any diagram in the same commit as the code change it depicts.
 
 ---
 
@@ -262,9 +293,15 @@ If a service is pre-scaffold (directory exists but no source yet), a CONVENTIONS
 
 ## Rules
 
-The behavior is specified in the steps above; these invariants are restated because violating them is the costly kind of mistake:
+The behavior is specified in the steps above; these invariants are restated as a checklist because violating any one is the costly kind of mistake:
 
 - **Explicit invocation only** — never auto-run based on project state.
 - **Skip, don't overwrite** — existing files are sacred; only create what's in `TO_CREATE`, and report `TO_SKIP`.
+- **No duplication** — information lives in one place, other docs link to it.
+- **No empty scaffolds** — every section has real content or an explicit TODO.
+- **Stack-aware** — tailor conventions and `.gitignore` to the detected stack.
+- **Diagrams earn their place** — Mermaid only, and only for branching/ordering/non-obvious-relationship flows that are stable; prose, tables, and ASCII trees are the default. Topology in the diagram, constraints in prose beside it. See "Diagramming policy".
+- **Living docs are non-negotiable** — the maintenance section goes into AGENTS.md verbatim, AND CONVENTIONS.md is created with the canonical-source-of-truth header verbatim.
 - **Conventions live in `docs/CONVENTIONS.md`, never in private notes** — a new rule lands in the doc in the same PR; the doc is what survives session boundaries for every contributor, human or AI.
+- **Per-scope CONVENTIONS.md for monorepos** — root + each service + infrastructure layer; cross-link so readers can navigate.
 - **Local git only** — never push to a remote or create a GitHub repo unprompted.
