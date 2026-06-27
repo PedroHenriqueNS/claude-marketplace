@@ -8,15 +8,17 @@ Deliberately minimal. There is no language runtime, package manager, or build sy
 |---|---|---|
 | **Markdown** | Skill content (`SKILL.md`), references, templates, all docs | The primary "source code". Skills are prompts/instructions, not compiled artifacts. |
 | **JSON** | Manifests (`marketplace.json`, `plugin.json`), evals (`evals.json`) | Shape is dictated by the Claude Code plugin spec. |
-| **Claude Code CLI** | The runtime + the validator | `claude plugin validate` is the only "build/test" gate. |
+| **Claude Code CLI** | The runtime + the validator | `claude plugin validate` is the manifest gate. |
+| **Python 3 (stdlib only)** | Compliance gate script | `scripts/check_compliance.py` — version-sync, frontmatter, dead links, reserved names. No pip deps. |
+| **GitHub Actions** | CI gate | `.github/workflows/validate.yml` runs the compliance script + `claude plugin validate` on PRs and pushes to `main`. Activates once the repo has a remote (Phase 1). |
 | **Git** | Versioning + distribution | Remote install resolves a GitHub `owner/repo`; local install resolves a path. |
 | **`.gitattributes` `text=auto`** | Line-ending normalization | Repo stores LF; checkout is native per platform. Matters because content was authored on Windows (`C:/Users/...`) and Unix. |
 
 ## What we deliberately do NOT use
 
 - No `package.json`, `pyproject.toml`, `Cargo.toml`, `go.mod` — there is no compiled or interpreted code to manage.
-- No bundler, transpiler, linter, or test framework — `claude plugin validate` covers correctness; prose quality is reviewed by hand.
-- No CI yet (see [ROADMAP.md](./ROADMAP.md)).
+- No bundler, transpiler, or test framework — `claude plugin validate` plus `scripts/check_compliance.py` cover mechanical correctness; judgment-based skill quality is audited by the `skill-auditor` plugin on demand.
+- No third-party Python/Node packages — the compliance script is stdlib-only so CI needs no install step for it.
 - No external services, databases, or message brokers.
 
 ## Manifest reference (what the spec requires of us)

@@ -1,5 +1,5 @@
 ---
-status: ready-for-agent
+status: in-progress
 ---
 
 # Best-practices compliance gate for all skills

@@ -14,7 +14,7 @@ Gotchas and non-obvious constraints — past failures and how they were resolved
 
 **Symptom:** a plugin's `version` lives in both `plugin.json` and its `marketplace.json` entry; they can silently drift, and installs then pick up a stale/wrong version.
 
-**Resolution:** treat the two as one fact — bump both in the same commit. Nothing enforces this yet except review and `claude plugin validate`. A CI check is planned (see [ROADMAP.md](./ROADMAP.md) Phase 2).
+**Resolution:** treat the two as one fact — bump both in the same commit. Now enforced: `scripts/check_compliance.py` hard-fails on drift, and CI runs it on every PR/push (`.github/workflows/validate.yml`).
 
 **Apply:** when bumping a plugin, grep for its version in both files before committing.
 

@@ -13,8 +13,8 @@ A "feature" in this repo is a **plugin**. Each ships a marketplace catalog entry
 
 - **Purpose:** enforce the rule that every skill follows Claude Code best practices (`docs/CONVENTIONS.md`) — audit the existing plugins to a clean baseline, then gate every change so nothing merges below the bar.
 - **Behavior:** CI (GitHub Actions) runs `claude plugin validate` per plugin, a `plugin.json`↔`marketplace.json` version-sync check, and a mechanical `SKILL.md` lint as the hard gate; `skill-auditor` provides the deeper judgment-based audit. Verification seam is per-plugin.
-- **Implementation:** specced in [docs/prds/best-practices-compliance-gate.md](./prds/best-practices-compliance-gate.md). Introduces `.github/workflows/`; supersedes the `docs/PRD.md` "no CI yet" non-goal for validation.
-- **Status:** planned.
+- **Implementation:** specced in [docs/prds/best-practices-compliance-gate.md](./prds/best-practices-compliance-gate.md). `scripts/check_compliance.py` + `.github/workflows/validate.yml`; supersedes the `docs/PRD.md` "no CI yet" non-goal for validation.
+- **Status:** in-progress. Mechanical gate shipped and green across all 6 plugins (0 failures); CI workflow in place (activates once the repo has a remote — Phase 1). Remaining: the deep per-skill `skill-auditor` audit of the 46 skills.
 
 ## project-initializer
 

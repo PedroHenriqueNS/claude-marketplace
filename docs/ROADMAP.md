@@ -16,14 +16,13 @@ Phased plan. Update this whenever priorities shift, a milestone is reached, or n
 - Confirm `claude plugin validate .` passes in a clean clone.
 - Before making `marketing-skills` publicly installable, review the upstream license per [../NOTICE](../NOTICE).
 
-## Phase 2 — Validation automation (planned — specced)
+## Phase 2 — Validation automation (in-progress)
 
-Realized by the **[best-practices compliance gate](./prds/best-practices-compliance-gate.md)** PRD (`status: ready-for-agent`). It supersedes the `docs/PRD.md` "no CI yet" non-goal for the validation half (publishing stays out).
+Realized by the **[best-practices compliance gate](./prds/best-practices-compliance-gate.md)** PRD. It supersedes the `docs/PRD.md` "no CI yet" non-goal for the validation half (publishing stays out).
 
-- Audit & remediate all six existing plugins against the [CONVENTIONS best-practices baseline](./CONVENTIONS.md#claude-code-best-practices-the-baseline-every-skill-follows) (via `skill-auditor`) to establish a green baseline.
-- Add CI (GitHub Actions) that runs `claude plugin validate .` and each `claude plugin validate ./plugins/<name>` on every PR.
-- Add a check that each plugin's `plugin.json` version matches its `marketplace.json` entry (the sync invariant — see [PITFALLS.md](./PITFALLS.md)).
-- Add a mechanical best-practice lint of each `SKILL.md` (frontmatter, size budget, no dead links), with a deeper `skill-auditor` pass for the judgment-based rules.
+- ✅ Mechanical compliance gate (`scripts/check_compliance.py`): version-sync, frontmatter, dead repo-relative links, reserved-name guard — green across all 6 plugins.
+- ✅ CI (`.github/workflows/validate.yml`) runs the compliance script + `claude plugin validate .` + each `claude plugin validate ./plugins/<name>` on PRs and pushes to `main`. (Runs once the repo has a remote — Phase 1.)
+- ⏳ Deep `skill-auditor` audit of all 46 skills against the [CONVENTIONS best-practices baseline](./CONVENTIONS.md#claude-code-best-practices-the-baseline-every-skill-follows) for the judgment-based rules (`description` quality, progressive disclosure). Run on demand; not a blocking CI gate until non-interactive Claude is wired into CI.
 
 ## Phase 3 — Growth (when scoped)
 

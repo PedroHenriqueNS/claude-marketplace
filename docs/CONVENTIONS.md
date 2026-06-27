@@ -88,14 +88,16 @@ Follow [Conventional Commits](https://www.conventionalcommits.org/). Types in us
 
 ## Testing
 
-There is no test framework. Validation is the gate:
+There is no test framework. Validation is the gate — run it locally exactly as CI does (`.github/workflows/validate.yml`):
 
 ```
+python3 scripts/check_compliance.py       # version-sync, frontmatter, dead links, reserved names
 claude plugin validate .                  # the marketplace manifest
 claude plugin validate ./plugins/<name>   # a single plugin + its skills
 ```
 
-- Run the relevant `validate` after any manifest or skill change; both must pass before commit.
+- Run the compliance script + the relevant `validate` after any manifest or skill change; both must pass before commit. The compliance script exits non-zero on a hard failure (size warnings don't fail).
+- The judgment-based best-practice rules a script can't measure (`description` quality, progressive disclosure) are audited by the `skill-auditor` plugin on demand — not part of the blocking gate.
 - Skills may carry `evals/evals.json` to guard triggering/quality — add or update these when changing a skill's `description` or behavior.
 
 ---

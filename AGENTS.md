@@ -27,6 +27,7 @@ The three manifest layers (marketplace → plugin → skill) and the install-tim
 There is nothing to install or run. The loop is: edit Markdown/JSON → validate → commit.
 
 ```
+python3 scripts/check_compliance.py       # best-practices compliance gate (versions, frontmatter, links)
 claude plugin validate .                  # validate the marketplace manifest
 claude plugin validate ./plugins/<name>   # validate one plugin + its skills
 ```
@@ -51,7 +52,7 @@ The single source of truth is [docs/CONVENTIONS.md](./docs/CONVENTIONS.md). High
 
 ## Testing expectations
 
-No test framework. `claude plugin validate` is the gate — run the relevant invocation after any manifest or skill change and ensure it passes before committing. Skills may carry `evals/evals.json`; update them when changing a skill's `description` or behavior.
+No test framework. The gate is `python3 scripts/check_compliance.py` + `claude plugin validate` — run both after any manifest or skill change and ensure they pass before committing (CI runs the same in `.github/workflows/validate.yml`). Skills may carry `evals/evals.json`; update them when changing a skill's `description` or behavior. Deep best-practice review is the `skill-auditor` plugin, on demand.
 
 ## Known pitfalls
 
