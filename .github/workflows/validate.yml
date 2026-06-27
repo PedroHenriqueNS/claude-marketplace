@@ -1,0 +1,39 @@
+name: validate
+
+# Best-practices compliance gate — see docs/prds/best-practices-compliance-gate.md
+# Hard gate: manifest validity + mechanical best-practice checks. The deeper
+# skill-auditor (judgment-based) pass is run on demand, not here — it needs
+# non-interactive Claude with model access.
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Compliance checks (versions, frontmatter, links, reserved names)
+        run: python3 scripts/check_compliance.py
+
+      - name: Install Claude Code CLI
+        run: npm install -g @anthropic-ai/claude-code
+
+      - name: Validate marketplace manifest
+        run: claude plugin validate .
+
+      - name: Validate each plugin
+        run: |
+          set -e
+          for dir in plugins/*/; do
+            echo "::group::$dir"
+            claude plugin validate "./$dir"
+            echo "::endgroup::"
+          done
