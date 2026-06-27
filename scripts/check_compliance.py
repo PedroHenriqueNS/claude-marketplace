@@ -33,17 +33,38 @@ warns: list[str] = []
 
 
 def frontmatter(text: str) -> dict[str, str]:
-    """Parse the leading --- ... --- block into top-level scalar keys."""
+    """Parse the leading --- ... --- block into top-level scalar keys.
+
+    Handles single-line scalars (quoted or bare) and YAML block scalars
+    (`>`, `|`, with optional chomp indicators). Without block-scalar support
+    a `description: >-` with continuation lines parses to the literal ">-",
+    which would let an effectively-empty description pass the presence check.
+    """
     if not text.startswith("---"):
         return {}
     end = text.find("\n---", 3)
     if end == -1:
         return {}
+    lines = text[3:end].splitlines()
     out: dict[str, str] = {}
-    for line in text[3:end].splitlines():
-        m = re.match(r"([A-Za-z0-9_-]+):\s*(.*)", line)
-        if m:
-            out[m.group(1)] = m.group(2).strip().strip("'\"")
+    i = 0
+    while i < len(lines):
+        m = re.match(r"([A-Za-z0-9_-]+):\s*(.*)", lines[i])
+        if not m:
+            i += 1
+            continue
+        key, val = m.group(1), m.group(2).strip()
+        if val and val[0] in "|>" and val.strip("|>+-") == "":
+            # block scalar — value is the following more-indented lines
+            body = []
+            i += 1
+            while i < len(lines) and (not lines[i].strip() or lines[i][:1] in " \t"):
+                body.append(lines[i].strip())
+                i += 1
+            out[key] = " ".join(b for b in body if b)
+            continue
+        out[key] = val.strip("'\"")
+        i += 1
     return out
 
 
@@ -102,5 +123,18 @@ def main() -> int:
     return 1 if fails else 0
 
 
+def _selftest() -> int:
+    """`python3 scripts/check_compliance.py --selftest` — verify the parser."""
+    block = "---\nname: x\ndescription: >-\n  first line\n  second line\n---\nbody"
+    assert frontmatter(block)["description"] == "first line second line", "block scalar"
+    assert frontmatter('---\nname: x\ndescription: "hi"\n---\n')["description"] == "hi", "quoted"
+    assert frontmatter("---\nname: x\ndescription: bare words\n---\n")["description"] == "bare words", "bare"
+    assert frontmatter("---\nname: x\ndescription: >-\n---\n").get("description", "") == "", "empty block"
+    print("selftest ok")
+    return 0
+
+
 if __name__ == "__main__":
+    if "--selftest" in sys.argv:
+        sys.exit(_selftest())
     sys.exit(main())
