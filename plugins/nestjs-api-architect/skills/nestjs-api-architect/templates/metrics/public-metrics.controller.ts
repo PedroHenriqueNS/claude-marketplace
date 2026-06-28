@@ -7,7 +7,9 @@
 // @willsoto/nestjs-prometheus major if a build error points here.
 import { Controller, Get, Res } from "@nestjs/common";
 import { PrometheusController } from "@willsoto/nestjs-prometheus";
-import { Response } from "express";
+// `import type` is required: with isolatedModules + emitDecoratorMetadata (the Nest CLI default), a
+// type used in a decorated signature (the @Res() param) must be type-only (TS1272).
+import type { Response } from "express";
 import { PublicRoute, SkipApiKey } from "@/@core/decorators/decorators";
 
 @Controller("metrics")
