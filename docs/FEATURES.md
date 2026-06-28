@@ -1,6 +1,6 @@
 # Features
 
-A "feature" in this repo is a **plugin**. Each ships a marketplace catalog entry plus one or more skills. All six are currently shipped at `0.1.0`. The marketplace itself (the catalog that makes them installable) is the seventh, cross-cutting feature.
+A "feature" in this repo is a **plugin**. Each ships a marketplace catalog entry plus one or more skills. All seven are currently shipped at `0.1.0`. The marketplace itself (the catalog that makes them installable) is the eighth, cross-cutting feature.
 
 ## The marketplace catalog
 
@@ -49,6 +49,13 @@ A "feature" in this repo is a **plugin**. Each ships a marketplace catalog entry
 - **Purpose:** safely upgrade `tsconfig.json`.
 - **Behavior:** pre-flights breaking changes, preserves paths/aliases, and handles cascading TS errors (e.g. TS2729, TS5090).
 - **Implementation:** `plugins/tsconfig-upgrade/skills/tsconfig-upgrade/SKILL.md` + `evals/evals.json`.
+- **Status:** shipped.
+
+## nestjs-api-architect
+
+- **Purpose:** build, maintain, and scaffold NestJS APIs as a Domain-Driven Design (DDD) layered system — generalizing the production `gigabase-api-core` conventions into reusable, project-neutral patterns. Supersedes the generic community `nestjs-best-practices` skill where they conflict.
+- **Behavior:** a main reference skill (auto-triggers on NestJS/DDD work) carrying a layer map, quick-ref rules table, supersede table, plus 23 on-demand rule files and 41 `.ts` templates; and five scaffolding skills — bootstrap an API foundation, add a feature module, a use-case service, a shared repository/gateway operation, or a TypeORM migration.
+- **Implementation:** `plugins/nestjs-api-architect/skills/nestjs-api-architect/SKILL.md` (+ `rules/`, `templates/`) and `scaffold-nestjs-api`, `add-nestjs-module`, `add-nestjs-use-case`, `add-nestjs-shared-op`, `add-nestjs-migration`.
 - **Status:** shipped.
 
 ## marketing-skills
