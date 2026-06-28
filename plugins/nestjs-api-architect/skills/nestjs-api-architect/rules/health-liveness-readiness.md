@@ -50,13 +50,16 @@ on the outbox drainer, etc.) — if you have a central drain/shutdown service, c
 first. The `ReadinessService` is `@Global` so both the health indicator and the shutdown layer share one
 instance without the route-module leaking into infra.
 
-## Silence probe logs by User-Agent, never by URL
+## Silence probe logs by User-Agent, scoped to the probe paths
 
-kubelet sets `User-Agent: kube-probe/<version>` on `httpGet` probes. Silence probe **success** logs with
-`(userAgent).startsWith("kube-probe/")` — never by matching `/health`, which would also hide a human
-curling the endpoint or another service health-checking it. **Keep the failure log**: a failing readiness
-is real signal (and during a graceful drain, readiness *intentionally* 503s for a few seconds). See
-`logging-cls` and `templates/core/logging.interceptor.ts`.
+kubelet sets `User-Agent: kube-probe/<version>` on `httpGet` probes. Silence probe **success** logs only
+when it is BOTH a probe path AND that UA — `req.path.startsWith("/health/") && (userAgent).startsWith("kube-probe/")`.
+The **UA** (not the URL alone) is what tells a probe apart from a human curling `/health`: that human lacks
+the `kube-probe` UA, so they still log. The **path** scope then stops an attacker from spoofing
+`User-Agent: kube-probe/...` on an application route to suppress its access log (audit-trail evasion) — UA
+alone would let any request mute its own log. **Keep the failure log**: a failing readiness is real signal
+(and during a graceful drain, readiness *intentionally* 503s for a few seconds). See `logging-cls` and
+`templates/core/logging.interceptor.ts`.
 
 ## Probes carry no auth
 

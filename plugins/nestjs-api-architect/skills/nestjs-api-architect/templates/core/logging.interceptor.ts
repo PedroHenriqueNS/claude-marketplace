@@ -23,9 +23,12 @@ export class LoggingInterceptor implements NestInterceptor {
     const req = context.switchToHttp().getRequest<Request>();
     if (SILENT_ROUTES.has(req.path) && req.header(DEBUG_HEADER) !== "true") return next.handle();
 
-    // Silence Kubernetes probe SUCCESS by User-Agent, never by URL (H2) — keying on /health would also
-    // hide a human curling it. A FAILING probe still logs on the error path below (H3).
-    const isProbe = (req.header("user-agent") ?? "").startsWith("kube-probe/");
+    // Silence Kubernetes probe SUCCESS on the probe paths AND with the kube-probe UA. The UA — not the
+    // URL alone — distinguishes a real probe from a human curling /health (H2); the path scope stops a
+    // spoofed `User-Agent: kube-probe/...` on an app route from suppressing its audit log. Failures
+    // still log on the error path below (H3).
+    const isProbe =
+      req.path.startsWith("/health/") && (req.header("user-agent") ?? "").startsWith("kube-probe/");
 
     const startedAt = Date.now();
     if (!isProbe) this.logger.log(`--> ${req.method} ${req.originalUrl}`);
