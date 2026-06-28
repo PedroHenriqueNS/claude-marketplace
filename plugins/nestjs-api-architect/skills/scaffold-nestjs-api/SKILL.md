@@ -36,7 +36,7 @@ src/
 │   ├── exceptions/              # base.exception.ts
 │   ├── filters/                 # custom-exception.filter.ts
 │   ├── guards/                  # api-key.guard.ts, jwt.guard.ts (+ jwt strategy)
-│   ├── interceptors/            # logging.interceptor.ts, idempotency-key.interceptor.ts
+│   ├── interceptors/            # logging.interceptor.ts, idempotency-key.interceptor.ts, http-metrics.interceptor.ts
 │   ├── loggers/                 # custom-logger.ts
 │   ├── readiness/               # readiness.service + module + shutdown hook (the drain flag)   ← templates/health
 │   └── redis/                   # redis.module.ts (only if events/idempotency/cache are in scope)
@@ -45,6 +45,7 @@ src/
 │   ├── api-docs/                # ApiHealthCheckDoc + dtos/ (cross-cutting doc helpers)
 │   └── constants/               # enums (ubiquitous language)
 └── modules/
+    ├── metrics/                 # GET /metrics (willsoto + Node defaults + HTTP RED)   ← templates/metrics
     └── health/                  # liveness + readiness probes (GET /health/live, /health/ready)   ← templates/health
 ```
 
@@ -59,7 +60,8 @@ src/
 7. **Idempotency** — copy `idempotency-key.interceptor.ts` if any mutating endpoints are coming (they are). Needs Redis (`spot-idempotency-outbox`).
 8. **Database** — `DatabaseModule` + standalone `data-source.ts`, `synchronize:false`, empty `migrations/` (`entities-and-migrations`).
 9. **Health** — `modules/health/` with **two** probes from `templates/health/`: `GET /health/live` = `health.check([])` (NO deps, H1) and `GET /health/ready` = `health.check([db.pingCheck, …, readiness])`. Add the `@Global` `ReadinessModule` (the drain flag) to `@core/readiness/` and import it in the root module; flip it to not-ready *first* on shutdown (H4). Keyless — `@SkipApiKey()` + `@PublicRoute()`, does NOT extend `BaseController`. Pin `@nestjs/terminus` to the NestJS major. See `rules/health-liveness-readiness.md`.
-10. **`main.ts`** — Helmet, `app.setGlobalPrefix(...)` (exclude `/metrics` **and** `health` so probes stay at `/health/live` & `/health/ready`), Swagger at `/docs` with API-key security, `app.enableShutdownHooks()`.
-11. **Verify** — `build` + `lint` pass; `GET /health/live` returns 200 (even with the DB down), `GET /health/ready` reflects deps + the flag; Swagger renders. Do NOT add a global `ValidationPipe` (`validation-baseservice`).
+10. **Metrics** — `modules/metrics/` from `templates/metrics/`: a `@Global` `MetricsModule` registers `@willsoto/nestjs-prometheus` with a keyless `PublicMetricsController` (extends `PrometheusController`; `@SkipApiKey()` + `@PublicRoute()`), `defaultMetrics: { enabled: true }` (Node metrics), and the three HTTP RED series. Register `HttpMetricsInterceptor` (in `@core/interceptors/`) as an `APP_INTERCEPTOR`. Pin `@willsoto/nestjs-prometheus` to the NestJS major; keep `prom-client` a direct dep. See `rules/metrics-prometheus.md`.
+11. **`main.ts`** — Helmet, `app.setGlobalPrefix(...)` (exclude `/metrics` **and** `health` so probes stay at `/health/live` & `/health/ready`), Swagger at `/docs` with API-key security, `app.enableShutdownHooks()`.
+12. **Verify** — `build` + `lint` pass; `GET /health/live` returns 200 (even with the DB down), `GET /health/ready` reflects deps + the flag, `GET /metrics` returns 200 keyless with the `http_*` series; Swagger renders. Do NOT add a global `ValidationPipe` (`validation-baseservice`).
 
 Then hand off to `add-nestjs-module` for the first real feature.

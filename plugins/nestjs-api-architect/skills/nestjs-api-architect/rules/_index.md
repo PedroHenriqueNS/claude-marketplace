@@ -52,6 +52,7 @@ A rule marked **⊃ `community-rule`** intentionally supersedes that rule from t
 ## Observability
 
 - **`logging-cls`** — One CLS-aware logger prefixes every line with the request id; sensitive DTO fields are masked. ⊃ `devops-use-logging`
+- **`metrics-prometheus`** — One standardized `GET /metrics` via `@willsoto/nestjs-prometheus`: Node defaults + the three HTTP RED series (a fleet-wide contract), recorded by a global `HttpMetricsInterceptor`; keyless route; the `route` label is the templated pattern, never the raw URL.
 
 ## Testing
 
