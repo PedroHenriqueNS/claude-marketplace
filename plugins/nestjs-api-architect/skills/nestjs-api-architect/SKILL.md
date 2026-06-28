@@ -1,18 +1,17 @@
 ---
 name: nestjs-api-architect
 description: >-
-  Domain-Driven Design (DDD) architecture and best practices for building, maintaining,
-  and scaffolding production NestJS APIs. Covers the layered domain/application/infrastructure
-  structure, use-case services (BaseService), per-operation repositories/gateways/factories,
-  XInput.of() validation discipline, Api<Route>Doc Swagger helpers, HttpStatus enums,
-  runtime-emitted constructs over types/interfaces, transactional outbox, and spot-safe
-  idempotency. Use this skill WHENEVER writing, reviewing, refactoring, debugging, or
-  scaffolding ANY NestJS code — controllers, services, modules, providers, DTOs, guards,
-  interceptors, filters, entities, migrations, workers — or whenever the user mentions
-  NestJS, Nest, @nestjs, DDD, domain-driven design, bounded contexts, use cases, clean
-  architecture, or a TypeScript API backend, EVEN IF they do not explicitly say "best
-  practices". Also use to scaffold a whole new NestJS API or to add a module, a use case,
-  a repository/gateway/factory operation, or a database migration.
+  Use for any change inside a NestJS / @nestjs API codebase — this is the project's house
+  architecture, so edits to it should follow this skill. Reach for it when: adding or changing
+  a POST/GET endpoint, controller, or route; creating or wiring a feature module; writing DTOs
+  and validation; adding a TypeORM entity or migration (e.g. a new column); splitting a fat,
+  mixed-concern service and deciding where business logic belongs vs. the controller; fixing
+  inconsistent HTTP error shapes, status codes, or 500s that leak stack traces via an exception
+  filter; making a webhook or other mutating endpoint idempotent against retries/duplicates; or
+  adding Swagger docs, guards, auth, domain events, or workers. Use it for one-line edits as much
+  as new features, and whether or not the user says "architecture" or "best practices." Not for
+  other stacks — Angular @Injectable, plain Express, Spring Boot, standalone Apollo/GraphQL — or
+  generic TypeScript questions with no NestJS context.
 license: MIT
 metadata:
   author: PedroHenriqueNS
