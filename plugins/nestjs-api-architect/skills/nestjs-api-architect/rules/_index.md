@@ -47,6 +47,7 @@ A rule marked **⊃ `community-rule`** intentionally supersedes that rule from t
 - **`spot-idempotency-outbox`** — On a platform where pods can die any moment: every mutating endpoint is idempotent, every async event is written to the outbox in the same TX as the state change, and modules holding long-lived resources drain on `OnModuleDestroy`. ⊃ `arch-use-events`, `perf-async-hooks`
 - **`events-redis-streams`** — A drainer worker publishes outbox rows to a single stream. Event envelopes are unversioned and additive-only; a breaking change mints a new event type. ⊃ `micro-use-queues`
 - **`workers`** — Async workers bootstrap a controller-less `WorkerModule` from `main-worker.ts`, selected by `WORKER_NAME`, and run as separate deployments off the request path.
+- **`health-liveness-readiness`** — Split `/health/live` (no dependencies) and `/health/ready` (deps + a manipulable drain flag); flip readiness to not-ready before draining on shutdown; silence probe logs by `kube-probe` User-Agent (keep failures); probes are keyless; `httpGet` probes only.
 
 ## Observability
 

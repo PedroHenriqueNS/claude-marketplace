@@ -38,18 +38,19 @@ src/
 │   ├── guards/                  # api-key.guard.ts, jwt.guard.ts (+ jwt strategy)
 │   ├── interceptors/            # logging.interceptor.ts, idempotency-key.interceptor.ts
 │   ├── loggers/                 # custom-logger.ts
+│   ├── readiness/               # readiness.service + module + shutdown hook (the drain flag)   ← templates/health
 │   └── redis/                   # redis.module.ts (only if events/idempotency/cache are in scope)
 ├── shared/
 │   ├── base/                    # base-class.ts, base-service.ts, base-controller.ts
 │   ├── api-docs/                # ApiHealthCheckDoc + dtos/ (cross-cutting doc helpers)
 │   └── constants/               # enums (ubiquitous language)
 └── modules/
-    └── health/                  # one real feature to prove the wiring (GET /health via terminus)
+    └── health/                  # liveness + readiness probes (GET /health/live, /health/ready)   ← templates/health
 ```
 
 ## Steps
 
-1. **Init** the Nest project (or confirm it exists), TypeScript strict, Yarn/PNPM per the repo. Add the `@/*` → `src/*` path alias the templates import through — `"baseUrl": "./"` + `"paths": { "@/*": ["src/*"] }` in `tsconfig.json` (and a runtime resolver: `tsconfig-paths`, or `tsConfigPath` in `nest-cli.json`).
+1. **Init** the Nest project (or confirm it exists), TypeScript strict, Yarn/PNPM per the repo. Add the `@/*` → `src/*` path alias the templates import through — `"paths": { "@/*": ["./src/*"] }` in `tsconfig.json` (relative target, so no `baseUrl`; `baseUrl` is deprecated on TS 6) plus a runtime resolver (`tsconfig-paths`, or `tsConfigPath` in `nest-cli.json`).
 2. **Spine** — copy `base-class.ts`, `base-service.ts`, `base-controller.ts` into `src/shared/base/`. Everything else depends on these.
 3. **Config** — copy `env.schema.ts` + `env.service.ts`; wrap them in a `@Global() ConfigModule`. The app must fail fast at boot on bad env (`config-env-zod`).
 4. **Decorators** — copy `decorators.ts` into `@core/decorators/`.
@@ -57,8 +58,8 @@ src/
 6. **Errors + logging** — copy `base.exception.ts`, `custom-exception.filter.ts` (as `APP_FILTER`), `custom-logger.ts`, `logging.interceptor.ts` (as `APP_INTERCEPTOR`).
 7. **Idempotency** — copy `idempotency-key.interceptor.ts` if any mutating endpoints are coming (they are). Needs Redis (`spot-idempotency-outbox`).
 8. **Database** — `DatabaseModule` + standalone `data-source.ts`, `synchronize:false`, empty `migrations/` (`entities-and-migrations`).
-9. **Health** — a real `modules/health/` feature with a terminus DB ping, `@SkipApiKey()` + `@PublicRoute()`, excluded from request logging.
-10. **`main.ts`** — Helmet, `app.setGlobalPrefix(...)` (exclude `/metrics`), Swagger at `/docs` with API-key security, `app.enableShutdownHooks()`.
-11. **Verify** — `build` + `lint` pass; `GET /health` returns 200; Swagger renders. Do NOT add a global `ValidationPipe` (`validation-baseservice`).
+9. **Health** — `modules/health/` with **two** probes from `templates/health/`: `GET /health/live` = `health.check([])` (NO deps, H1) and `GET /health/ready` = `health.check([db.pingCheck, …, readiness])`. Add the `@Global` `ReadinessModule` (the drain flag) to `@core/readiness/` and import it in the root module; flip it to not-ready *first* on shutdown (H4). Keyless — `@SkipApiKey()` + `@PublicRoute()`, does NOT extend `BaseController`. Pin `@nestjs/terminus` to the NestJS major. See `rules/health-liveness-readiness.md`.
+10. **`main.ts`** — Helmet, `app.setGlobalPrefix(...)` (exclude `/metrics` **and** `health` so probes stay at `/health/live` & `/health/ready`), Swagger at `/docs` with API-key security, `app.enableShutdownHooks()`.
+11. **Verify** — `build` + `lint` pass; `GET /health/live` returns 200 (even with the DB down), `GET /health/ready` reflects deps + the flag; Swagger renders. Do NOT add a global `ValidationPipe` (`validation-baseservice`).
 
 Then hand off to `add-nestjs-module` for the first real feature.

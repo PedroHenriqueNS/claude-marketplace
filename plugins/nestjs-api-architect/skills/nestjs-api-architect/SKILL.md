@@ -102,6 +102,7 @@ Full index with one-liners: `rules/_index.md`.
 | Reliability | `events-redis-streams` | Async events flow through the outbox → a stream; envelopes are unversioned + additive-only |
 | Observability | `logging-cls` | One CLS-aware logger prefixing `requestId`; mask sensitive fields |
 | Reliability | `workers` | Workers bootstrap a controller-less `WorkerModule` via `main-worker.ts`, deploy separately |
+| Reliability | `health-liveness-readiness` | Two K8s probes — `/health/live` (no deps) + `/health/ready` (deps + drain flag); flip readiness before drain; keyless; silence probe logs by `kube-probe` UA |
 | Testing | `testing` | Unit-test services; integration-test controllers against a real test DB; `*.spec.ts` |
 
 ## This skill supersedes the generic `nestjs-best-practices` skill
@@ -145,6 +146,7 @@ They are the literal source-of-truth shapes the rules describe.
 - `templates/shared-op/` — `repository/`, `gateway/`, `factory/` (each: `index.<role>.ts`, `input.ts`, `output.ts`, `operation.module.ts`)
 - `templates/db/` — `entity.ts`, `migration.ts`
 - `templates/worker/` — `worker.module.ts`, `main-worker.ts`, `outbox-drainer.worker.ts`, `insert-outbox-event.repository.ts`
+- `templates/health/` — `readiness.service.ts`, `readiness.module.ts`, `readiness-shutdown.hook.ts`, `readiness.health.ts` (terminus indicator), `health.controller.ts` (live + ready), `health.module.ts`
 
 ## How to apply this skill
 
