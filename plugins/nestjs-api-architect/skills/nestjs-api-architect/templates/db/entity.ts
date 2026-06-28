@@ -13,11 +13,11 @@ import {
   CreateDateColumn,
   Entity,
   Index,
-  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
-import { OwnerEntity } from "./owner.entity";
+// import { ManyToOne } from "typeorm";
+// import { OwnerEntity } from "./owner.entity"; // <- a real entity you own
 
 @Entity({ name: "<entity_plural>", synchronize: false })
 export class <Entity>Entity {
@@ -28,8 +28,11 @@ export class <Entity>Entity {
   @Column({ type: "uuid" })
   ownerId!: string;
 
-  @ManyToOne(() => OwnerEntity, { createForeignKeyConstraints: false, onDelete: "CASCADE" })
-  owner!: OwnerEntity;
+  // Example relation — uncomment and point at a real entity. With synchronize:false the relation is
+  // documentation only; the migration owns the FK. `createForeignKeyConstraints:false` keeps TypeORM
+  // from emitting its own; `onDelete` must mirror the migration's ON DELETE for readability.
+  // @ManyToOne(() => OwnerEntity, { createForeignKeyConstraints: false, onDelete: "CASCADE" })
+  // owner!: OwnerEntity;
 
   @Column({ type: "text" })
   message!: string;

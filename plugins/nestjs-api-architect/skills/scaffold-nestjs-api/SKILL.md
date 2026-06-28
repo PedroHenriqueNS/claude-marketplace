@@ -31,6 +31,7 @@ src/
 │   ├── config/                  # config.module.ts, env.schema.ts, env.service.ts   ← templates/core
 │   ├── db/                      # database.module.ts, data-source.ts, migrations/
 │   ├── decorators/              # decorators.ts (@PublicRoute, @SkipApiKey, @Idempotent, @CurrentUser, @MaskLogger)
+│   ├── auth/                    # authenticated-user.type.ts (the @CurrentUser() return type)
 │   ├── entities/                # (empty — first entity arrives with the first feature)
 │   ├── exceptions/              # base.exception.ts
 │   ├── filters/                 # custom-exception.filter.ts
@@ -48,11 +49,11 @@ src/
 
 ## Steps
 
-1. **Init** the Nest project (or confirm it exists), TypeScript strict, Yarn/PNPM per the repo.
+1. **Init** the Nest project (or confirm it exists), TypeScript strict, Yarn/PNPM per the repo. Add the `@/*` → `src/*` path alias the templates import through — `"baseUrl": "./"` + `"paths": { "@/*": ["src/*"] }` in `tsconfig.json` (and a runtime resolver: `tsconfig-paths`, or `tsConfigPath` in `nest-cli.json`).
 2. **Spine** — copy `base-class.ts`, `base-service.ts`, `base-controller.ts` into `src/shared/base/`. Everything else depends on these.
 3. **Config** — copy `env.schema.ts` + `env.service.ts`; wrap them in a `@Global() ConfigModule`. The app must fail fast at boot on bad env (`config-env-zod`).
 4. **Decorators** — copy `decorators.ts` into `@core/decorators/`.
-5. **Auth** — copy `api-key.guard.ts` + `jwt.guard.ts`; register both as `APP_GUARD`s (or apply via `BaseController`). Add the JWT strategy wired to your IdP's JWKS (`auth-layered-guards`).
+5. **Auth** — copy `api-key.guard.ts` + `jwt.guard.ts`; register both as `APP_GUARD`s (or apply via `BaseController`). Add the JWT strategy wired to your IdP's JWKS, the `IDP_ISSUER` / `IDP_JWKS_URI` env vars it reads, and `authenticated-user.type.ts` in `@core/auth/` (the `@CurrentUser()` return type) (`auth-layered-guards`).
 6. **Errors + logging** — copy `base.exception.ts`, `custom-exception.filter.ts` (as `APP_FILTER`), `custom-logger.ts`, `logging.interceptor.ts` (as `APP_INTERCEPTOR`).
 7. **Idempotency** — copy `idempotency-key.interceptor.ts` if any mutating endpoints are coming (they are). Needs Redis (`spot-idempotency-outbox`).
 8. **Database** — `DatabaseModule` + standalone `data-source.ts`, `synchronize:false`, empty `migrations/` (`entities-and-migrations`).

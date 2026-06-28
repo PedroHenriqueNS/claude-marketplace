@@ -6,7 +6,7 @@ import { Reflector } from "@nestjs/core";
 import { timingSafeEqual } from "crypto";
 import { Request } from "express";
 import { EnvService } from "../config/env.service";
-import { SKIP_API_KEY } from "../decorators/skip-api-key.decorator";
+import { SKIP_API_KEY } from "../decorators/decorators";
 
 const HEADER = "x-<app>-api-key"; // replace <app> with your prefix, lowercased
 

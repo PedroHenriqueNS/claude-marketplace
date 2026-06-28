@@ -21,6 +21,10 @@ export const envSchema = z.object({
   API_KEY: z.string().min(1),
   MIGRATIONS_RUN: envBoolean.default(false),
 
+  // Identity provider (read by jwt.strategy.ts). Point these at your IdP's realm/issuer + JWKS.
+  IDP_ISSUER: z.string().url(),
+  IDP_JWKS_URI: z.string().url(),
+
   // Add more variables here. Keep secrets out of source — they arrive from the environment.
 });
 

@@ -15,7 +15,7 @@ import { Request, Response } from "express";
 import { createHash } from "crypto";
 import { Observable, of } from "rxjs";
 import { tap } from "rxjs/operators";
-import { IDEMPOTENT, IdempotentOptions } from "../decorators/idempotent.decorator";
+import { IDEMPOTENT, IdempotentOptions } from "../decorators/decorators";
 
 const HEADER = "x-<app>-idempotency-key";
 

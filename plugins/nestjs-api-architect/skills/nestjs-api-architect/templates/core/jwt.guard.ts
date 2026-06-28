@@ -5,7 +5,7 @@
 import { ExecutionContext, Injectable } from "@nestjs/common";
 import { Reflector } from "@nestjs/core";
 import { AuthGuard } from "@nestjs/passport";
-import { PUBLIC_ROUTE } from "../decorators/public-route.decorator";
+import { PUBLIC_ROUTE } from "../decorators/decorators";
 
 @Injectable()
 export class JwtKeycloakGuard extends AuthGuard("jwt-keycloak") {

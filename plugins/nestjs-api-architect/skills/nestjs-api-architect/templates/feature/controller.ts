@@ -6,7 +6,7 @@
 // Runtime decorators (@HttpCode, guards) stay visible here; Swagger lives in the Api<Route>Doc helper.
 import { Body, Controller, HttpCode, HttpStatus, Post } from "@nestjs/common";
 import { BaseController } from "@/shared/base/base-controller";
-import { CurrentUser } from "@/@core/decorators/current-user.decorator";
+import { CurrentUser } from "@/@core/decorators/decorators";
 import { AuthenticatedUser } from "@/@core/auth/authenticated-user.type";
 import { <UseCase>Service } from "../domain/<use-case>/index.service";
 import { <UseCase>Input } from "../domain/<use-case>/input";
