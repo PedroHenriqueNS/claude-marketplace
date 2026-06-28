@@ -1,9 +1,11 @@
 # One exception filter; generic error messages
 
 Throw `HttpException` subclasses or a project `BaseException` (with a `static of({ status, code, message,
-cause? })` factory). One `CustomExceptionFilter` (`@Catch()`) normalizes everything to a single envelope
-`{ status, message, cause? }`. Controllers never catch-and-return raw errors — the filter is the single
-exit for every failure, so the wire shape of an error is identical across the whole API.
+cause? })` factory — `cause` is for logging/chaining, never the wire). One `CustomExceptionFilter`
+(`@Catch()`) normalizes everything to a single envelope `{ status, code?, message }`. Controllers never
+catch-and-return raw errors — the filter is the single exit for every failure, so the wire shape of an
+error is identical across the whole API. The filter never echoes `cause` (or any HttpException body
+detail beyond `code`) to the client — that text is attacker-influenceable and often leaks internals.
 
 ```typescript
 // WRONG — controller hand-formats an error; shape drifts per route

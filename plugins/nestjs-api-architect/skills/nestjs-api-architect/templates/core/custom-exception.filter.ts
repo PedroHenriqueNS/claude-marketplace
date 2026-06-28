@@ -16,7 +16,8 @@ interface ErrorEnvelope {
   status: number; // wire format — a NUMBER, not the HttpStatus enum
   code?: string;
   message: string;
-  cause?: unknown;
+  // No `cause`/`details` here on purpose: an HttpException body is attacker-influenceable and often
+  // carries internal error text. Keep the wire envelope to these three fields; full detail goes to the log.
 }
 
 @Catch()
@@ -46,7 +47,6 @@ export class CustomExceptionFilter implements ExceptionFilter {
           status,
           code: typeof b.code === "string" ? b.code : undefined,
           message: typeof b.message === "string" ? b.message : exception.message,
-          cause: b.cause,
         };
       }
       return { status, message: String(body) };
