@@ -1,6 +1,6 @@
 # Features
 
-A "feature" in this repo is a **plugin**. Each ships a marketplace catalog entry plus one or more skills. All seven are currently shipped at `0.1.0`. The marketplace itself (the catalog that makes them installable) is the eighth, cross-cutting feature.
+A "feature" in this repo is a **plugin**. Each ships a marketplace catalog entry plus one or more skills. All eight are currently shipped at `0.1.0`. The marketplace itself (the catalog that makes them installable) is the ninth, cross-cutting feature.
 
 ## The marketplace catalog
 
@@ -56,6 +56,13 @@ A "feature" in this repo is a **plugin**. Each ships a marketplace catalog entry
 - **Purpose:** build, maintain, and scaffold NestJS APIs as a Domain-Driven Design (DDD) layered system — generalizing the production `gigabase-api-core` conventions into reusable, project-neutral patterns. Supersedes the generic community `nestjs-best-practices` skill where they conflict.
 - **Behavior:** a main reference skill (auto-triggers on NestJS/DDD work) carrying a layer map, quick-ref rules table, supersede table, plus 25 on-demand rule files and 52 `.ts` templates (including Kubernetes liveness/readiness health probes and a standardized Prometheus `/metrics` endpoint with HTTP RED metrics); and five scaffolding skills — bootstrap an API foundation, add a feature module, a use-case service, a shared repository/gateway operation, or a TypeORM migration.
 - **Implementation:** `plugins/nestjs-api-architect/skills/nestjs-api-architect/SKILL.md` (+ `rules/`, `templates/`) and `scaffold-nestjs-api`, `add-nestjs-module`, `add-nestjs-use-case`, `add-nestjs-shared-op`, `add-nestjs-migration`.
+- **Status:** shipped.
+
+## test-optimizer
+
+- **Purpose:** diagnose and fix test-suite performance problems — first target is runaway RAM/`node.exe` usage and OOM crashes during test runs. Container plugin: sibling test-optimization skills can land here later.
+- **Behavior:** its `test-memory-doctor` skill triggers on memory/OOM/slow-suite symptoms across the three frameworks that coexist in a full-stack repo — Jest (NestJS), Vitest (React), Playwright — takes a `--logHeapUsage` (or peak-RSS) baseline, applies the correct per-framework fix (they differ meaningfully), then re-measures and shows before/after as evidence.
+- **Implementation:** `plugins/test-optimizer/skills/test-memory-doctor/SKILL.md` + per-framework `references/{jest-nestjs,vitest-react,playwright}.md`.
 - **Status:** shipped.
 
 ## marketing-skills

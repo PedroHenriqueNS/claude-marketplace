@@ -1,6 +1,6 @@
 {
   "name": "pedrohenriquens",
-  "description": "PedroHenriqueNS's personal Claude Code plugin marketplace — living-docs scaffolding, PRD authoring, skill auditing, tsconfig upgrades, Azure DevOps cards, a NestJS DDD API architect, and 41 marketing skills.",
+  "description": "PedroHenriqueNS's personal Claude Code plugin marketplace — living-docs scaffolding, PRD authoring, skill auditing, tsconfig upgrades, Azure DevOps cards, a NestJS DDD API architect, test-suite memory optimization, and 41 marketing skills.",
   "owner": {
     "name": "PedroHenriqueNS"
   },
@@ -52,6 +52,13 @@
       "source": "./plugins/nestjs-api-architect",
       "version": "0.1.0",
       "description": "Domain-Driven Design (DDD) architecture and best practices for building, maintaining, and scaffolding production NestJS APIs — layered domain/application/infrastructure structure, use-case services, per-operation repositories/gateways, transactional outbox, spot-safe idempotency. Supersedes the generic community nestjs-best-practices skill where they conflict.",
+      "author": { "name": "PedroHenriqueNS" }
+    },
+    {
+      "name": "test-optimizer",
+      "source": "./plugins/test-optimizer",
+      "version": "0.1.0",
+      "description": "Diagnose and fix test-suite performance problems — starting with runaway RAM/OOM in Jest (NestJS), Vitest (React), and Playwright runs.",
       "author": { "name": "PedroHenriqueNS" }
     }
   ]
