@@ -1,6 +1,6 @@
 # Features
 
-A "feature" in this repo is a **plugin**. Each ships a marketplace catalog entry plus one or more skills. All seven are currently shipped at `0.1.0`. The marketplace itself (the catalog that makes them installable) is the eighth, cross-cutting feature.
+A "feature" in this repo is a **plugin**. Each ships a marketplace catalog entry plus one or more skills. All eight are currently shipped at `0.1.0`. The marketplace itself (the catalog that makes them installable) is the ninth, cross-cutting feature.
 
 ## The marketplace catalog
 
@@ -56,6 +56,13 @@ A "feature" in this repo is a **plugin**. Each ships a marketplace catalog entry
 - **Purpose:** build, maintain, and scaffold NestJS APIs as a Domain-Driven Design (DDD) layered system — generalizing the production `gigabase-api-core` conventions into reusable, project-neutral patterns. Supersedes the generic community `nestjs-best-practices` skill where they conflict.
 - **Behavior:** a main reference skill (auto-triggers on NestJS/DDD work) carrying a layer map, quick-ref rules table, supersede table, plus 25 on-demand rule files and 52 `.ts` templates (including Kubernetes liveness/readiness health probes and a standardized Prometheus `/metrics` endpoint with HTTP RED metrics); and five scaffolding skills — bootstrap an API foundation, add a feature module, a use-case service, a shared repository/gateway operation, or a TypeORM migration.
 - **Implementation:** `plugins/nestjs-api-architect/skills/nestjs-api-architect/SKILL.md` (+ `rules/`, `templates/`) and `scaffold-nestjs-api`, `add-nestjs-module`, `add-nestjs-use-case`, `add-nestjs-shared-op`, `add-nestjs-migration`.
+- **Status:** shipped.
+
+## context-handoff
+
+- **Purpose:** on demand, generate a cold-start `HANDOFF.md` so the session can be `/clear`ed or `/compact`ed and a fresh Claude with zero memory becomes productive in ~30 seconds — without re-doing work or re-making mistakes. Deliberately different from `/compact` (same-session summary that loses decision rationale) and from a generic state dump; written for the cold reader.
+- **Behavior:** triggered by explicit pre-reset intent ("write a handoff", "prep for /clear", "context is getting full"). Gathers ground truth from git (`status`, `diff --stat`, branch) and whatever memory tooling exists (`.remember/`, claude-mem, context-mode timeline — degrading gracefully to git + the live conversation), then writes eight fixed sections — Objective (+why), Status, Decisions (+reasoning), State on disk, Verification (verified-vs-claimed), Next actions, Landmines, Resume ritual — and gitignores the file. General-purpose: no repo-specific paths baked in.
+- **Implementation:** `plugins/context-handoff/skills/handoff/SKILL.md` (+ `references/handoff-spec.md`, `templates/handoff.md`).
 - **Status:** shipped.
 
 ## marketing-skills

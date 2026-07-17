@@ -1,6 +1,6 @@
 {
   "name": "pedrohenriquens",
-  "description": "PedroHenriqueNS's personal Claude Code plugin marketplace — living-docs scaffolding, PRD authoring, skill auditing, tsconfig upgrades, Azure DevOps cards, a NestJS DDD API architect, and 41 marketing skills.",
+  "description": "PedroHenriqueNS's personal Claude Code plugin marketplace — living-docs scaffolding, PRD authoring, skill auditing, tsconfig upgrades, Azure DevOps cards, cold-start context handoffs, a NestJS DDD API architect, and 41 marketing skills.",
   "owner": {
     "name": "PedroHenriqueNS"
   },
@@ -52,6 +52,13 @@
       "source": "./plugins/nestjs-api-architect",
       "version": "0.1.0",
       "description": "Domain-Driven Design (DDD) architecture and best practices for building, maintaining, and scaffolding production NestJS APIs — layered domain/application/infrastructure structure, use-case services, per-operation repositories/gateways, transactional outbox, spot-safe idempotency. Supersedes the generic community nestjs-best-practices skill where they conflict.",
+      "author": { "name": "PedroHenriqueNS" }
+    },
+    {
+      "name": "context-handoff",
+      "source": "./plugins/context-handoff",
+      "version": "0.1.0",
+      "description": "Generate a cold-start HANDOFF.md before /clear or /compact so a fresh Claude with zero memory resumes in ~30 seconds — captures objective, decisions and why, verified-vs-claimed state, next actions, and landmines.",
       "author": { "name": "PedroHenriqueNS" }
     }
   ]

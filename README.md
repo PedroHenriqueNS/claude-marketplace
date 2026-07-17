@@ -14,6 +14,8 @@ A personal [Claude Code plugin marketplace](https://code.claude.com/docs/en/plug
 | [`skill-auditor`](plugins/skill-auditor) | Audit/improve your Claude skills against best practices. |
 | [`tsconfig-upgrade`](plugins/tsconfig-upgrade) | Safely upgrade `tsconfig.json`, pre-flighting breaking changes. |
 | [`marketing-skills`](plugins/marketing-skills) | 41 cross-referencing marketing skills (SEO, CRO, analytics, copy, ads…). Derived from a third-party repo — see [NOTICE](NOTICE). |
+| [`nestjs-api-architect`](plugins/nestjs-api-architect) | Build, maintain & scaffold NestJS APIs as a DDD layered system (+ health probes, Prometheus metrics). |
+| [`context-handoff`](plugins/context-handoff) | Write a cold-start `HANDOFF.md` before `/clear`/`/compact` so a fresh session resumes in ~30s. |
 
 ## Layout
 
