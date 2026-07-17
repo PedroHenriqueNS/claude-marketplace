@@ -26,7 +26,8 @@ Realized by the **[best-practices compliance gate](./prds/best-practices-complia
 
 ## Phase 3 — Growth (when scoped)
 
-- ✅ `context-handoff` — cold-start `HANDOFF.md` generator for surviving `/clear` / `/compact`; shipped at `0.1.0`.
+- ✅ `test-optimizer` (skill `test-memory-doctor`) — first Phase 3 growth plugin; diagnoses and fixes runaway test-run memory/OOM across Jest (NestJS), Vitest (React), and Playwright.
+- ✅ `context-handoff` (skill `handoff`) — cold-start `HANDOFF.md` generator for surviving `/clear` / `/compact`; shipped at `0.1.0`.
 - Add new plugins as needs arise; each lands with its `marketplace.json` entry, `plugin.json`, and at least one skill in the same PR.
 - Add `evals/evals.json` to skills that lack them, to guard triggering quality.
 

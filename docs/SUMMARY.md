@@ -1,6 +1,6 @@
 # Summary
 
-`claude-marketplace` is a personal [Claude Code plugin marketplace](https://code.claude.com/docs/en/plugin-marketplaces) — a monorepo that owns and distributes a set of Claude Code skills and plugins. The catalog (`.claude-plugin/marketplace.json`) lists eight plugins whose `source` paths all point inside this same repo, so adding the marketplace makes every plugin installable. There is no application code, build step, or runtime: the entire project is Markdown skill content plus JSON manifests, validated with `claude plugin validate`.
+`claude-marketplace` is a personal [Claude Code plugin marketplace](https://code.claude.com/docs/en/plugin-marketplaces) — a monorepo that owns and distributes a set of Claude Code skills and plugins. The catalog (`.claude-plugin/marketplace.json`) lists nine plugins whose `source` paths all point inside this same repo, so adding the marketplace makes every plugin installable. There is no application code, build step, or runtime: the entire project is Markdown skill content plus JSON manifests, validated with `claude plugin validate`.
 
 **Owner:** PedroHenriqueNS · **Marketplace name:** `pedrohenriquens` · **Status:** local-only (no remote yet).
 

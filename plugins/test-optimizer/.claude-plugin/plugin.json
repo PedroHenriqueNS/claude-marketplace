@@ -1,0 +1,7 @@
+{
+  "name": "test-optimizer",
+  "version": "0.1.0",
+  "description": "Diagnose and fix test-suite performance problems — starting with runaway RAM/OOM in Jest (NestJS), Vitest (React), and Playwright runs.",
+  "author": { "name": "PedroHenriqueNS" },
+  "keywords": ["testing", "jest", "vitest", "playwright", "memory", "oom", "performance", "nestjs", "react"]
+}
