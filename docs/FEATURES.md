@@ -1,6 +1,6 @@
 # Features
 
-A "feature" in this repo is a **plugin**. Each ships a marketplace catalog entry plus one or more skills. All eight are currently shipped at `0.1.0`. The marketplace itself (the catalog that makes them installable) is the ninth, cross-cutting feature.
+A "feature" in this repo is a **plugin**. Each ships a marketplace catalog entry plus one or more skills. All nine are currently shipped at `0.1.0`. The marketplace itself (the catalog that makes them installable) is the tenth, cross-cutting feature.
 
 ## The marketplace catalog
 
@@ -14,7 +14,7 @@ A "feature" in this repo is a **plugin**. Each ships a marketplace catalog entry
 - **Purpose:** enforce the rule that every skill follows Claude Code best practices (`docs/CONVENTIONS.md`) — audit the existing plugins to a clean baseline, then gate every change so nothing merges below the bar.
 - **Behavior:** CI (GitHub Actions) runs `claude plugin validate` per plugin, a `plugin.json`↔`marketplace.json` version-sync check, and a mechanical `SKILL.md` lint as the hard gate; `skill-auditor` provides the deeper judgment-based audit. Verification seam is per-plugin.
 - **Implementation:** specced in [docs/prds/best-practices-compliance-gate.md](./prds/best-practices-compliance-gate.md). `scripts/check_compliance.py` + `.github/workflows/validate.yml`; supersedes the `docs/PRD.md` "no CI yet" non-goal for validation.
-- **Status:** in-progress. Mechanical gate shipped and green across all 6 plugins (0 failures); CI workflow in place (activates once the repo has a remote — Phase 1). Remaining: the deep per-skill `skill-auditor` audit of the 46 skills.
+- **Status:** in-progress. Mechanical gate shipped and green across all 9 plugins (0 failures); CI workflow in place (activates once the repo has a remote — Phase 1). Remaining: the deep per-skill `skill-auditor` audit of the 54 skills.
 
 ## project-initializer
 
@@ -63,6 +63,13 @@ A "feature" in this repo is a **plugin**. Each ships a marketplace catalog entry
 - **Purpose:** diagnose and fix test-suite performance problems — first target is runaway RAM/`node.exe` usage and OOM crashes during test runs. Container plugin: sibling test-optimization skills can land here later.
 - **Behavior:** its `test-memory-doctor` skill triggers on memory/OOM/slow-suite symptoms across the three frameworks that coexist in a full-stack repo — Jest (NestJS), Vitest (React), Playwright — takes a `--logHeapUsage` (or peak-RSS) baseline, applies the correct per-framework fix (they differ meaningfully), then re-measures and shows before/after as evidence.
 - **Implementation:** `plugins/test-optimizer/skills/test-memory-doctor/SKILL.md` + per-framework `references/{jest-nestjs,vitest-react,playwright}.md`.
+- **Status:** shipped.
+
+## context-handoff
+
+- **Purpose:** on demand, generate a cold-start `HANDOFF.md` so the session can be `/clear`ed or `/compact`ed and a fresh Claude with zero memory becomes productive in ~30 seconds — without re-doing work or re-making mistakes. Deliberately different from `/compact` (same-session summary that loses decision rationale) and from a generic state dump; written for the cold reader.
+- **Behavior:** triggered by explicit pre-reset intent ("write a handoff", "prep for /clear", "context is getting full"). Gathers ground truth from git (`status`, `diff --stat`, branch) and whatever memory tooling exists (`.remember/`, claude-mem, context-mode timeline — degrading gracefully to git + the live conversation), then writes eight fixed sections — Objective (+why), Status, Decisions made (+reasoning), State on disk, Verification (verified-vs-claimed), Next actions, Landmines, Resume ritual — and gitignores the file. General-purpose: no repo-specific paths baked in.
+- **Implementation:** `plugins/context-handoff/skills/handoff/SKILL.md` (+ `references/handoff-spec.md`, `templates/handoff.md`).
 - **Status:** shipped.
 
 ## marketing-skills

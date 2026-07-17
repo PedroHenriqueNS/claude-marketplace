@@ -16,6 +16,7 @@ A personal [Claude Code plugin marketplace](https://code.claude.com/docs/en/plug
 | [`marketing-skills`](plugins/marketing-skills) | 41 cross-referencing marketing skills (SEO, CRO, analytics, copy, ads…). Derived from a third-party repo — see [NOTICE](NOTICE). |
 | [`nestjs-api-architect`](plugins/nestjs-api-architect) | Build, maintain & scaffold NestJS APIs as a DDD layered system (modules, use-cases, migrations). |
 | [`test-optimizer`](plugins/test-optimizer) | Diagnose & fix runaway test-run memory/OOM in Jest (NestJS), Vitest (React), Playwright. |
+| [`context-handoff`](plugins/context-handoff) | Write a cold-start `HANDOFF.md` before `/clear`/`/compact` so a fresh session resumes in ~30s. |
 
 ## Layout
 

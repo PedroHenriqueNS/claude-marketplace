@@ -17,7 +17,7 @@ The key non-obvious fact: a plugin's `version` is written **twice** — in its `
 ```
 claude-marketplace/
 ├── .claude-plugin/
-│   └── marketplace.json              # catalog: name "pedrohenriquens", owner, 8 plugins
+│   └── marketplace.json              # catalog: name "pedrohenriquens", owner, 9 plugins
 ├── plugins/
 │   └── <plugin>/
 │       ├── .claude-plugin/

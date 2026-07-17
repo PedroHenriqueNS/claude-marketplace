@@ -1,0 +1,7 @@
+{
+  "name": "context-handoff",
+  "version": "0.1.0",
+  "description": "Generate a cold-start HANDOFF.md before /clear or /compact so a fresh Claude with zero memory resumes in ~30 seconds — captures objective, decisions and why, verified-vs-claimed state, next actions, and landmines.",
+  "author": { "name": "PedroHenriqueNS" },
+  "keywords": ["handoff", "context", "clear", "compact", "continuity", "session"]
+}
