@@ -17,6 +17,7 @@ A personal [Claude Code plugin marketplace](https://code.claude.com/docs/en/plug
 | [`nestjs-api-architect`](plugins/nestjs-api-architect) | Build, maintain & scaffold NestJS APIs as a DDD layered system (modules, use-cases, migrations). |
 | [`test-optimizer`](plugins/test-optimizer) | Diagnose & fix runaway test-run memory/OOM in Jest (NestJS), Vitest (React), Playwright. |
 | [`context-handoff`](plugins/context-handoff) | Write a cold-start `HANDOFF.md` before `/clear`/`/compact` so a fresh session resumes in ~30s. |
+| [`prompt-creator`](plugins/prompt-creator) | Rewrite a rough prompt into a best-practice one, grounded in the live Claude Code best-practices doc. |
 
 ## Layout
 

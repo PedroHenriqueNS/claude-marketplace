@@ -1,0 +1,7 @@
+{
+  "name": "prompt-creator",
+  "version": "0.1.0",
+  "description": "Rewrite a rough prompt for Claude Code into a best-practice one — fetches the live Claude Code best-practices doc on every use, asks targeted questions when the prompt is ambiguous, and returns a copy-paste-ready improved prompt with a what-changed rationale.",
+  "author": { "name": "PedroHenriqueNS" },
+  "keywords": ["prompt", "prompt-engineering", "rewrite", "best-practices", "claude-code"]
+}

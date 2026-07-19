@@ -1,6 +1,6 @@
 {
   "name": "pedrohenriquens",
-  "description": "PedroHenriqueNS's personal Claude Code plugin marketplace — living-docs scaffolding, PRD authoring, skill auditing, tsconfig upgrades, Azure DevOps cards, a NestJS DDD API architect, test-suite memory optimization, cold-start context handoffs, and 41 marketing skills.",
+  "description": "PedroHenriqueNS's personal Claude Code plugin marketplace — living-docs scaffolding, PRD authoring, skill auditing, tsconfig upgrades, Azure DevOps cards, a NestJS DDD API architect, test-suite memory optimization, cold-start context handoffs, prompt rewriting, and 41 marketing skills.",
   "owner": {
     "name": "PedroHenriqueNS"
   },
@@ -66,6 +66,13 @@
       "source": "./plugins/context-handoff",
       "version": "0.1.0",
       "description": "Generate a cold-start HANDOFF.md before /clear or /compact so a fresh Claude with zero memory resumes in ~30 seconds — captures objective, decisions and why, verified-vs-claimed state, next actions, and landmines.",
+      "author": { "name": "PedroHenriqueNS" }
+    },
+    {
+      "name": "prompt-creator",
+      "source": "./plugins/prompt-creator",
+      "version": "0.1.0",
+      "description": "Rewrite a rough prompt for Claude Code into a best-practice one — fetches the live Claude Code best-practices doc on every use, asks targeted questions when the prompt is ambiguous, and returns a copy-paste-ready improved prompt with a what-changed rationale.",
       "author": { "name": "PedroHenriqueNS" }
     }
   ]
