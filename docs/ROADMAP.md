@@ -22,12 +22,13 @@ Realized by the **[best-practices compliance gate](./prds/best-practices-complia
 
 - ✅ Mechanical compliance gate (`scripts/check_compliance.py`): version-sync, frontmatter, dead repo-relative links, reserved-name guard — green across all 6 plugins.
 - ✅ CI (`.github/workflows/validate.yml`) runs the compliance script + `claude plugin validate .` + each `claude plugin validate ./plugins/<name>` on PRs and pushes to `main`. (Runs once the repo has a remote — Phase 1.)
-- ⏳ Deep `skill-auditor` audit of all 46 skills against the [CONVENTIONS best-practices baseline](./CONVENTIONS.md#claude-code-best-practices-the-baseline-every-skill-follows) for the judgment-based rules (`description` quality, progressive disclosure). Run on demand; not a blocking CI gate until non-interactive Claude is wired into CI.
+- ⏳ Deep `skill-auditor` audit of all 55 skills against the [CONVENTIONS best-practices baseline](./CONVENTIONS.md#claude-code-best-practices-the-baseline-every-skill-follows) for the judgment-based rules (`description` quality, progressive disclosure). Run on demand; not a blocking CI gate until non-interactive Claude is wired into CI.
 
 ## Phase 3 — Growth (when scoped)
 
 - ✅ `test-optimizer` (skill `test-memory-doctor`) — first Phase 3 growth plugin; diagnoses and fixes runaway test-run memory/OOM across Jest (NestJS), Vitest (React), and Playwright.
 - ✅ `context-handoff` (skill `handoff`) — cold-start `HANDOFF.md` generator for surviving `/clear` / `/compact`; shipped at `0.1.0`.
+- ✅ `prompt-creator` (skill `prompt-creator`) — rewrites rough Claude Code prompts against the live best-practices doc (re-fetched every invocation, offline fallback checklist); shipped at `0.1.0`.
 - Add new plugins as needs arise; each lands with its `marketplace.json` entry, `plugin.json`, and at least one skill in the same PR.
 - Add `evals/evals.json` to skills that lack them, to guard triggering quality.
 

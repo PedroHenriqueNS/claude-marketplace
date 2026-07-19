@@ -1,0 +1,33 @@
+{
+  "skill_name": "prompt-creator",
+  "evals": [
+    {
+      "id": 1,
+      "name": "vague-prompt-asks-before-rewriting",
+      "prompt": "Improve this prompt for Claude Code: \"fix the login bug\"",
+      "expected_output": "Should first fetch https://code.claude.com/docs/en/best-practices, then recognize the prompt is missing symptom, location, and definition of fixed, and ask 1-3 targeted questions (what do users observe, where does auth live, how to verify the fix) BEFORE rewriting. Should NOT attempt to fix any bug itself and should NOT invent requirements.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "name": "clear-prompt-one-shot-rewrite",
+      "prompt": "Rewrite my prompt: \"add tests for src/utils/date.ts — we use Vitest, I care about DST edge cases, done means npm test passes, don't touch the implementation\"",
+      "expected_output": "Should fetch the best-practices page, then rewrite in ONE shot (no clarifying questions — scope, verification, and non-goals are all present). Output: the rewritten prompt in a fenced code block (scoped task, verification command with a demand for evidence, explicit do-not-touch), a bulleted what-changed-and-why list tied to best-practice rules, and an offer to run it now or paste into a fresh session.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "name": "fetch-failure-uses-fallback",
+      "prompt": "(WebFetch is unavailable in this environment.) Make this prompt better: \"refactor the payment service, it's getting messy\"",
+      "expected_output": "Should attempt the live fetch, fail, then fall back to references/best-practices-checklist.md and explicitly warn the user the guidance may be stale. Should still proceed: the prompt is ambiguous (which files, what does better look like, what must not break), so it asks targeted questions before rewriting.",
+      "files": []
+    },
+    {
+      "id": 4,
+      "name": "negative-trigger-llm-app-system-prompt",
+      "prompt": "Help me write a good system prompt for my customer-support chatbot built on the Claude API",
+      "expected_output": "Should NOT trigger this skill — the request is prompt engineering for the user's own LLM application, not a prompt aimed at Claude Code. The Claude API / claude-api guidance applies instead.",
+      "files": []
+    }
+  ]
+}

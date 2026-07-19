@@ -4,7 +4,7 @@ Primary source of truth for any AI agent (or human) working on **claude-marketpl
 
 ## Project overview
 
-`claude-marketplace` is a personal [Claude Code plugin marketplace](https://code.claude.com/docs/en/plugin-marketplaces) — a single-repo catalog that owns and distributes nine Claude Code plugins. There is no application code, build step, or runtime: the project is Markdown skill content plus JSON manifests, made installable by `.claude-plugin/marketplace.json`. See [docs/SUMMARY.md](./docs/SUMMARY.md) for the 30-second version.
+`claude-marketplace` is a personal [Claude Code plugin marketplace](https://code.claude.com/docs/en/plugin-marketplaces) — a single-repo catalog that owns and distributes ten Claude Code plugins. There is no application code, build step, or runtime: the project is Markdown skill content plus JSON manifests, made installable by `.claude-plugin/marketplace.json`. See [docs/SUMMARY.md](./docs/SUMMARY.md) for the 30-second version.
 
 ## Tech stack
 
@@ -13,7 +13,7 @@ Markdown (skill content + docs), JSON (manifests), validated by the Claude Code 
 ## Repository structure
 
 ```
-.claude-plugin/marketplace.json   # catalog: name "pedrohenriquens", owner, 9 plugins
+.claude-plugin/marketplace.json   # catalog: name "pedrohenriquens", owner, 10 plugins
 plugins/<name>/.claude-plugin/plugin.json   # one plugin's identity + version
 plugins/<name>/skills/<skill>/SKILL.md      # the capability (+ optional references/ templates/ evals/)
 docs/                             # living documentation (start at SUMMARY.md)
