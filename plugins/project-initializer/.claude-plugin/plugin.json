@@ -1,7 +1,7 @@
 {
   "name": "project-initializer",
-  "version": "0.1.0",
-  "description": "Scaffold a new project's living agent documentation — AGENTS.md, CLAUDE.md, and docs/* — with maintenance conventions baked in.",
+  "version": "0.2.0",
+  "description": "Scaffold a project's living agent documentation — AGENTS.md, CLAUDE.md, and docs/* — with maintenance conventions baked in, and re-tune it for a specific Claude model.",
   "author": { "name": "PedroHenriqueNS" },
-  "keywords": ["documentation", "scaffolding", "agents-md", "claude-md", "init"]
+  "keywords": ["documentation", "scaffolding", "agents-md", "claude-md", "init", "model-tuning"]
 }

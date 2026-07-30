@@ -1,0 +1,47 @@
+{
+  "skill_name": "update-for-model",
+  "evals": [
+    {
+      "id": 1,
+      "name": "asks-for-model-never-assumes-session-model",
+      "prompt": "Update this project's living docs for a different Claude model.",
+      "expected_output": "Should fetch the models overview page FIRST and ask which model to target, offering the models that page actually lists. Must NOT assume the model running the session, and must NOT offer a model list recalled from memory. No files are written before the user answers.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "name": "named-model-writes-notes-and-proposes-edits",
+      "prompt": "Tune AGENTS.md and the docs for Claude Opus 5.",
+      "expected_output": "Should fetch the prompting-best-practices hub, follow its link to the Opus 5 page, plus the migration guide and Claude Code model-config page; extract only what differs for that model; read the existing living docs; write docs/MODEL-NOTES.md from the template with the fetch date and source URLs. Then PROPOSE the in-place edit list (including the two anchors — @docs/MODEL-NOTES.md in CLAUDE.md's Living documentation list and a Documentation maintenance line in AGENTS.md) and wait for approval before writing any of them. Conditional edits must link to MODEL-NOTES.md, not inline the detail.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "name": "fetch-failure-warns-stale",
+      "prompt": "(No web tool is available in this environment.) Re-tune the docs for Claude Sonnet 5.",
+      "expected_output": "Should attempt the live fetches, fail, fall back to references/model-tuning-sources.md, and explicitly warn the user the guidance may be stale — including recording that staleness in the MODEL-NOTES.md Sources section. Must not silently substitute memorized model behavior for the live docs, and must not invent model-specific behavior the fallback does not document.",
+      "files": []
+    },
+    {
+      "id": 4,
+      "name": "rewrites-existing-notes-and-reports-delta",
+      "prompt": "We're switching from Opus 5 to Haiku 4.5 — update the docs. (docs/MODEL-NOTES.md already exists, targeting Opus 5.)",
+      "expected_output": "Should rewrite docs/MODEL-NOTES.md wholesale for Haiku 4.5 rather than appending a second model's section or skipping the existing file, and report what changed versus the previous target — including which previously-applied in-place edits need revising.",
+      "files": []
+    },
+    {
+      "id": 5,
+      "name": "negative-trigger-switch-session-model",
+      "prompt": "Switch me to Sonnet 5 for the rest of this session.",
+      "expected_output": "Should NOT trigger this skill — the user wants to change the session's active model (/model), not re-tune the project's documentation. No docs are read or written.",
+      "files": []
+    },
+    {
+      "id": 6,
+      "name": "negative-trigger-non-anthropic-model",
+      "prompt": "Re-tune our AGENTS.md for GPT-5.",
+      "expected_output": "Should state that this skill supports Anthropic Claude models only and stop, rather than fetching Anthropic docs or guessing at another vendor's prompting guidance.",
+      "files": []
+    }
+  ]
+}
