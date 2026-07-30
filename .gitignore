@@ -6,5 +6,8 @@ Thumbs.db
 .vscode/
 .idea/
 
+# Byte-cache from running scripts/check_compliance.py
+__pycache__/
+
 # Local Claude Code state that shouldn't ship with the marketplace
 .claude/settings.local.json

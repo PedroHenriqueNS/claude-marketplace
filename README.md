@@ -8,7 +8,7 @@ A personal [Claude Code plugin marketplace](https://code.claude.com/docs/en/plug
 
 | Plugin | What it does |
 |--------|--------------|
-| [`project-initializer`](plugins/project-initializer) | Scaffold a project's living agent docs (AGENTS.md, CLAUDE.md, docs/*). |
+| [`project-initializer`](plugins/project-initializer) | Scaffold a project's living agent docs (AGENTS.md, CLAUDE.md, docs/*), and re-tune them for a specific Claude model. |
 | [`to-prd`](plugins/to-prd) | Turn the current conversation into a feature-level PRD and publish it. |
 | [`azure-devops-card`](plugins/azure-devops-card) | Draft Azure DevOps work-item titles & descriptions (pt-BR). |
 | [`skill-auditor`](plugins/skill-auditor) | Audit/improve your Claude skills against best practices. |

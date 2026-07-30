@@ -1,6 +1,6 @@
 # Features
 
-A "feature" in this repo is a **plugin**. Each ships a marketplace catalog entry plus one or more skills. All ten are currently shipped at `0.1.0`. The marketplace itself (the catalog that makes them installable) is the eleventh, cross-cutting feature.
+A "feature" in this repo is a **plugin**. Each ships a marketplace catalog entry plus one or more skills. Nine are shipped at `0.1.0`; `project-initializer` is at `0.2.0`. The marketplace itself (the catalog that makes them installable) is the eleventh, cross-cutting feature.
 
 ## The marketplace catalog
 
@@ -14,14 +14,16 @@ A "feature" in this repo is a **plugin**. Each ships a marketplace catalog entry
 - **Purpose:** enforce the rule that every skill follows Claude Code best practices (`docs/CONVENTIONS.md`) — audit the existing plugins to a clean baseline, then gate every change so nothing merges below the bar.
 - **Behavior:** CI (GitHub Actions) runs `claude plugin validate` per plugin, a `plugin.json`↔`marketplace.json` version-sync check, and a mechanical `SKILL.md` lint as the hard gate; `skill-auditor` provides the deeper judgment-based audit. Verification seam is per-plugin.
 - **Implementation:** specced in [docs/prds/best-practices-compliance-gate.md](./prds/best-practices-compliance-gate.md). `scripts/check_compliance.py` + `.github/workflows/validate.yml`; supersedes the `docs/PRD.md` "no CI yet" non-goal for validation.
-- **Status:** in-progress. Mechanical gate shipped and green across all 10 plugins (0 failures); CI workflow in place (activates once the repo has a remote — Phase 1). Remaining: the deep per-skill `skill-auditor` audit of the 55 skills.
+- **Status:** in-progress. Mechanical gate shipped and green across all 10 plugins (0 failures); CI workflow in place (activates once the repo has a remote — Phase 1). Remaining: the deep per-skill `skill-auditor` audit of the 56 skills.
 
 ## project-initializer
 
-- **Purpose:** scaffold a project's living agent documentation — `AGENTS.md`, `CLAUDE.md`, and `docs/*` — with documentation-maintenance conventions baked in.
-- **Behavior:** triggered by explicit phrases ("init this project", "scaffold docs for agents"). Surveys the repo, detects stack and event-broker usage, then creates only the docs that don't already exist (skip-and-report). Includes a diagramming policy (Mermaid only, earns-its-place).
-- **Implementation:** `plugins/project-initializer/skills/project-initializer/SKILL.md` + `templates/generate-events-catalog.md`.
-- **Status:** shipped. (This very docs set was produced by it.)
+- **Purpose:** own a project's living agent documentation across its life — scaffold it (`AGENTS.md`, `CLAUDE.md`, `docs/*`) with documentation-maintenance conventions baked in, then re-tune it when the target Claude model changes.
+- **Behavior:** two skills.
+  - `project-initializer` — triggered by explicit phrases ("init this project", "scaffold docs for agents"). Surveys the repo, detects stack and event-broker usage, then creates only the docs that don't already exist (skip-and-report). Includes a diagramming policy (Mermaid only, earns-its-place).
+  - `update-for-model` — triggered by explicit re-tune intent ("update the docs for Opus 5", "tune AGENTS.md for Sonnet 5"). **Asks which Claude model to target — never infers it from the session's own model** — then fetches Anthropic's live docs for it (models overview → prompting-best-practices hub → that model's own `prompting-claude-<slug>` page → migration guide → Claude Code model-config), extracts only what differs for that model, surveys the existing living docs, and writes `docs/MODEL-NOTES.md`. In-place edits to `AGENTS.md`/`CLAUDE.md`/`docs/*` are **proposed for approval first** and always link to `MODEL-NOTES.md` rather than inlining detail. Re-invoking for a different model rewrites the file wholesale and reports the delta. Anthropic Claude models only. Same live-fetch contract as `prompt-creator`: fetch every invocation, bundled date-stamped fallback, staleness warning when the fetch fails.
+- **Implementation:** `plugins/project-initializer/skills/project-initializer/SKILL.md` + `templates/generate-events-catalog.md`; `plugins/project-initializer/skills/update-for-model/SKILL.md` + `references/model-tuning-sources.md` (offline fallback: URL map + extraction checklist, deliberately a method rather than a per-model snapshot) + `templates/model-notes.md` + `evals/evals.json` (6 evals incl. two negative triggers).
+- **Status:** shipped at `0.2.0`. (This very docs set was produced by `project-initializer`.)
 
 ## to-prd
 
