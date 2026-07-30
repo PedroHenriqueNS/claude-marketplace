@@ -37,7 +37,7 @@ Realized by the **[best-practices compliance gate](./prds/best-practices-complia
 
 Choosing a target Claude model has knock-on effects on the other plugins' skills that this repo has **not** acted on yet — deliberately out of scope for the change that added the skill.
 
-- ⏳ Once a target model is chosen for this repo, review the other 10 plugins' skills against that model's guidance. The likely hot spot is trigger-language calibration: `description` wording tuned to stop a former model from *under*-triggering can make a newer, more instruction-sensitive model *over*-trigger. Re-check the `disable-model-invocation` choices at the same time.
+- ⏳ Once a target model is chosen for this repo, review the other 9 plugins' skills against that model's guidance. The likely hot spot is trigger-language calibration: `description` wording tuned to stop a former model from *under*-triggering can make a newer, more instruction-sensitive model *over*-trigger. Re-check the `disable-model-invocation` choices at the same time.
 - ⏳ Decide whether `update-for-model` should ever edit sibling plugins' `SKILL.md` files, or stay scoped to living docs only (current behavior: living docs only).
 
 > TODO: Decide whether to adopt a release/versioning convention (e.g. tags per plugin) once there are external consumers.

@@ -1,6 +1,6 @@
 # Features
 
-A "feature" in this repo is a **plugin**. Each ships a marketplace catalog entry plus one or more skills. All ten are shipped at `0.1.0`, except `project-initializer` at `0.2.0`. The marketplace itself (the catalog that makes them installable) is the eleventh, cross-cutting feature.
+A "feature" in this repo is a **plugin**. Each ships a marketplace catalog entry plus one or more skills. Nine are shipped at `0.1.0`; `project-initializer` is at `0.2.0`. The marketplace itself (the catalog that makes them installable) is the eleventh, cross-cutting feature.
 
 ## The marketplace catalog
 
