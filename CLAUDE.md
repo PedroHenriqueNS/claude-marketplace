@@ -17,6 +17,7 @@ Keep these files current as the project evolves:
 - @docs/ARCHITECTURE.md
 - @docs/CONVENTIONS.md
 - @docs/FEATURES.md
+- @docs/MODEL-NOTES.md
 - @docs/PITFALLS.md
 - @docs/PRD.md
 - @docs/ROADMAP.md

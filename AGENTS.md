@@ -70,5 +70,6 @@ These files are living documents. When you make changes to this project, update 
 - Scope or requirements change → update `docs/PRD.md` and `docs/SUMMARY.md`
 - New coding rule, banned shortcut, or workflow convention → add to `docs/CONVENTIONS.md` (THE source of truth — never bury rules in commit messages, AGENTS.md prose, or private notes)
 - Phase reached or priorities shifted → update `docs/ROADMAP.md`
+- Switching the target Claude model → re-run `update-for-model` to rewrite `docs/MODEL-NOTES.md` (currently tuned for Claude Opus 5); never hand-edit it into a second model's notes
 
 If you skip a doc update, note why in the commit message.
