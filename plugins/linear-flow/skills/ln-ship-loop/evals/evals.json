@@ -1,0 +1,26 @@
+{
+  "skill_name": "ln-ship-loop",
+  "evals": [
+    {
+      "id": 1,
+      "name": "open-pr-attaches-and-proposes-status",
+      "prompt": "I just opened the PR for this branch — sync Linear",
+      "expected_output": "Should read the current branch, the commits not on the main branch, and the PR via `gh pr view`; find the issue by an identifier in the branch/commits/PR title and show the match for confirmation; attach the PR URL as a link (not the diff or a generated summary); then propose the status move that matches an OPEN PR using the workspace's own status meanings, showing current -> proposed with its evidence, and apply it only after approval. Must NOT commit, push, or open anything, and must NOT move status on inference alone.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "name": "no-matching-issue-offers-to-create-an-issue",
+      "prompt": "Link this branch to Linear",
+      "expected_output": "When no identifier appears in the branch, commits, or PR title and a text search finds no plausible match, should say so and offer to create ONE issue — not a project, because a branch is an execution item — drafted from the commits and PR, shown before writing. If a text search returns two plausible matches, should ask rather than ranking them. A branch with commits and no PR is a normal state to report, not a failure, and no PR URL may be invented.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "name": "negative-trigger-pure-git-request",
+      "prompt": "Commit this and push it up",
+      "expected_output": "Should NOT trigger this skill — there is no Linear intent, and this skill never commits, pushes, or opens PRs. The commit-commands plugin owns this.",
+      "files": []
+    }
+  ]
+}

@@ -19,7 +19,7 @@ Deliberately minimal. There is no language runtime, package manager, or build sy
 - No `package.json`, `pyproject.toml`, `Cargo.toml`, `go.mod` — there is no compiled or interpreted code to manage.
 - No bundler, transpiler, or test framework — `claude plugin validate` plus `scripts/check_compliance.py` cover mechanical correctness; judgment-based skill quality is audited by the `skill-auditor` plugin on demand.
 - No third-party Python/Node packages — the compliance script is stdlib-only so CI needs no install step for it.
-- No external services, databases, or message brokers.
+- No external services, databases, or message brokers **in this repo**. One plugin, `linear-flow`, depends at *runtime* on a Linear MCP server the user configures in their own session — nothing this repo builds, vendors, or validates. Its skills name no tools, and every one of them stops with a clear message when none is present. Its `ln-ship-loop` skill additionally reads git and, where available, a host CLI (`gh`, `glab`) to find a pull request; that CLI is optional, and a lookup that fails is reported as unknown rather than as "no PR".
 
 ## Manifest reference (what the spec requires of us)
 
@@ -29,7 +29,7 @@ Deliberately minimal. There is no language runtime, package manager, or build sy
 
 ## Versions
 
-Every plugin sits at **`0.1.0`** in both its `plugin.json` and `marketplace.json` entry, except `project-initializer` at **`0.2.0`** (it gained a second skill, `update-for-model`). The two files must always agree — `scripts/check_compliance.py` hard-fails on drift. The Claude Code plugin spec version is whatever the installed `claude` CLI supports — there's no pin in this repo.
+Every plugin sits at **`0.1.0`** in both its `plugin.json` and `marketplace.json` entry, except `project-initializer` at **`0.2.0`** (it gained a second skill, `update-for-model`). Eleven plugins, 61 skills. The two files must always agree — `scripts/check_compliance.py` hard-fails on drift. The Claude Code plugin spec version is whatever the installed `claude` CLI supports — there's no pin in this repo.
 
 > TODO: Pin a minimum supported `claude` CLI version here if remote consumers ever report spec-compatibility issues.
 

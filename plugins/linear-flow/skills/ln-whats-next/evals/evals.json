@@ -1,0 +1,26 @@
+{
+  "skill_name": "ln-whats-next",
+  "evals": [
+    {
+      "id": 1,
+      "name": "ranks-and-groups-by-client-project",
+      "prompt": "What's next? What should I pick up?",
+      "expected_output": "Should resolve conventions for the status ladder and its meanings, read the workspace via the Linear tools (preferring any saved views the conventions declare), then rank in-progress > blocked > near-delivery > current-client work. Output grouped by client and project — never by status column — one line per item, ending with a single recommendation and why it beat the runner-up. Must make no writes of any kind.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "name": "nothing-active-says-so",
+      "prompt": "Where are things? Anything in flight?",
+      "expected_output": "When the queries return no active or blocked work, should say so plainly rather than padding the answer, then offer the few strongest backlog candidates. Must not enumerate the whole backlog and must not invent items — every item named traces to a tool result. If a query failed, should report that instead of filling the gap.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "name": "negative-trigger-create-request",
+      "prompt": "Create an issue for the failing nightly build",
+      "expected_output": "Should NOT trigger this skill — it is read-only and the user is asking to create work. ln-issue-lifecycle (shape already named) or ln-triage owns this.",
+      "files": []
+    }
+  ]
+}

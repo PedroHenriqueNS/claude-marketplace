@@ -32,7 +32,7 @@ See [Claude Code model configuration](https://code.claude.com/docs/en/model-conf
 
 ## Prompting adjustments
 
-- **Skill `description` fields.** Trigger wording tuned to stop an older model *under*-triggering can make a more instruction-sensitive model *over*-trigger. Opus 5 is now the model to calibrate the 56 skill descriptions against — tracked in [ROADMAP.md](./ROADMAP.md#follow-up-from-update-for-model).
+- **Skill `description` fields.** Trigger wording tuned to stop an older model *under*-triggering can make a more instruction-sensitive model *over*-trigger. Opus 5 is now the model to calibrate the 61 skill descriptions against — tracked in [ROADMAP.md](./ROADMAP.md#follow-up-from-update-for-model).
 - **Reviews.** Ask for all findings, then filter. See the literal-instruction row above.
 - **`prompt-creator`'s bundled checklist** advises telling a reviewer to "flag only gaps affecting correctness or stated requirements" — the pattern Opus 5 follows too literally. It is a plugin file, out of scope for `update-for-model`, and is covered by the same ROADMAP follow-up.
 
