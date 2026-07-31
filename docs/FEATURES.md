@@ -1,6 +1,6 @@
 # Features
 
-A "feature" in this repo is a **plugin**. Each ships a marketplace catalog entry plus one or more skills. Nine are shipped at `0.1.0`; `project-initializer` is at `0.2.0`. The marketplace itself (the catalog that makes them installable) is the eleventh, cross-cutting feature.
+A "feature" in this repo is a **plugin**. Each ships a marketplace catalog entry plus one or more skills. Eleven plugins ship 61 skills between them: ten are at `0.1.0` and `project-initializer` is at `0.2.0`. The marketplace itself (the catalog that makes them installable) is the twelfth, cross-cutting feature.
 
 ## The marketplace catalog
 
@@ -14,7 +14,7 @@ A "feature" in this repo is a **plugin**. Each ships a marketplace catalog entry
 - **Purpose:** enforce the rule that every skill follows Claude Code best practices (`docs/CONVENTIONS.md`) — audit the existing plugins to a clean baseline, then gate every change so nothing merges below the bar.
 - **Behavior:** CI (GitHub Actions) runs `claude plugin validate` per plugin, a `plugin.json`↔`marketplace.json` version-sync check, and a mechanical `SKILL.md` lint as the hard gate; `skill-auditor` provides the deeper judgment-based audit. Verification seam is per-plugin.
 - **Implementation:** specced in [docs/prds/best-practices-compliance-gate.md](./prds/best-practices-compliance-gate.md). `scripts/check_compliance.py` + `.github/workflows/validate.yml`; supersedes the `docs/PRD.md` "no CI yet" non-goal for validation.
-- **Status:** in-progress. Mechanical gate shipped and green across all 10 plugins (0 failures); CI workflow in place (activates once the repo has a remote — Phase 1). Remaining: the deep per-skill `skill-auditor` audit of the 56 skills.
+- **Status:** in-progress. Mechanical gate shipped and green across all 11 plugins (0 failures); CI workflow in place (activates once the repo has a remote — Phase 1). Remaining: the deep per-skill `skill-auditor` audit of the 61 skills.
 
 ## project-initializer
 
@@ -80,6 +80,15 @@ A "feature" in this repo is a **plugin**. Each ships a marketplace catalog entry
 - **Behavior:** auto-triggers on "improve/rewrite this prompt", "make this prompt better" (also manual `/prompt-creator`). Fetches the best-practices URL fresh each time (falling back to a bundled date-stamped checklist with a staleness warning if the fetch fails), asks 1–3 targeted questions when the rough prompt is ambiguous on scope/done/verification (never guesses), then delivers the rewritten prompt in a copy-paste-ready block plus a "what changed & why" list tied to specific rules, and offers to run it now or in a fresh session. Does not execute the task itself and does not cover system prompts for the user's own LLM apps.
 - **Implementation:** `plugins/prompt-creator/skills/prompt-creator/SKILL.md` + `references/best-practices-checklist.md` (offline fallback) + `evals/evals.json` (4 evals incl. a negative trigger).
 - **Status:** shipped.
+
+## linear-flow
+
+- **Purpose:** drive Linear through its MCP tools using the user's own workspace conventions, so day-to-day tracking doesn't mean restating those conventions every session. A prompt layer over the tools — it does not reimplement the Linear API.
+- **Behavior:** five skills, all prefixed `ln-`. `ln-triage` takes a rough description, decides project-vs-issue by the workspace's rule (asking when genuinely ambiguous), and creates it. `ln-whats-next` is read-only and answers "what should I work on", ranking in-progress → blocked → near-delivery → current-client and grouping by client/project. `ln-ship-loop` reads branch, commits, and PR to find or create the matching issue, attach the PR, and propose the status move — it never commits, pushes, or opens PRs. `ln-project-lifecycle` and `ln-issue-lifecycle` are the symmetric pair for work whose shape is already known, covering creation plus every later edit; the issue side adds comments, sub-issues, and bulk grooming behind a hard "never write to a set you haven't listed back" guard. Every mutating call is shown and confirmed first.
+- **Config contract:** ships generic — no team key, client name, or label string anywhere in it. Workspace knowledge splits in two: *discoverable* values (teams, statuses, labels, templates) are read live from the Linear tools at use time, never hardcoded; *judgment* rules (project-vs-issue, naming patterns, description shapes, status meanings) resolve from `~/.claude/linear-conventions.md` if it exists, else the bundled `references/conventions.md`, else the user is asked. That split is what makes the plugin shippable to anyone.
+- **Implementation:** `plugins/linear-flow/skills/ln-{triage,whats-next,ship-loop,project-lifecycle,issue-lifecycle}/SKILL.md` + `evals/evals.json` each; plugin-root `references/{conventions,linear-mcp}.md` and `templates/{workspace-conventions,project-description,discovery-description}.md` shared across skills; skill-local `ln-issue-lifecycle/references/bulk-grooming.md`.
+- **Requires:** a Linear MCP server configured in the session. The only plugin here with a runtime dependency — see [STACK.md](./STACK.md).
+- **Status:** shipped at `0.1.0`.
 
 ## marketing-skills
 

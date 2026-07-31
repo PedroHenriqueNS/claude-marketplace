@@ -18,6 +18,7 @@ A personal [Claude Code plugin marketplace](https://code.claude.com/docs/en/plug
 | [`test-optimizer`](plugins/test-optimizer) | Diagnose & fix runaway test-run memory/OOM in Jest (NestJS), Vitest (React), Playwright. |
 | [`context-handoff`](plugins/context-handoff) | Write a cold-start `HANDOFF.md` before `/clear`/`/compact` so a fresh session resumes in ~30s. |
 | [`prompt-creator`](plugins/prompt-creator) | Rewrite a rough prompt into a best-practice one, grounded in the live Claude Code best-practices doc. |
+| [`linear-flow`](plugins/linear-flow) | Drive Linear from your own workspace conventions — triage, what's next, branch/PR sync, issue & project lifecycles. Requires a Linear MCP server. |
 
 ## Layout
 

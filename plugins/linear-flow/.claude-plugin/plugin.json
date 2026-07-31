@@ -1,0 +1,7 @@
+{
+  "name": "linear-flow",
+  "version": "0.1.0",
+  "description": "Drive Linear through its MCP tools using your own workspace conventions — triage rough work into the right project or issue, decide what to work on next, bind branches and PRs to issues, and manage issue and project lifecycles.",
+  "author": { "name": "PedroHenriqueNS" },
+  "keywords": ["linear", "issue-tracker", "project-management", "triage", "mcp", "workflow"]
+}

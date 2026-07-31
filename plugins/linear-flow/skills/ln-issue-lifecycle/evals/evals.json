@@ -1,0 +1,26 @@
+{
+  "skill_name": "ln-issue-lifecycle",
+  "evals": [
+    {
+      "id": 1,
+      "name": "bulk-relabel-lists-every-affected-issue",
+      "prompt": "Add the backend domain label to all the unlabeled API issues",
+      "expected_output": "Should query the set, then list EVERY affected issue by identifier and title — not a count, not a description of the filter, never \"and N more\" — state the change per issue (including which already have the label and will be skipped), get approval for that specific list, then apply one issue at a time and report per-issue results including failures. If the set is too long to display, should narrow the filter and re-show rather than truncating. Must not create the label if it does not already exist, and must warn that a single-select group's existing value would be replaced.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "name": "targeted-edit-shows-diff-and-verifies-status",
+      "prompt": "Move ABC-123 to the deploy status",
+      "expected_output": "Should fetch ABC-123 and show its title back so a mistyped identifier cannot silently retarget the write, resolve the requested status against the team's actual workflow states (listing what exists and asking if that target is not on the workflow), then propose the change as a diff — current status -> proposed — and write only after approval, reporting what the API returned. Must interpret the status by the workspace's declared meaning rather than by how the name reads.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "name": "negative-trigger-code-driven-status-move",
+      "prompt": "The PR for this branch just merged — update Linear",
+      "expected_output": "Should NOT trigger this skill — the status move is driven by code state, not by a directly requested edit, so it needs the git and PR reading that ln-ship-loop does.",
+      "files": []
+    }
+  ]
+}

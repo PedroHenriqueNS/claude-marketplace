@@ -1,0 +1,26 @@
+{
+  "skill_name": "ln-project-lifecycle",
+  "evals": [
+    {
+      "id": 1,
+      "name": "discovery-uses-question-shape",
+      "prompt": "Start a discovery on whether we should move our reporting queries off Postgres",
+      "expected_output": "Should recognize this as a discovery (bounded by a question with an unknown answer, signalled by \"whether\"), search for an existing project covering the scope, then draft the whole thing before writing: title per the workspace's discovery naming pattern, description in the question / hypotheses / what to investigate / expected output shape from templates/discovery-description.md unless the workspace declares its own, plus project-side labels and a matching Linear template if one exists. Creates only after approval and reports identifier and URL. Must NOT invent hypotheses or a stopping condition the user did not give.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "name": "status-update-reads-previous-first",
+      "prompt": "Post a project update for the billing revamp",
+      "expected_output": "Should read the project's current state and its PREVIOUS status update first, so the new one continues rather than restates it, and write it from evidence of what actually moved — sourced from tool results, never from assumed progress. Should include whatever health signal the workspace uses, show the draft, and post only after approval. Must not report progress no tool result supports.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "name": "negative-trigger-tiny-execution-item",
+      "prompt": "There's a typo in the footer copyright year — make a task for it",
+      "expected_output": "Should NOT trigger this skill — a one-line fix is a single execution item, not project-shaped work. ln-issue-lifecycle (shape named) or ln-triage owns this.",
+      "files": []
+    }
+  ]
+}

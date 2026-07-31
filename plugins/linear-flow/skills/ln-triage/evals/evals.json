@@ -1,0 +1,26 @@
+{
+  "skill_name": "ln-triage",
+  "evals": [
+    {
+      "id": 1,
+      "name": "ambiguous-shape-asks-before-creating",
+      "prompt": "Add this to Linear: our error handling is inconsistent across the API",
+      "expected_output": "Should resolve conventions per section (each section from ~/.claude/linear-conventions.md if it declares one, else the bundled references/conventions.md default), search for existing work on this, then recognize the project-vs-issue call is genuinely ambiguous — this reads as either a single cleanup chore or a codebase-wide tech-debt initiative, and nothing in the input settles it. Should state which way it leans and why, then ASK before creating anything. Must NOT create an item on its own judgment, and must NOT invent scope or acceptance criteria. Note this prompt deliberately avoids 'spike'/'investigate'/'figure out whether', which ln-project-lifecycle treats as a deterministic discovery signal rather than an ambiguous one.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "name": "clear-issue-drafts-then-creates",
+      "prompt": "Track this: the date picker on the signup form shows the wrong month in December",
+      "expected_output": "Should search for an existing issue first, classify as an issue (single execution item, a bug) and say what decided it, discover the team's real statuses and label groups via the Linear tools, then show the full draft — title per the workspace naming pattern, description containing only what the user gave, labels only where the input determines them, starting status — and create it only after approval, reporting the identifier and URL. Must NOT invent repro steps, severity, or an affected version, and must NOT create a label that does not already exist.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "name": "negative-trigger-asks-what-to-work-on",
+      "prompt": "What should I work on today?",
+      "expected_output": "Should NOT trigger this skill — the user is asking for a read on existing work, not asking to create anything. ln-whats-next owns this.",
+      "files": []
+    }
+  ]
+}
