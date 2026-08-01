@@ -21,6 +21,13 @@
       "prompt": "There's a typo in the footer copyright year — make a task for it",
       "expected_output": "Should NOT trigger this skill — a one-line fix is a single execution item, not project-shaped work. ln-issue-lifecycle (shape named) or ln-triage owns this.",
       "files": []
+    },
+    {
+      "id": 4,
+      "name": "pr-link-on-a-project-routes-to-an-issue",
+      "prompt": "Attach this PR to the billing revamp project",
+      "expected_output": "Should NOT attach the PR to the project where the session's Linear tools expose no way to link a URL to one. Should say so plainly, state that a PR attaches to an issue and the project sees it through that issue, and ask which issue under the billing revamp project the PR delivers — offering to create one drafted from the PR if none fits. Once an issue is chosen, the resolves / contributes / related question runs against that issue and titles the link. Must NOT write the PR URL into the project description as a workaround, and must NOT report a project-side link that no tool result confirms.",
+      "files": []
     }
   ]
 }

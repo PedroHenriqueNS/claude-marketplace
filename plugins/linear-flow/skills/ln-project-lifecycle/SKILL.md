@@ -35,6 +35,8 @@ Use the Linear tools per [`../../references/linear-mcp.md`](../../references/lin
 
 Rewriting a description **preserves what is still true**. A scope change is an edit to the Scope section, not a regenerated document.
 
+**A pull request is not a project edit.** A PR attaches to an issue; the project sees it through that issue. Where the session's Linear tools expose no way to link a URL to a project, say so plainly and ask which issue under this project the PR delivers — offering to create one drafted from the PR if none fits — then follow [`../../references/pr-relations.md`](../../references/pr-relations.md). Never write the PR URL into the project description as a workaround.
+
 ## Milestones and status updates
 
 - **Milestones** are delivery checkpoints, not a task list. If a proposed milestone is really one unit of work, it is an issue.
