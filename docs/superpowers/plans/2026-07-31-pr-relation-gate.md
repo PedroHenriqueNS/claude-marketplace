@@ -297,7 +297,7 @@ Rewriting a description **preserves what is still true**. A scope change is an e
 Insert immediately after it (leaving one blank line between the two paragraphs):
 
 ```markdown
-**A pull request is not a project edit.** A PR attaches to an issue; the project sees it through that issue. Where the session's Linear tools expose no way to link a URL to a project, say so plainly and ask which issue under this project the PR delivers — offering to create one drafted from the PR if none fits — then follow [`../../references/pr-relations.md`](../../references/pr-relations.md). Never write the PR URL into the project description as a workaround.
+**A pull request is not a project edit.** A PR attaches to an issue; the project sees it through that issue. Route it per [`../../references/pr-relations.md`](../../references/pr-relations.md).
 ```
 
 - [ ] **Step 2: Run the compliance gate to confirm the new link resolves**
