@@ -38,7 +38,7 @@ Read the current value, then **propose it as a diff** — what the field says no
 - **Labels** — only ones that already exist. Adding a label from a single-select group *replaces* the group's current value; say so when proposing it.
 - **Status** — move by the workspace's meaning, not the name's appearance. If the requested target does not exist on that team's workflow, list what does and ask.
 - **Comments** — read the thread before adding to it. A comment that answers something already answered is noise.
-- **Sub-issues and links** — breaking an issue up means the parent keeps the outcome and the children hold the work; propose the whole split at once, not one child at a time. Attaching to a project or milestone is an edit like any other: show it, confirm it.
+- **Sub-issues and links** — breaking an issue up means the parent keeps the outcome and the children hold the work; propose the whole split at once, not one child at a time. Attaching to a project or milestone is an edit like any other: show it, confirm it. A **pull or merge request** is not: ask first what it is to the issue — resolves, contributes to, or merely related — and title the link with the answer ([`../../references/pr-relations.md`](../../references/pr-relations.md)).
 
 ## Bulk changes
 
