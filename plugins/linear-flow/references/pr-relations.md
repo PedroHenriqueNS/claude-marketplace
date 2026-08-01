@@ -11,7 +11,8 @@ proposed.
 | **Related** | Context only; the issue is not advanced by this PR. | `Related · <PR title>` | **No** status move proposed. |
 
 The ceiling never *forces* a move. "Resolves" permits proposing completion; it does not make
-completion automatic, and the move is still shown and approved like any other.
+completion automatic, and the move is still shown and approved like any other. It bounds only a
+move inferred from code state; it never overrides a status change the user asks for directly.
 
 ## Asking
 
@@ -25,6 +26,10 @@ plainly, with no steer. A recommendation is never applied without the answer.
 Already recorded for this PR and this issue? Read it and propose the change as a diff — what it
 says now, what it would say.
 
+**Check what Linear already sees.** If the PR title, the description, or a commit message
+already carries a closing magic word, Linear will close the issue on merge whatever is answered
+here. Say so before asking — an unmentioned closing word silently outranks the ceiling.
+
 ## Projects
 
 A PR attaches to an issue. Where the session's Linear tools expose no way to link a URL to a
@@ -35,13 +40,17 @@ description as a workaround.
 
 ## Linear's own magic words — documented, never written
 
-Linear acts on a relation only when a magic word appears in the **pull request description**,
-which these skills never edit. Linear has two buckets, not three:
+Linear acts on a relation only when a magic word appears in the pull request itself — on GitHub
+that means its title, its description, or a commit message; on GitLab, its description. These
+skills never edit any of them. Linear has two buckets, not three:
 
 - **Closing** — `close`, `fix`, `resolve`, `complete`, `implement` and their inflections.
   Automates the issue's status on merge.
 - **Contributing** — `ref`, `references`, `part of`, `related to`, `contributes to`, `towards`.
   Links without automating.
+
+These are the words both hosts accept; GitHub takes a few more. Check the host's own docs before
+relying on an unlisted one.
 
 So **Resolves** corresponds to the closing bucket, while **Contributes** and **Related** both
 fall in the contributing one. When the user wants Linear's own merge automation, offer them the

@@ -25,8 +25,8 @@
     {
       "id": 4,
       "name": "asks-pr-relation-before-attaching-and-caps-status",
-      "prompt": "PR is up for this branch — attach it to PED-7 and update the status",
-      "expected_output": "Before attaching anything, should ask what the PR is to PED-7 — resolves it, contributes to it, or is merely related to it — showing both the PR title and PED-7's own title so a mis-matched issue is visible before the write, and marking a recommended answer ONLY when the branch or PR title carries the identifier AND the PR covers the whole of what the issue asks for. Should title the link with that answer (e.g. \"Contributes to · <PR title>\"), then bound the status proposal by it: a contributing PR may reach a started status but never a completed one, and a merely related PR justifies no move at all. Must still show current -> proposed with its evidence and move only on approval. Must NOT edit the PR description to add a magic word, and must NOT treat \"resolves\" as permission to move without approval.",
+      "prompt": "PR is up for this branch — attach it to ABC-123 and update the status",
+      "expected_output": "Before attaching anything, should ask what the PR is to ABC-123 — resolves it, contributes to it, or is merely related to it — showing both the PR title and ABC-123's own title so a mis-matched issue is visible before the write, and marking a recommended answer ONLY when the branch or PR title carries the identifier AND the PR covers the whole of what the issue asks for. Should title the link with that answer (e.g. \"Contributes to · <PR title>\"), then bound the status proposal by it: a contributing PR may reach a started status but never a completed one, and a merely related PR justifies no move at all. Must still show current -> proposed with its evidence and move only on approval. Must NOT edit the PR description to add a magic word, and must NOT treat \"resolves\" as permission to move without approval.",
       "files": []
     }
   ]
