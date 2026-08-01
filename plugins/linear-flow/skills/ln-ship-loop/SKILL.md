@@ -32,9 +32,9 @@ Use the Linear tools per [`../../references/linear-mcp.md`](../../references/lin
 
 3. **Nothing tracked yet?** Offer to create it, shaped by the **workspace's own project-vs-issue rule** — do not assume. A branch usually points at an execution item, but a workspace may require this work to live under a project, or as one. Draft from the commits and PR, show it, create on approval; if the rule makes it project-shaped, say so and use [`ln-project-lifecycle`](../ln-project-lifecycle/SKILL.md)'s description shape.
 
-4. **Attach the PR** to the issue as a link. Attach only that; do not paste the diff or a generated summary into the description.
+4. **Ask what the PR is to the issue** — resolves it, contributes to it, or is merely related to it — then attach it as a link **titled with that answer**. Attach only the link; do not paste the diff or a generated summary into the description. The three answers, their wording, and the project case: [`../../references/pr-relations.md`](../../references/pr-relations.md).
 
-5. **Propose the status move** that matches the code, expressed in the workspace's own statuses and meanings. Show current → proposed and the evidence for it. **Move only on approval.**
+5. **Propose the status move** that matches the code, expressed in the workspace's own statuses and meanings and **bounded by step 4's answer** — a PR that only contributes cannot justify a completed status, and one that is merely related justifies no move at all. Show current → proposed and the evidence for it. **Move only on approval.**
 
 6. **Report** the issue identifier and URL, what was attached, and the status transition actually applied.
 

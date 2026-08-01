@@ -41,3 +41,11 @@ Gotchas and non-obvious constraints — past failures and how they were resolved
 **Resolution:** `.gitattributes` sets `* text=auto`, normalizing to LF in the repo with native checkout per platform.
 
 **Apply:** don't disable `text=auto`; if a diff looks like it changed every line, it's a line-ending issue, not a content change.
+
+## 2026-07-31 — Version numbers also drift in doc prose, not just the manifests
+
+**Symptom:** a plugin's version is duplicated in prose across `docs/FEATURES.md`, `docs/STACK.md`, and `docs/ROADMAP.md`, in addition to `plugin.json` and its `marketplace.json` entry. `scripts/check_compliance.py` only compares the two manifests, so a stale version in one of those docs passes the gate silently. This has now been caught by review twice, both times on `linear-flow`.
+
+**Resolution:** treat the docs as part of the same fact as the manifests when bumping a version; review is currently the only thing catching drift in the prose copies.
+
+**Apply:** when bumping a plugin's version, grep all three docs (`FEATURES.md`, `STACK.md`, `ROADMAP.md`) for the plugin name, not just the two manifests.

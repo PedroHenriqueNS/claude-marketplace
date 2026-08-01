@@ -21,6 +21,13 @@
       "prompt": "The PR for this branch just merged — update Linear",
       "expected_output": "Should NOT trigger this skill — the status move is driven by code state, not by a directly requested edit, so it needs the git and PR reading that ln-ship-loop does.",
       "files": []
+    },
+    {
+      "id": 4,
+      "name": "pr-link-asks-relation-other-links-do-not",
+      "prompt": "Attach this PR to ABC-123: https://github.com/acme/api/pull/412",
+      "expected_output": "Should fetch ABC-123 and show its title back so a mistyped identifier cannot silently retarget the write, then — because the link is a pull request — ask whether it resolves, contributes to, or is merely related to the issue BEFORE writing, and title the link with that answer. A non-PR link such as a design doc or a Slack thread takes no such question and is attached as a plain confirmed edit. If a relation is already recorded for this PR and this issue, should read it and propose the change as a diff, current -> proposed, rather than silently overwriting it.",
+      "files": []
     }
   ]
 }

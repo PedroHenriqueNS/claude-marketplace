@@ -29,7 +29,7 @@ Deliberately minimal. There is no language runtime, package manager, or build sy
 
 ## Versions
 
-Every plugin sits at **`0.1.0`** in both its `plugin.json` and `marketplace.json` entry, except `project-initializer` at **`0.2.0`** (it gained a second skill, `update-for-model`). Eleven plugins, 61 skills. The two files must always agree — `scripts/check_compliance.py` hard-fails on drift. The Claude Code plugin spec version is whatever the installed `claude` CLI supports — there's no pin in this repo.
+Every plugin sits at **`0.1.0`** in both its `plugin.json` and `marketplace.json` entry, except `project-initializer` and `linear-flow`, both at **`0.2.0`** (`project-initializer` gained a second skill, `update-for-model`; `linear-flow` gained the PR relation gate). Eleven plugins, 61 skills. The two files must always agree — `scripts/check_compliance.py` hard-fails on drift. The Claude Code plugin spec version is whatever the installed `claude` CLI supports — there's no pin in this repo.
 
 > TODO: Pin a minimum supported `claude` CLI version here if remote consumers ever report spec-compatibility issues.
 

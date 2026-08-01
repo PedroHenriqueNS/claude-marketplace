@@ -23,6 +23,7 @@ Realized by the **[best-practices compliance gate](./prds/best-practices-complia
 - ✅ Mechanical compliance gate (`scripts/check_compliance.py`): version-sync, frontmatter, dead repo-relative links, reserved-name guard — green across all 11 plugins.
 - ✅ CI (`.github/workflows/validate.yml`) runs the compliance script + `claude plugin validate .` + each `claude plugin validate ./plugins/<name>` on PRs and pushes to `main`. (Runs once the repo has a remote — Phase 1.)
 - ⏳ Deep `skill-auditor` audit of all 61 skills against the [CONVENTIONS best-practices baseline](./CONVENTIONS.md#claude-code-best-practices-the-baseline-every-skill-follows) for the judgment-based rules (`description` quality, progressive disclosure). Run on demand; not a blocking CI gate until non-interactive Claude is wired into CI.
+- ⏳ Extend `scripts/check_compliance.py` to flag a plugin version string in `docs/*.md` that disagrees with its `plugin.json` — see [PITFALLS.md](./PITFALLS.md) 2026-07-31 entry.
 
 ## Phase 3 — Growth (when scoped)
 
@@ -30,7 +31,7 @@ Realized by the **[best-practices compliance gate](./prds/best-practices-complia
 - ✅ `context-handoff` (skill `handoff`) — cold-start `HANDOFF.md` generator for surviving `/clear` / `/compact`; shipped at `0.1.0`.
 - ✅ `prompt-creator` (skill `prompt-creator`) — rewrites rough Claude Code prompts against the live best-practices doc (re-fetched every invocation, offline fallback checklist); shipped at `0.1.0`.
 - ✅ `project-initializer` gains a second skill, `update-for-model` — re-tunes an existing project's living docs for one user-chosen Claude model, writing `docs/MODEL-NOTES.md` and linking to it from the docs it affects; `project-initializer` bumped to `0.2.0`.
-- ✅ `linear-flow` (skills `ln-triage`, `ln-whats-next`, `ln-ship-loop`, `ln-project-lifecycle`, `ln-issue-lifecycle`) — drives Linear through its MCP tools from a user-supplied conventions file, shipping generic with no workspace values baked in; shipped at `0.1.0`. First plugin here with a runtime dependency on an external MCP server.
+- ✅ `linear-flow` (skills `ln-triage`, `ln-whats-next`, `ln-ship-loop`, `ln-project-lifecycle`, `ln-issue-lifecycle`) — drives Linear through its MCP tools from a user-supplied conventions file, shipping generic with no workspace values baked in; shipped at `0.2.0` (gained the PR relation gate). First plugin here with a runtime dependency on an external MCP server.
 - Add new plugins as needs arise; each lands with its `marketplace.json` entry, `plugin.json`, and at least one skill in the same PR.
 - Add `evals/evals.json` to skills that lack them, to guard triggering quality.
 

@@ -35,6 +35,8 @@ Use the Linear tools per [`../../references/linear-mcp.md`](../../references/lin
 
 Rewriting a description **preserves what is still true**. A scope change is an edit to the Scope section, not a regenerated document.
 
+**A pull or merge request is not a project edit.** A PR attaches to an issue; the project sees it through that issue. Route it per [`../../references/pr-relations.md`](../../references/pr-relations.md).
+
 ## Milestones and status updates
 
 - **Milestones** are delivery checkpoints, not a task list. If a proposed milestone is really one unit of work, it is an issue.
