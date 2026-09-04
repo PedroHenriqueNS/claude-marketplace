@@ -1,12 +1,12 @@
 ---
-status: proposed
+status: implemented
 ---
 
 # Lessons from Superpowers for the `prompt-creator` plugin
 
 **Serves product goal:** "All skills and plugins in this repo MUST follow Claude Code best practices" ([CONVENTIONS.md](../CONVENTIONS.md#claude-code-best-practices-the-baseline-every-skill-follows)) — applied to the one plugin whose *subject matter* is those best practices, and therefore the most damaging place for them to be stale.
 
-> **Basis.** Superpowers **6.3.0**, read from disk at `~/.claude/plugins/cache/claude-plugins-official/superpowers/6.3.0/`; all `path:line` citations are relative to that directory. Upstream is still 6.3.0 (releases page; `commits/main` HEAD `b36e082`, 12 Aug 2026; `plugin.json` on `main` reads `6.3.0`), so nothing post-6.3.0 changes a conclusion here. The live rubric <https://code.claude.com/docs/en/best-practices> was fetched 2026-09-04 and cross-checked against the raw HTML by literal string match. **This PRD proposes only** — no plugin file is edited and no version bumped.
+> **Basis.** Superpowers **6.3.0**, read from disk at `~/.claude/plugins/cache/claude-plugins-official/superpowers/6.3.0/`; all `path:line` citations are relative to that directory. Upstream is still 6.3.0 (releases page; `commits/main` HEAD `b36e082`, 12 Aug 2026; `plugin.json` on `main` reads `6.3.0`), so nothing post-6.3.0 changes a conclusion here. The live rubric <https://code.claude.com/docs/en/best-practices> was fetched 2026-09-04 and cross-checked against the raw HTML by literal string match. **Implemented** in `prompt-creator` `0.2.0` — all seven proposals (P1–P7) under decisions Q1–Q6; the four rejections stand. This document is now a record, not a proposal: its `path:line` citations describe the files as they were BEFORE that change, so read them as history rather than as current anchors. See [ROADMAP.md](../ROADMAP.md) for what shipped.
 
 ## Problem Statement
 

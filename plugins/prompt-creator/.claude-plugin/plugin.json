@@ -1,7 +1,7 @@
 {
   "name": "prompt-creator",
-  "version": "0.1.0",
-  "description": "Rewrite a rough prompt for Claude Code into a best-practice one — fetches the live Claude Code best-practices doc on every use, asks targeted questions when the prompt is ambiguous, and returns a copy-paste-ready improved prompt with a what-changed rationale.",
+  "version": "0.2.0",
+  "description": "Improve a rough prompt before you give it to Claude Code. Reach for it when you have a task in mind and want the prompt rewritten against the official Claude Code best practices first — including a feature too big for one prompt. Wants web access to stay current, with a bundled offline fallback. Not for executing the task itself, and not for system prompts in your own LLM applications.",
   "author": { "name": "PedroHenriqueNS" },
   "keywords": ["prompt", "prompt-engineering", "rewrite", "best-practices", "claude-code"]
 }
