@@ -5,28 +5,42 @@
       "id": 1,
       "name": "vague-prompt-asks-before-rewriting",
       "prompt": "Improve this prompt for Claude Code: \"fix the login bug\"",
-      "expected_output": "Should first fetch https://code.claude.com/docs/en/best-practices, then recognize the prompt is missing symptom, location, and definition of fixed, and ask 1-3 targeted questions (what do users observe, where does auth live, how to verify the fix) BEFORE rewriting. Should NOT attempt to fix any bug itself and should NOT invent requirements.",
+      "expected_output": "Should fetch https://code.claude.com/docs/en/best-practices, name the request's shape as a BUG in one line, then recognize the prompt is missing symptom, likely location, and definition of fixed. Should ask about ALL THREE of those missing pieces — what users observe, where auth lives, and how to verify the fix — one at a time, offering multiple choice where the options are knowable, and should NOT rewrite the parts that are already clear while anything is still unclear. Should NOT attempt to fix any bug itself and should NOT invent requirements.",
       "files": []
     },
     {
       "id": 2,
       "name": "clear-prompt-one-shot-rewrite",
       "prompt": "Rewrite my prompt: \"add tests for src/utils/date.ts — we use Vitest, I care about DST edge cases, done means npm test passes, don't touch the implementation\"",
-      "expected_output": "Should fetch the best-practices page, then rewrite in ONE shot (no clarifying questions — scope, verification, and non-goals are all present). Output: the rewritten prompt in a fenced code block (scoped task, verification command with a demand for evidence, explicit do-not-touch), a bulleted what-changed-and-why list tied to best-practice rules, and an offer to run it now or paste into a fresh session.",
+      "expected_output": "Should fetch the best-practices page, name the shape as a ONE-SHOT TASK in one line, then rewrite in ONE shot (no clarifying questions — scope, verification, and non-goals are all present). Output, in order: the rewritten prompt in a fenced code block (scoped task, verification command with a demand for evidence, explicit do-not-touch); one line naming the guidance used (live URL plus the fetch date); a bulleted what-changed-and-why list tied to best-practice rules; and an offer to run it now or paste into a fresh session.",
       "files": []
     },
     {
       "id": 3,
       "name": "fetch-failure-uses-fallback",
       "prompt": "(WebFetch is unavailable in this environment.) Make this prompt better: \"refactor the payment service, it's getting messy\"",
-      "expected_output": "Should attempt the live fetch, fail, then fall back to references/best-practices-checklist.md and explicitly warn the user the guidance may be stale. Should still proceed: the prompt is ambiguous (which files, what does better look like, what must not break), so it asks targeted questions before rewriting.",
+      "expected_output": "Should attempt the live fetch, fail, then fall back to references/best-practices-checklist.md and explicitly warn the user the guidance may be stale. The staleness warning must also appear in the deliverable as the line naming which guidance was used — naming the fallback file, not the live URL. Should still proceed: the prompt is ambiguous (which files, what does better look like, what must not break), so it asks before rewriting rather than guessing.",
       "files": []
     },
     {
       "id": 4,
+      "name": "large-feature-emits-interview-kickoff-prompt",
+      "prompt": "Improve this prompt: \"build a multi-tenant billing system with usage metering, proration, and a self-serve plan switcher\"",
+      "expected_output": "Should name the request's shape as a LARGE FEATURE and say so. The deliverable must STILL BE A PROMPT — the interview kickoff prompt from the guidance, adapted to this billing feature, instructing Claude to interview the user with AskUserQuestion and write a complete spec to SPEC.md — plus the instruction to execute that spec in a fresh session. Should NOT decline the job, and should NOT hand back a workflow recommendation or a plan in place of a prompt.",
+      "files": []
+    },
+    {
+      "id": 5,
       "name": "negative-trigger-llm-app-system-prompt",
       "prompt": "Help me write a good system prompt for my customer-support chatbot built on the Claude API",
       "expected_output": "Should NOT trigger this skill — the request is prompt engineering for the user's own LLM application, not a prompt aimed at Claude Code. The Claude API / claude-api guidance applies instead.",
+      "files": []
+    },
+    {
+      "id": 6,
+      "name": "negative-control-baseline-without-skill",
+      "prompt": "(BASELINE ARM — run this with the prompt-creator skill NOT loaded. Deliberately the same rough prompt as case 1.) Improve this prompt for Claude Code: \"fix the login bug\"",
+      "expected_output": "This case has no pass/fail of its own; it exists so case 1 can be read as evidence rather than assumed. Record what the model does unaided. A pass for the skill is a visible DELTA against this baseline, not merely a good-looking answer: without the skill, expect no live fetch of the best-practices page, no named request shape, no line naming which guidance was used, and a plausible chance the model simply starts diagnosing the login bug instead of rewriting the prompt. If the baseline already matches case 1, the skill is not causing the behavior and its wording needs work — that is the finding. Where the runner supports it, `claude plugin eval --ablation with-without` produces this arm automatically and should be preferred over reading this case by hand.",
       "files": []
     }
   ]

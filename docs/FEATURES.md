@@ -1,6 +1,6 @@
 # Features
 
-A "feature" in this repo is a **plugin**. Each ships a marketplace catalog entry plus one or more skills. Eleven plugins ship 61 skills between them: nine are at `0.1.0`, and `project-initializer` and `linear-flow` are at `0.2.0`. The marketplace itself (the catalog that makes them installable) is the twelfth, cross-cutting feature.
+A "feature" in this repo is a **plugin**. Each ships a marketplace catalog entry plus one or more skills. Eleven plugins ship 61 skills between them: eight are at `0.1.0`, and `project-initializer`, `linear-flow` and `prompt-creator` are at `0.2.0`. The marketplace itself (the catalog that makes them installable) is the twelfth, cross-cutting feature.
 
 ## The marketplace catalog
 
@@ -77,9 +77,9 @@ A "feature" in this repo is a **plugin**. Each ships a marketplace catalog entry
 ## prompt-creator
 
 - **Purpose:** rewrite a rough prompt the user intends to give Claude Code into one that follows the official [best-practices doc](https://code.claude.com/docs/en/best-practices) — always grounded in the live page, which it re-fetches on every invocation.
-- **Behavior:** auto-triggers on "improve/rewrite this prompt", "make this prompt better" (also manual `/prompt-creator`). Fetches the best-practices URL fresh each time (falling back to a bundled date-stamped checklist with a staleness warning if the fetch fails), asks 1–3 targeted questions when the rough prompt is ambiguous on scope/done/verification (never guesses), then delivers the rewritten prompt in a copy-paste-ready block plus a "what changed & why" list tied to specific rules, and offers to run it now or in a fresh session. Does not execute the task itself and does not cover system prompts for the user's own LLM apps.
-- **Implementation:** `plugins/prompt-creator/skills/prompt-creator/SKILL.md` + `references/best-practices-checklist.md` (offline fallback) + `evals/evals.json` (4 evals incl. a negative trigger).
-- **Status:** shipped.
+- **Behavior:** auto-triggers on "improve/rewrite this prompt", "make this prompt better" (also manual `/prompt-creator`). Fetches the best-practices URL fresh each time (falling back to a bundled date-stamped checklist with a staleness warning if the fetch fails), then **names the request's shape out loud** — one-shot task, bug, large feature, exploratory, or unattended run — so the user can correct it before the rewrite. A *large feature* still yields a prompt, never a hand-off: the guidance's interview kickoff prompt adapted to that feature, ending in a spec to execute in a fresh session. When something the rewrite depends on is ambiguous it asks **one question per message**, multiple choice where the options are knowable, and holds back the clear parts until the unclear ones resolve (never guesses). Delivers the rewritten prompt in a copy-paste-ready block, **a line naming the guidance actually used** (live URL + fetch date, or the fallback plus its staleness warning), a "what changed & why" list tied to specific rules, and an offer to run it now or in a fresh session. The rubric lives in one place — the body points at the fetched page rather than restating it. Does not execute the task itself and does not cover system prompts for the user's own LLM apps.
+- **Implementation:** `plugins/prompt-creator/skills/prompt-creator/SKILL.md` + `references/best-practices-checklist.md` (offline fallback, structured around the live page's ten body sections) + `evals/evals.json` (6 evals incl. a negative trigger and a skill-absent baseline arm).
+- **Status:** shipped at `0.2.0`. Applies all seven proposals (P1–P7) in [prompt-creator-superpowers-lessons.md](./prds/prompt-creator-superpowers-lessons.md); its four rejected proposals stay rejected.
 
 ## linear-flow
 
