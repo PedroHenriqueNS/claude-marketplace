@@ -124,6 +124,7 @@ These files are living documents. When you change the project, update the releva
 - Scope or requirements change → `docs/PRD.md` and `docs/SUMMARY.md`.
 - New coding rule, banned shortcut, or workflow convention → add HERE (the source of truth).
 - Phase reached or priorities shifted → `docs/ROADMAP.md`.
+- An audit run (a tool's report plus this repo's triage of it) → `docs/audits/<tool>-<YYYY-MM-DD>.md`, linked from the ROADMAP item it serves.
 
 If you skip a doc update, note why in the commit message.
 

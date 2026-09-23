@@ -124,8 +124,6 @@ Termos técnicos consagrados podem ficar em inglês.
 
 ## Autoverificação (antes de entregar)
 
-Confira de fato, não presuma:
-
 - [ ] Título casa **exatamente** com `[<categoria>][<FRONTEND|BACKEND>] <título>`.
 - [ ] Exatamente **uma** camada, em CAIXA ALTA.
 - [ ] Categoria coerente com a área/módulo da tarefa.

@@ -1,6 +1,6 @@
 # Features
 
-A "feature" in this repo is a **plugin**. Each ships a marketplace catalog entry plus one or more skills. Eleven plugins ship 61 skills between them: five are at `0.1.0`, `marketing-skills` and `nestjs-api-architect` are at `0.1.1`, `skill-auditor` is at `0.2.0`, `project-initializer` is at `0.2.1`, `linear-flow` is at `0.3.0`, and `prompt-creator` is at `0.3.1`. The marketplace itself (the catalog that makes them installable) is the twelfth, cross-cutting feature.
+A "feature" in this repo is a **plugin**. Each ships a marketplace catalog entry plus one or more skills. Eleven plugins ship 61 skills between them: three are at `0.1.0`, `nestjs-api-architect` is at `0.1.1`, `to-prd`, `azure-devops-card`, `skill-auditor` and `marketing-skills` are at `0.2.0`, `project-initializer` is at `0.2.1`, `linear-flow` is at `0.3.0`, and `prompt-creator` is at `0.3.1`. The marketplace itself (the catalog that makes them installable) is the twelfth, cross-cutting feature.
 
 ## The marketplace catalog
 
@@ -30,14 +30,14 @@ A "feature" in this repo is a **plugin**. Each ships a marketplace catalog entry
 - **Purpose:** turn the current conversation into a feature-level PRD and publish it.
 - **Behavior:** distills the chat into a PRD and publishes to the issue tracker, falling back to `docs/prds/`. Reads project-initializer living docs for context.
 - **Implementation:** `plugins/to-prd/skills/to-prd/SKILL.md`.
-- **Status:** shipped.
+- **Status:** shipped at `0.2.0`, whose user-story section asks for one story per scenario instead of pressing for volume ([prompt audit](./audits/prompt-audit-2026-09-23.md)).
 
 ## azure-devops-card
 
 - **Purpose:** draft Azure DevOps work-item titles and markdown descriptions in Brazilian Portuguese.
 - **Behavior:** produces titles in the `[categoria][FRONTEND|BACKEND]` pattern with matching descriptions (pt-BR).
 - **Implementation:** `plugins/azure-devops-card/skills/azure-devops-card/SKILL.md`.
-- **Status:** shipped.
+- **Status:** shipped at `0.2.0`, which drops a redundant "verify for real" line from its pre-delivery checklist ([prompt audit](./audits/prompt-audit-2026-09-23.md)).
 
 ## skill-auditor
 
@@ -95,4 +95,4 @@ A "feature" in this repo is a **plugin**. Each ships a marketplace catalog entry
 - **Purpose:** a bundle of 41 cross-referencing marketing skills — SEO, AI search (AEO/GEO), CRO, analytics, schema, copywriting, ads, email, social, PR, pricing, and more.
 - **Behavior:** each skill is independently triggerable and links to siblings; many carry `references/` deep-dive docs.
 - **Implementation:** `plugins/marketing-skills/skills/<skill>/SKILL.md`. **Derived** from a third-party repo — see [../NOTICE](../NOTICE) and review the upstream license before public distribution.
-- **Status:** shipped at `0.1.1` (its two manifest descriptions synced).
+- **Status:** shipped at `0.2.0`: manifest descriptions synced, and four fixes from the [prompt audit](./audits/prompt-audit-2026-09-23.md) (a wrong context-file path in `seo-audit`, textbook definitions trimmed from `marketing-psychology`, two volatile specifics marked for re-checking).
