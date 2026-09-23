@@ -103,7 +103,7 @@ claude plugin validate ./plugins/<name>   # a single plugin + its skills
 - Run the compliance script + the relevant `validate` after any manifest or skill change; both must pass before commit. The compliance script exits non-zero on a hard failure (size warnings don't fail).
 - The judgment-based best-practice rules a script can't measure (`description` quality, progressive disclosure) are audited by the `skill-auditor` plugin on demand — not part of the blocking gate.
 - Behavior evals live in `plugins/<name>/evals/<case>/` (`prompt.md` + `graders/*.md`) and run with `claude plugin eval ./plugins/<name> --trust-plugin --no-publish` (Claude Code ≥ 2.1.269), which scores each case with and without the plugin. Runs call the model on your plan, so they are manual, not a CI gate. An `--allow-tools` grant covers every case in a run; cases that need different grants carry tags and run separately. Grade long replies with `regex` graders and keep `llm` graders for short, concrete PASS/FAIL criteria — the default judge misreads long replies (see [PITFALLS.md](./PITFALLS.md)). Add or update cases when changing a skill's `description` or behavior.
-- `prompt-creator` is the pilot. The other plugins' per-skill `evals/evals.json` files are legacy: no runner reads them, so convert them to cases rather than extending them.
+- `prompt-creator` is the pilot, and `linear-flow` carries four negative cases. Every per-skill `evals/evals.json` is legacy: no runner reads them, so convert them to cases rather than extending them.
 
 ---
 

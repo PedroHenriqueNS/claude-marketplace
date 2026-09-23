@@ -2,9 +2,9 @@
 name: ln-triage
 description: >-
   Use when the user describes work in rough terms and wants it tracked in Linear
-  without saying what shape it should take — "add this to Linear", "track this",
-  "log this work", "create something for this", "put this in the backlog", or
-  /ln-triage followed by a loose description. Decides project vs issue using the
+  without saying what shape it should take — "add this to Linear", "track this
+  in Linear", "log this work", "create something for this", "put this in the
+  backlog", or /ln-triage followed by a loose description. Decides project vs issue using the
   workspace's own rule, then creates it with the right naming pattern, labels,
   template, and starting status. Do NOT trigger when the user already named the
   shape ("create an issue for…" is ln-issue-lifecycle, "start a project/discovery

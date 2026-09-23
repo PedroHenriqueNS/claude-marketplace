@@ -16,7 +16,7 @@ Markdown (skill content + docs), JSON (manifests), validated by the Claude Code 
 .claude-plugin/marketplace.json   # catalog: name "pedrohenriquens", owner, 11 plugins
 plugins/<name>/.claude-plugin/plugin.json   # one plugin's identity + version
 plugins/<name>/skills/<skill>/SKILL.md      # the capability (+ optional references/ templates/; legacy evals/)
-plugins/<name>/evals/<case>/                # eval cases for `claude plugin eval` (prompt-creator so far)
+plugins/<name>/evals/<case>/                # eval cases for `claude plugin eval` (prompt-creator, linear-flow)
 docs/                             # living documentation (start at SUMMARY.md)
 README.md · NOTICE · .gitignore · .gitattributes
 ```
