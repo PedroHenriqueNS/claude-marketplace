@@ -1,6 +1,6 @@
 # Where model tuning guidance lives, and what to pull from it
 
-> URL map verified against Anthropic's live docs on 2026-07-30. This file is a **method, not a snapshot** — it deliberately records *where to look* and *what to look for*, never a frozen copy of any model's behavior. A snapshot of per-model specifics would rot on the next model launch, which is exactly the failure this skill exists to prevent. If you are reading this because a live fetch failed, tell the user the guidance may be stale.
+> URL map verified against Anthropic's live docs on 2026-09-23. This file is a **method, not a snapshot** — it deliberately records *where to look* and *what to look for*, never a frozen copy of any model's behavior. A snapshot of per-model specifics would rot on the next model launch, which is exactly the failure this skill exists to prevent. If you are reading this because a live fetch failed, tell the user the guidance may be stale.
 
 ## The URL map
 
@@ -8,13 +8,15 @@ Fetch the hubs; let them route you to the model. Only the hubs are pinned here �
 
 | # | Page | URL | What it gives you |
 |---|---|---|---|
-| 1 | Models overview | `https://docs.claude.com/en/docs/about-claude/models/overview` | The live model menu for step 1 — names, API IDs, extended-thinking support, context window, knowledge cutoff, pricing. Use it to offer choices and to confirm the user's model exists. |
-| 2 | Prompting best practices (hub) | `https://docs.claude.com/en/docs/build-with-claude/prompt-engineering/claude-prompting-best-practices` | Model-agnostic prompting baseline **and** the index of per-model pages. Follow its link for the chosen model. |
+| 1 | Models overview | `https://platform.claude.com/docs/en/models/overview` | The live model menu for step 1 — names, API IDs, extended-thinking support, context window, knowledge cutoff, pricing. Use it to offer choices and to confirm the user's model exists. |
+| 2 | Prompting best practices (hub) | `https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices` | Model-agnostic prompting baseline **and** the index of per-model pages. Follow its link for the chosen model. |
 | 3 | Per-model prompting page | `…/prompt-engineering/prompting-claude-<model-slug>` | **The payload.** Each page documents that model's behavioral differences from its predecessor and the prompt/scaffolding changes worth making. Slug is the model name lowercased with dots and spaces as dashes (`Claude Opus 4.8` → `prompting-claude-opus-4-8`). Reach it via the hub link; construct the slug only if the hub link is unavailable. |
-| 4 | Migration guide | `https://docs.claude.com/en/docs/about-claude/models/migration-guide` | What breaks coming *from* the project's previous model — deprecated parameters, changed defaults. Has per-pair anchors. |
+| 4 | Migration guides (index) | `https://platform.claude.com/docs/en/about-claude/models/migration-guide` | An index linking each model's own guide (`…/docs/en/models/<model-slug>/migration-guide`). Follow the chosen model's link: what breaks coming *from* the project's previous model — deprecated parameters, changed defaults — with a section per starting model. |
 | 5 | Claude Code model config | `https://code.claude.com/docs/en/model-config` | Harness side: how the model is actually selected, aliases, effort/thinking settings, env vars. This is what belongs in the project's Harness settings section. |
 
 Not every model has page 3 — older or smaller models may only appear in pages 1, 2, and 4. That is not an error; note it and work from what exists.
+
+The platform docs left `docs.claude.com`, whose URLs now answer with a redirect to `platform.claude.com` — a hop WebFetch reports instead of following. On the new host, overview and what's-new pages live under `/docs/en/models/…` (e.g. `/docs/en/models/opus-5/overview`); per-model prompting pages stay under `/docs/en/build-with-claude/prompt-engineering/`.
 
 ## Extraction checklist
 

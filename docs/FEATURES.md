@@ -1,6 +1,6 @@
 # Features
 
-A "feature" in this repo is a **plugin**. Each ships a marketplace catalog entry plus one or more skills. Eleven plugins ship 61 skills between them: six are at `0.1.0`, `marketing-skills` and `nestjs-api-architect` are at `0.1.1`, `project-initializer` and `linear-flow` are at `0.2.0`, and `prompt-creator` is at `0.3.1`. The marketplace itself (the catalog that makes them installable) is the twelfth, cross-cutting feature.
+A "feature" in this repo is a **plugin**. Each ships a marketplace catalog entry plus one or more skills. Eleven plugins ship 61 skills between them: six are at `0.1.0`, `marketing-skills` and `nestjs-api-architect` are at `0.1.1`, `linear-flow` is at `0.2.0`, `project-initializer` is at `0.2.1`, and `prompt-creator` is at `0.3.1`. The marketplace itself (the catalog that makes them installable) is the twelfth, cross-cutting feature.
 
 ## The marketplace catalog
 
@@ -23,7 +23,7 @@ A "feature" in this repo is a **plugin**. Each ships a marketplace catalog entry
   - `project-initializer` — triggered by explicit phrases ("init this project", "scaffold docs for agents"). Surveys the repo, detects stack and event-broker usage, then creates only the docs that don't already exist (skip-and-report). Includes a diagramming policy (Mermaid only, earns-its-place).
   - `update-for-model` — triggered by explicit re-tune intent ("update the docs for Opus 5", "tune AGENTS.md for Sonnet 5"). **Asks which Claude model to target — never infers it from the session's own model** — then fetches Anthropic's live docs for it (models overview → prompting-best-practices hub → that model's own `prompting-claude-<slug>` page → migration guide → Claude Code model-config), extracts only what differs for that model, surveys the existing living docs, and writes `docs/MODEL-NOTES.md`. In-place edits to `AGENTS.md`/`CLAUDE.md`/`docs/*` are **proposed for approval first** and always link to `MODEL-NOTES.md` rather than inlining detail. Re-invoking for a different model rewrites the file wholesale and reports the delta. Anthropic Claude models only. Same live-fetch contract as `prompt-creator`: fetch every invocation, bundled date-stamped fallback, staleness warning when the fetch fails.
 - **Implementation:** `plugins/project-initializer/skills/project-initializer/SKILL.md` + `templates/generate-events-catalog.md`; `plugins/project-initializer/skills/update-for-model/SKILL.md` + `references/model-tuning-sources.md` (offline fallback: URL map + extraction checklist, deliberately a method rather than a per-model snapshot) + `templates/model-notes.md` + `evals/evals.json` (6 evals incl. two negative triggers).
-- **Status:** shipped at `0.2.0`. (This very docs set was produced by `project-initializer`.)
+- **Status:** shipped at `0.2.1`, which points `update-for-model` at `platform.claude.com` instead of the `docs.claude.com` URLs that now redirect. (This very docs set was produced by `project-initializer`.)
 
 ## to-prd
 
