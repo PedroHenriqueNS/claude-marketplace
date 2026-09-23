@@ -58,7 +58,7 @@ No test framework. The gate is `python3 scripts/check_compliance.py` + `claude p
 
 ## Known pitfalls
 
-Reserved name prefixes, version and description drift between the two manifests, relative `source` paths, derived-content licensing, line endings, and the eval runner's defaults — all documented with fixes in [docs/PITFALLS.md](./docs/PITFALLS.md). Read it before your first manifest change.
+Reserved name prefixes, version and description drift between the two manifests, relative `source` paths, derived-content licensing, line endings, the eval runner's defaults, and personal skills hiding bundled ones — all documented with fixes in [docs/PITFALLS.md](./docs/PITFALLS.md). Read it before your first manifest change.
 
 ## Documentation maintenance
 

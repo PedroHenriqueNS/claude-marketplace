@@ -1,6 +1,6 @@
 # Features
 
-A "feature" in this repo is a **plugin**. Each ships a marketplace catalog entry plus one or more skills. Eleven plugins ship 61 skills between them: six are at `0.1.0`, `marketing-skills` and `nestjs-api-architect` are at `0.1.1`, `project-initializer` is at `0.2.1`, `linear-flow` is at `0.3.0`, and `prompt-creator` is at `0.3.1`. The marketplace itself (the catalog that makes them installable) is the twelfth, cross-cutting feature.
+A "feature" in this repo is a **plugin**. Each ships a marketplace catalog entry plus one or more skills. Eleven plugins ship 61 skills between them: five are at `0.1.0`, `marketing-skills` and `nestjs-api-architect` are at `0.1.1`, `skill-auditor` is at `0.2.0`, `project-initializer` is at `0.2.1`, `linear-flow` is at `0.3.0`, and `prompt-creator` is at `0.3.1`. The marketplace itself (the catalog that makes them installable) is the twelfth, cross-cutting feature.
 
 ## The marketplace catalog
 
@@ -42,9 +42,9 @@ A "feature" in this repo is a **plugin**. Each ships a marketplace catalog entry
 ## skill-auditor
 
 - **Purpose:** audit and improve Claude skills against Claude Code best practices.
-- **Behavior:** checks frontmatter, triggering quality, leanness, and progressive disclosure; recommends fixes.
+- **Behavior:** checks frontmatter, triggering quality, leanness, and progressive disclosure; recommends fixes. Context cost and usage come from the built-in `/skill-doctor` report rather than estimates, and model-tuned wording findings come from the bundled `/claude-api prompt-audit`; the skill keeps the project-fit judgment, adoption picks, and new-skill drafts.
 - **Implementation:** `plugins/skill-auditor/skills/skill-auditor/SKILL.md`.
-- **Status:** shipped.
+- **Status:** shipped at `0.2.0`, which replaced its estimates with the `/skill-doctor` and `prompt-audit` reports.
 
 ## tsconfig-upgrade
 

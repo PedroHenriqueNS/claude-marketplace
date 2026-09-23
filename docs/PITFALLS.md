@@ -58,6 +58,14 @@ Gotchas and non-obvious constraints — past failures and how they were resolved
 
 **Apply:** edit a plugin's description in both manifests in the same commit.
 
+## 2026-09-23 — A personal skill hides the bundled one with the same name
+
+**Symptom:** `/claude-api prompt-audit` loaded a months-old personal copy of `claude-api` (a symlink in `~/.claude/skills/`) with no `prompt-audit` subcommand. A skill in a personal or project location replaces a bundled skill of the same name, and the session silently served the old copy.
+
+**Resolution:** the symlink was moved out of `~/.claude/skills/` for the audit and restored afterwards; the session picked up the bundled skill once its listing refreshed. `skill-auditor` now tells the user this is the likely cause when the subcommand isn't recognized.
+
+**Apply:** if a bundled command behaves like an old version, look for a same-named skill in `~/.claude/skills/` or `.claude/skills/` before debugging the command.
+
 ## 2026-09-23 — `claude plugin eval`: an old CLI, then four defaults
 
 **Symptom:** on Claude Code 2.1.267 every `claude plugin eval` call, `init --bare` included, exited 1 with "currently in early access". Homebrew's `claude-code` cask tracks the stable channel, which had not reached 2.1.269, the release that made the command generally available.
