@@ -1,12 +1,12 @@
 ---
-status: proposed
+status: implemented
 ---
 
 # Anthropic updates, 2026-06-26 → 2026-09-23: what this marketplace needs to change
 
 **Serves product goal:** "Keep manifests valid (`claude plugin validate`) and versions in sync" ([PRD.md](../PRD.md#goals)) and "All skills and plugins in this repo MUST follow Claude Code best practices" ([CONVENTIONS.md](../CONVENTIONS.md#claude-code-best-practices-the-baseline-every-skill-follows)) — applied where this repo encodes Anthropic behavior that has since changed.
 
-> **Basis.** Five channels, window 2026-06-26 → 2026-09-23, all fetched 2026-09-23 ([Sources & method](#sources--method)). Local shell CLI **2.1.267**; the window's newest release is **2.1.280**. Proposals cite F1–F25 in [Findings](#findings).
+> **Basis.** Five channels, window 2026-06-26 → 2026-09-23, all fetched 2026-09-23 ([Sources & method](#sources--method)). Local shell CLI **2.1.267**; the window's newest release is **2.1.280**. Proposals cite F1–F25 in [Findings](#findings). **Implemented** on branch `feat/apply-anthropic-updates-2026-09`: all eight proposals (P1–P8) under decisions Q1–Q9, one commit each; the nine rejections stand. This document is now a record, not a proposal — its file and line references describe the repo before that change. [ROADMAP.md](../ROADMAP.md) has what shipped and what stays open, and [the prompt audit](../audits/prompt-audit-2026-09-23.md) has P6's triage.
 
 ## Problem Statement
 
