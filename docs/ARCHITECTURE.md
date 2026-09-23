@@ -10,7 +10,7 @@ This repo is a **catalog**, not a program. Its "architecture" is three nested la
 | Plugin | `plugins/<name>/.claude-plugin/plugin.json` | One plugin's identity: `name`, `version`, `description`, `author`, `keywords`. |
 | Skill | `plugins/<name>/skills/<skill>/SKILL.md` | The actual capability — the prompt/instructions Claude loads when the skill triggers. Optional `references/`, `templates/` siblings (and a legacy `evals/evals.json`). |
 
-The key non-obvious fact: a plugin's `version` is written **twice** — in its `plugin.json` and in its `marketplace.json` entry — and the two must match. Nothing enforces this but `claude plugin validate` and review.
+The key non-obvious fact: a plugin's `version` and `description` are each written **twice** — in its `plugin.json` and in its `marketplace.json` entry — and each pair must match. `scripts/check_compliance.py` hard-fails on drift in either.
 
 ## Repository layout
 

@@ -50,6 +50,14 @@ Gotchas and non-obvious constraints — past failures and how they were resolved
 
 **Apply:** when bumping a plugin's version, grep all three docs (`FEATURES.md`, `STACK.md`, `ROADMAP.md`) for the plugin name, not just the two manifests.
 
+## 2026-09-23 — Description written in two places
+
+**Symptom:** a plugin's `description`, like its version, lives in both `plugin.json` and its `marketplace.json` entry. Two plugins (`marketing-skills`, `nestjs-api-architect`) had drifted unnoticed. Since Claude Code 2.1.265 the Installed tab and `claude plugin details` show the marketplace text, so an edit made to `plugin.json` alone no longer reaches users.
+
+**Resolution:** both synced to the marketplace text; `scripts/check_compliance.py` now hard-fails on description drift, as it does on version drift.
+
+**Apply:** edit a plugin's description in both manifests in the same commit.
+
 ## 2026-09-23 — `claude plugin eval`: an old CLI, then four defaults
 
 **Symptom:** on Claude Code 2.1.267 every `claude plugin eval` call, `init --bare` included, exited 1 with "currently in early access". Homebrew's `claude-code` cask tracks the stable channel, which had not reached 2.1.269, the release that made the command generally available.

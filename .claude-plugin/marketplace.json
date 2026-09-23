@@ -43,14 +43,14 @@
     {
       "name": "marketing-skills",
       "source": "./plugins/marketing-skills",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "description": "41 cross-referencing marketing skills — SEO, AI search (AEO/GEO), CRO, analytics, schema, copywriting, ads, email, social, PR, pricing, and more. Derived from coreyhaines31/marketingskills (see NOTICE).",
       "author": { "name": "PedroHenriqueNS" }
     },
     {
       "name": "nestjs-api-architect",
       "source": "./plugins/nestjs-api-architect",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "description": "Domain-Driven Design (DDD) architecture and best practices for building, maintaining, and scaffolding production NestJS APIs — layered domain/application/infrastructure structure, use-case services, per-operation repositories/gateways, transactional outbox, spot-safe idempotency. Supersedes the generic community nestjs-best-practices skill where they conflict.",
       "author": { "name": "PedroHenriqueNS" }
     },

@@ -9,7 +9,7 @@ Deliberately minimal. There is no language runtime, package manager, or build sy
 | **Markdown** | Skill content (`SKILL.md`), references, templates, all docs | The primary "source code". Skills are prompts/instructions, not compiled artifacts. |
 | **JSON** | Manifests (`marketplace.json`, `plugin.json`), legacy per-skill evals (`evals.json`) | Shape is dictated by the Claude Code plugin spec. |
 | **Claude Code CLI** | The runtime, the validator, and the eval runner | `claude plugin validate` is the manifest gate. `claude plugin eval` (≥ 2.1.269) runs behavior evals by hand; Homebrew's stable `claude-code` cask can lag that version, `claude-code@latest` tracks it. |
-| **Python 3 (stdlib only)** | Compliance gate script | `scripts/check_compliance.py` — version-sync, frontmatter, dead links, reserved names. No pip deps. |
+| **Python 3 (stdlib only)** | Compliance gate script | `scripts/check_compliance.py` — version and description sync, frontmatter and Agent Skills limits, dead links, reserved names. No pip deps. |
 | **GitHub Actions** | CI gate | `.github/workflows/validate.yml` runs the compliance script + `claude plugin validate` on PRs and pushes to `main`. Activates once the repo has a remote (Phase 1). |
 | **Git** | Versioning + distribution | Remote install resolves a GitHub `owner/repo`; local install resolves a path. |
 | **`.gitattributes` `text=auto`** | Line-ending normalization | Repo stores LF; checkout is native per platform. Matters because content was authored on Windows (`C:/Users/...`) and Unix. |
@@ -29,7 +29,7 @@ Deliberately minimal. There is no language runtime, package manager, or build sy
 
 ## Versions
 
-Every plugin sits at **`0.1.0`** in both its `plugin.json` and `marketplace.json` entry, except `project-initializer` and `linear-flow` at **`0.2.0`** (`project-initializer` gained a second skill, `update-for-model`; `linear-flow` gained the PR relation gate) and `prompt-creator` at **`0.3.1`** (`0.2.0` gained request classification and a rebuilt fallback checklist; `0.3.0` gained explicit model assignment for prompts that dispatch work; `0.3.1` moved its evals to `claude plugin eval`). Eleven plugins, 61 skills. The two files must always agree — `scripts/check_compliance.py` hard-fails on drift. The Claude Code plugin spec version is whatever the installed `claude` CLI supports — there's no pin in this repo.
+Every plugin sits at **`0.1.0`** in both its `plugin.json` and `marketplace.json` entry, except `marketing-skills` and `nestjs-api-architect` at **`0.1.1`** (manifest descriptions synced), `project-initializer` and `linear-flow` at **`0.2.0`** (`project-initializer` gained a second skill, `update-for-model`; `linear-flow` gained the PR relation gate) and `prompt-creator` at **`0.3.1`** (`0.2.0` gained request classification and a rebuilt fallback checklist; `0.3.0` gained explicit model assignment for prompts that dispatch work; `0.3.1` moved its evals to `claude plugin eval`). Eleven plugins, 61 skills. The two files must always agree — `scripts/check_compliance.py` hard-fails on drift. The Claude Code plugin spec version is whatever the installed `claude` CLI supports — there's no pin in this repo.
 
 > TODO: Pin a minimum supported `claude` CLI version here if remote consumers ever report spec-compatibility issues.
 

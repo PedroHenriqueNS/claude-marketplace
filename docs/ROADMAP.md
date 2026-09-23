@@ -20,7 +20,7 @@ Phased plan. Update this whenever priorities shift, a milestone is reached, or n
 
 Realized by the **[best-practices compliance gate](./prds/best-practices-compliance-gate.md)** PRD. It supersedes the `docs/PRD.md` "no CI yet" non-goal for the validation half (publishing stays out).
 
-- ✅ Mechanical compliance gate (`scripts/check_compliance.py`): version-sync, frontmatter, dead repo-relative links, reserved-name guard — green across all 11 plugins.
+- ✅ Mechanical compliance gate (`scripts/check_compliance.py`): version-sync, frontmatter, dead repo-relative links, reserved-name guard — green across all 11 plugins. Since 2026-09-23 it also hard-fails on description drift between the two manifests and on the Agent Skills `name`/`description` limits.
 - ✅ CI (`.github/workflows/validate.yml`) runs the compliance script + `claude plugin validate .` + each `claude plugin validate ./plugins/<name>` on PRs and pushes to `main`. (Runs once the repo has a remote — Phase 1.)
 - ✅ Behavior evals run on `claude plugin eval` (Claude Code ≥ 2.1.269), piloted on `prompt-creator`: 7 cases, each scored with and without the plugin. Manual by decision, since every run costs model usage, so not a CI gate ([anthropic-updates PRD](./prds/anthropic-updates-2026-09.md), Q5).
 - ⏳ Convert the other 46 per-skill `evals.json` files (39 of them in `marketing-skills`) to runner cases, now that the pilot shows the runner separating the plugin's behavior from the baseline.

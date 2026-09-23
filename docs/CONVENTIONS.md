@@ -55,6 +55,8 @@ This repo has no application code. The "source" is Markdown skill content and JS
 - **Where `references/`/`templates/` live**: **skill-local by default** (`skills/<skill>/references/`) — that is the common case and matches most plugins here. Put them at the **plugin root** (`plugins/<name>/references/`) only when two or more skills in that plugin share the same file, linked as `../../references/<file>.md`. Copying one reference into several skill folders is banned: the copies drift on the first edit. `linear-flow` is the worked example of both halves.
 - **No persona preambles, no non-standard frontmatter, no dead repo-relative links** in skills (these were stripped from derived content — don't reintroduce them; see [PITFALLS.md](./PITFALLS.md)).
 - **Versions**: a plugin's `version` appears in both its `plugin.json` and its `marketplace.json` entry. They MUST match — bump both in the same commit.
+- **Descriptions**: the same holds for a plugin's `description` — identical in both manifests, changed in the same commit. The Installed tab and `claude plugin details` show the marketplace one (Claude Code 2.1.265+).
+- **Agent Skills spec limits** ([specification](https://agentskills.io/specification)): a `SKILL.md` `name` is 1–64 lowercase letters, digits and single inner hyphens, equal to its directory name; its `description` is at most 1,024 characters.
 - **Marketplace `name`**: never starts with `claude-`/`anthropic-` (reserved). Current name: `pedrohenriquens`.
 - **`source` paths**: relative to repo root (`./plugins/<name>`); keep them in lockstep with folder names.
 
@@ -93,7 +95,7 @@ Follow [Conventional Commits](https://www.conventionalcommits.org/). Types in us
 There is no test framework. Validation is the gate — run it locally exactly as CI does (`.github/workflows/validate.yml`):
 
 ```
-python3 scripts/check_compliance.py       # version-sync, frontmatter, dead links, reserved names
+python3 scripts/check_compliance.py       # version/description sync, frontmatter + spec limits, dead links, reserved names
 claude plugin validate .                  # the marketplace manifest
 claude plugin validate ./plugins/<name>   # a single plugin + its skills
 ```

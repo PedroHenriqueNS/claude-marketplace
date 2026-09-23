@@ -1,6 +1,6 @@
 # Features
 
-A "feature" in this repo is a **plugin**. Each ships a marketplace catalog entry plus one or more skills. Eleven plugins ship 61 skills between them: eight are at `0.1.0`, `project-initializer` and `linear-flow` are at `0.2.0`, and `prompt-creator` is at `0.3.1`. The marketplace itself (the catalog that makes them installable) is the twelfth, cross-cutting feature.
+A "feature" in this repo is a **plugin**. Each ships a marketplace catalog entry plus one or more skills. Eleven plugins ship 61 skills between them: six are at `0.1.0`, `marketing-skills` and `nestjs-api-architect` are at `0.1.1`, `project-initializer` and `linear-flow` are at `0.2.0`, and `prompt-creator` is at `0.3.1`. The marketplace itself (the catalog that makes them installable) is the twelfth, cross-cutting feature.
 
 ## The marketplace catalog
 
@@ -12,7 +12,7 @@ A "feature" in this repo is a **plugin**. Each ships a marketplace catalog entry
 ## Best-practices compliance gate
 
 - **Purpose:** enforce the rule that every skill follows Claude Code best practices (`docs/CONVENTIONS.md`) — audit the existing plugins to a clean baseline, then gate every change so nothing merges below the bar.
-- **Behavior:** CI (GitHub Actions) runs `claude plugin validate` per plugin, a `plugin.json`↔`marketplace.json` version-sync check, and a mechanical `SKILL.md` lint as the hard gate; `skill-auditor` provides the deeper judgment-based audit. Verification seam is per-plugin.
+- **Behavior:** CI (GitHub Actions) runs `claude plugin validate` per plugin, `plugin.json`↔`marketplace.json` version- and description-sync checks, and a mechanical `SKILL.md` lint (frontmatter, the Agent Skills `name`/`description` limits, dead links) as the hard gate; `skill-auditor` provides the deeper judgment-based audit. Verification seam is per-plugin.
 - **Implementation:** specced in [docs/prds/best-practices-compliance-gate.md](./prds/best-practices-compliance-gate.md). `scripts/check_compliance.py` + `.github/workflows/validate.yml`; supersedes the `docs/PRD.md` "no CI yet" non-goal for validation.
 - **Status:** in-progress. Mechanical gate shipped and green across all 11 plugins (0 failures); CI workflow in place (activates once the repo has a remote — Phase 1). Remaining: the deep per-skill `skill-auditor` audit of the 61 skills.
 
@@ -58,7 +58,7 @@ A "feature" in this repo is a **plugin**. Each ships a marketplace catalog entry
 - **Purpose:** build, maintain, and scaffold NestJS APIs as a Domain-Driven Design (DDD) layered system — generalizing the production `gigabase-api-core` conventions into reusable, project-neutral patterns. Supersedes the generic community `nestjs-best-practices` skill where they conflict.
 - **Behavior:** a main reference skill (auto-triggers on NestJS/DDD work) carrying a layer map, quick-ref rules table, supersede table, plus 25 on-demand rule files and 52 `.ts` templates (including Kubernetes liveness/readiness health probes and a standardized Prometheus `/metrics` endpoint with HTTP RED metrics); and five scaffolding skills — bootstrap an API foundation, add a feature module, a use-case service, a shared repository/gateway operation, or a TypeORM migration.
 - **Implementation:** `plugins/nestjs-api-architect/skills/nestjs-api-architect/SKILL.md` (+ `rules/`, `templates/`) and `scaffold-nestjs-api`, `add-nestjs-module`, `add-nestjs-use-case`, `add-nestjs-shared-op`, `add-nestjs-migration`.
-- **Status:** shipped.
+- **Status:** shipped at `0.1.1` (its two manifest descriptions synced).
 
 ## test-optimizer
 
@@ -95,4 +95,4 @@ A "feature" in this repo is a **plugin**. Each ships a marketplace catalog entry
 - **Purpose:** a bundle of 41 cross-referencing marketing skills — SEO, AI search (AEO/GEO), CRO, analytics, schema, copywriting, ads, email, social, PR, pricing, and more.
 - **Behavior:** each skill is independently triggerable and links to siblings; many carry `references/` deep-dive docs.
 - **Implementation:** `plugins/marketing-skills/skills/<skill>/SKILL.md`. **Derived** from a third-party repo — see [../NOTICE](../NOTICE) and review the upstream license before public distribution.
-- **Status:** shipped.
+- **Status:** shipped at `0.1.1` (its two manifest descriptions synced).
