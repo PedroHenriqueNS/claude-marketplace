@@ -36,16 +36,16 @@ Almost none of it touches this repo — five plugins get "no action". What does 
 
 ## Proposals, prioritized
 
-Preconditions: upgrade the shell CLI (Homebrew cask, 2.1.267) to ≥ 2.1.280 before P1 and P3. Every proposal that edits a plugin bumps its version in both manifests and in the prose of FEATURES.md, STACK.md and ROADMAP.md ([PITFALLS.md](../PITFALLS.md), 2026-07-31).
+Preconditions: only P1 depends on the shell CLI — `claude plugin eval` needs ≥ 2.1.269, which Homebrew's stable `claude-code` cask (2.1.267) does not meet and `claude-code@latest` does (Q6). P3, P5 and P6 run inside a session. Every proposal that edits a plugin bumps its version in both manifests and in the prose of FEATURES.md, STACK.md and ROADMAP.md ([PITFALLS.md](../PITFALLS.md), 2026-07-31).
 
 **P1 — Make the evals runnable under `claude plugin eval`, piloting `prompt-creator`. RECOMMENDED.**
-*Files:* `plugins/prompt-creator/skills/prompt-creator/evals/`; [ROADMAP.md](../ROADMAP.md) (Phase 2, the Q6 gate); [STACK.md](../STACK.md); [CONVENTIONS.md › Testing](../CONVENTIONS.md#testing). *Motivated by:* F6. *Change:* convert the pilot's 8 cases into the runner's layout (`evals/**/case.yaml`, or `prompt.md` + `graders/*.md`) and delete `evals.json`; map the skill-absent case onto the built-in no-plugin arm (`--ablation with-without`) instead of porting it. If the report discriminates, schedule the other 46 files (Q3). *Why first:* without it every wording change in P4–P8 ships unverified — what ROADMAP Phase 2 and the `prompt-creator` Q6 gate wait on. *CLI:* ≥ 2.1.269 and early-access enablement — on 2.1.267 the command exits 1 with an early-access notice, and CL 2.1.269 does not say the gate is gone. *Verify:* `claude plugin eval ./plugins/prompt-creator` exits 0 with a JSON + HTML report and a with/without delta; compliance and validate pass.
+*Files:* `plugins/prompt-creator/skills/prompt-creator/evals/`; [ROADMAP.md](../ROADMAP.md) (Phase 2, the Q6 gate); [STACK.md](../STACK.md); [CONVENTIONS.md › Testing](../CONVENTIONS.md#testing). *Motivated by:* F6. *Change:* convert the pilot's 8 cases into the runner's layout (`evals/**/case.yaml`, or `prompt.md` + `graders/*.md`) and delete `evals.json`; map the skill-absent case onto the built-in no-plugin arm (`--ablation with-without`) instead of porting it. If the report discriminates, schedule the other 46 files (Q3). *Why first:* without it every wording change in P4–P8 ships unverified — what ROADMAP Phase 2 and the `prompt-creator` Q6 gate wait on. *CLI:* ≥ 2.1.269 — on 2.1.267 the command exits 1 with an early-access notice, which the live docs attribute to a build predating general availability (Q6). *Verify:* `claude plugin eval ./plugins/prompt-creator` exits 0 with a JSON + HTML report and a with/without delta; compliance and validate pass.
 
 **P2 — Point `update-for-model` at `platform.claude.com`. RECOMMENDED.**
 *Files:* `plugins/project-initializer/skills/update-for-model/SKILL.md` (step 1 URL); `…/references/model-tuning-sources.md` (URL map rows 1, 2, 4 and its "verified" date). *Motivated by:* F13. *Change:* replace each `docs.claude.com` hub with the URL it resolves to (e.g. `https://platform.claude.com/docs/en/models/overview`) and note that overview and what's-new pages moved under `/docs/en/models/<model>/` while per-model prompting pages stay under `/build-with-claude/prompt-engineering/`; the discovery method stays. *Gain:* one hop per hub instead of a cross-host 302 that WebFetch reports rather than follows, costing a second fetch and risking a needless fallback. *CLI:* none. *Verify:* each URL in the map returns 200 without a redirect (`curl -sI`); compliance and validate pass.
 
 **P3 — Re-target MODEL-NOTES to Opus 5.5, if Q1 says so. RECOMMENDED (conditional).**
-*Files:* [MODEL-NOTES.md](../MODEL-NOTES.md), rewritten wholesale, plus links into it the skill proposes (approval-gated). *Motivated by:* F2, F3, F12. *Change:* after P2, run `/update-for-model` and choose Opus 5.5. *Why:* the notes are right for Opus 5, but `opus` now resolves to Opus 5.5, which always thinks, so their advice on disabling thinking no longer applies. The re-run should also weigh the new Concise output style against the verbosity row. *CLI:* choosing Opus 5.5 needs ≥ 2.1.280; the shell does not meet it. *Verify:* the skill's delta report; the header names Opus 5.5 with a 2026-09 fetch date; compliance passes.
+*Files:* [MODEL-NOTES.md](../MODEL-NOTES.md), rewritten wholesale, plus links into it the skill proposes (approval-gated). *Motivated by:* F2, F3, F12. *Change:* after P2, run `/update-for-model` and choose Opus 5.5. *Why:* the notes are right for Opus 5, but `opus` now resolves to Opus 5.5, which always thinks, so their advice on disabling thinking no longer applies. The re-run should also weigh the new Concise output style against the verbosity row. *CLI:* none — the skill runs inside a session, whatever the shell's version (Q6). *Verify:* the skill's delta report; the header names Opus 5.5 with a 2026-09 fetch date; compliance passes.
 
 **P4 — Refresh `prompt-creator`'s model fallback. REQUIRED.**
 *Files:* `plugins/prompt-creator/skills/prompt-creator/references/model-selection.md` §2, §3, §5 and its distilled date. *Motivated by:* F2, F3, F5, F25. *Change:* (a) add Opus 5.5 to the effort-support sentence — it starts at a default effort of its own (CL 2.1.280) and the launch post runs it at `low`; take the exact levels from the live model-config page. (b) One line on `maxEffortLevel` (CL 2.1.267): a cap, top-level or per model, can lower an assigned effort. (c) If Q4 confirms forks keep the parent's model, one line in §3: an assignment lands only on a fresh subagent. (d) §5 says every custom subagent loads CLAUDE.md; `omitClaudeMd` (CL 2.1.271) is now the exception. *Why Required:* (a) makes the fallback wrong about the default Opus model the moment a fetch fails. *CLI:* none for the edit. *Verify:* each new line matches the live model-config or sub-agents page verbatim; P1 evals once they exist; compliance and validate pass.
@@ -82,17 +82,36 @@ Preconditions: upgrade the shell CLI (Homebrew cask, 2.1.267) to ≥ 2.1.280 bef
 
 **R9 — Loops and the `/verify` pattern (F22).** No plugin overlaps them.
 
-## Open questions
+## Resolved questions
 
-**Q1 — Target model for MODEL-NOTES: stay on Opus 5 or move to Opus 5.5?** Recommend Opus 5.5: `opus` now resolves to it (F2), and advice on disabling thinking cannot apply to a model that always thinks. The skill asks; this PRD does not decide.
+Settled by the owner on 2026-09-23, before implementation, each with the evidence it rests on. Q6–Q9 were not in the original list; they came up while preparing the implementation.
 
-**Q2 — `disable-model-invocation` for `ln-issue-lifecycle`?** Recommend anchoring the phrases first (P7), measuring with P1 evals, and setting it only if bare-phrase negatives still fire. `ln-triage` creates single items: lower risk.
+**Q1 — Target model for MODEL-NOTES. → Opus 5.5.**
+The live [model-config](https://code.claude.com/docs/en/model-config) page (2026-09-23) resolves `opus` to Opus 5.5 on the Anthropic API and says thinking cannot be turned off on Opus 5.5, so the notes' advice on disabling thinking no longer applies (F2). P3 answers the skill's model question with Opus 5.5.
 
-**Q3 — P1 scope: pilot only, or all 47 eval files?** Recommend the pilot first; 39 of them belong to the derived `marketing-skills`.
+**Q2 — `disable-model-invocation` for `ln-issue-lifecycle`. → Anchor first, measure, then decide.**
+P7 anchors the four phrases and adds negative cases for the bare phrases in the runner's format; the flag is set only if one of them still fires. Measuring is possible now that the runner works (Q6). `ln-triage` creates single items and stays auto-invocable.
 
-**Q4 — Does a fork honor a per-spawn `model`?** F5's inherited prompt cache implies the parent's model, but no source in the window says so. Confirm on the live sub-agents page before P4(c).
+**Q3 — P1 scope. → The `prompt-creator` pilot, plus P7's bare-phrase negatives.**
+The other 46 `evals.json` files stay as they are; 39 of them belong to the derived `marketing-skills`. ROADMAP schedules their conversion if the pilot discriminates.
 
-**Q5 — Evals in CI?** They call a model: cost plus an API secret. Recommend manual or non-blocking runs until pilot scores are stable.
+**Q4 — Does a fork honor a per-spawn `model`? → No: a fork runs on the main session's model.**
+The live [sub-agents](https://code.claude.com/docs/en/sub-agents) page (2026-09-23) says a fork sees the same system prompt, tools, model and history as the main session. P4(c) applies unconditionally.
+
+**Q5 — Evals in CI. → No; run them by hand until the pilot's scores are stable.**
+Every run calls the model on the runner's credentials, so a CI job means a cost per push plus an API secret, for scores not yet shown to be stable. `validate.yml` stays unchanged.
+
+**Q6 — Shell CLI and the P1 gate. → Upgraded to 2.1.280; P1 runs for real. (Corrects this PRD's Preconditions.)**
+On 2.1.267 every `claude plugin eval` call, `init --bare` included, exited 1 with the early-access notice. The live [plugin-evals](https://code.claude.com/docs/en/plugin-evals) page requires v2.1.269 and attributes that notice to a build predating general availability; no account enablement is involved. Homebrew's `claude-code` cask tracks the stable channel (2.1.267 on 2026-09-23); the owner switched to `claude-code@latest` (2.1.280), where the runner starts and, in a shell without a terminal, asks only for `--trust-plugin`. Only P1 needs the shell CLI; P3, P5 and P6 run inside a session. The runner reads cases from `<plugin>/evals/`, not from a skill's own `evals/` folder.
+
+**Q7 — P6 scope. → Run the audit, triage it against CONVENTIONS, and apply the edits that survive.**
+Each edited plugin bumps its version. Outside the pilot and P7's negatives, those edits are verified by compliance and validate only, and the PR says so.
+
+**Q8 — P8(b) severity. → Hard failure, like version drift.**
+Since 2.1.265 the Installed tab shows the marketplace entry's description (F7), so drift reaches users. Once P8(a) syncs the two drifted plugins, the check starts green.
+
+**Q9 — Delivery. → One PR for the whole PRD, one commit per proposal.**
+Precedent: [#14](https://github.com/PedroHenriqueNS/claude-marketplace/pull/14) implemented all seven proposals of the Superpowers-lessons PRD in one PR. Several proposals cross plugins, the PRD's `status` flips in the same PR, and each plugin bumps once.
 
 ## Findings
 
