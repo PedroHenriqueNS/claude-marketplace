@@ -49,3 +49,18 @@ Gotchas and non-obvious constraints — past failures and how they were resolved
 **Resolution:** treat the docs as part of the same fact as the manifests when bumping a version; review is currently the only thing catching drift in the prose copies.
 
 **Apply:** when bumping a plugin's version, grep all three docs (`FEATURES.md`, `STACK.md`, `ROADMAP.md`) for the plugin name, not just the two manifests.
+
+## 2026-09-23 — `claude plugin eval`: an old CLI, then four defaults
+
+**Symptom:** on Claude Code 2.1.267 every `claude plugin eval` call, `init --bare` included, exited 1 with "currently in early access". Homebrew's `claude-code` cask tracks the stable channel, which had not reached 2.1.269, the release that made the command generally available.
+
+**Resolution:** the live [plugin-evals](https://code.claude.com/docs/en/plugin-evals) page ties that message to a build predating general availability. Switching to the `claude-code@latest` cask (2.1.280) unblocked it. Four defaults then shape every run:
+
+- cases are read from `plugins/<name>/evals/`, not from a skill's own `evals/` folder;
+- without a terminal, a run refuses a directory it has not trusted yet — pass `--trust-plugin` for your own plugins;
+- an `--allow-tools` grant applies to every case in the run, so a case that must run *without* a tool (prompt-creator's `offline` case) is selected by tag and run on its own;
+- the HTML report is published to claude.ai unless you pass `--no-publish`.
+
+The first pilot run also showed the default judge (haiku) failing compliant 3–4 KB replies and passing violating ones on the same rubric. The runner's docs say to suspect the judge first when a skill fires but the with/without delta is negative.
+
+**Apply:** check `claude --version` is ≥ 2.1.269 before debugging a suite, and run evals with `--trust-plugin --no-publish`. Read a failing run's reply (the `evidence` field in `results/<run>/aggregate-result.json`) before blaming the skill, and move long-reply checks to `regex` graders.

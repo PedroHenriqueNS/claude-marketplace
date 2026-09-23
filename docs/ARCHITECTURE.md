@@ -8,7 +8,7 @@ This repo is a **catalog**, not a program. Its "architecture" is three nested la
 |---|---|---|
 | Marketplace | `.claude-plugin/marketplace.json` | The catalog: marketplace `name`, `owner`, and the list of plugins with their relative `source` paths and versions. |
 | Plugin | `plugins/<name>/.claude-plugin/plugin.json` | One plugin's identity: `name`, `version`, `description`, `author`, `keywords`. |
-| Skill | `plugins/<name>/skills/<skill>/SKILL.md` | The actual capability — the prompt/instructions Claude loads when the skill triggers. Optional `references/`, `templates/`, `evals/` siblings. |
+| Skill | `plugins/<name>/skills/<skill>/SKILL.md` | The actual capability — the prompt/instructions Claude loads when the skill triggers. Optional `references/`, `templates/` siblings (and a legacy `evals/evals.json`). |
 
 The key non-obvious fact: a plugin's `version` is written **twice** — in its `plugin.json` and in its `marketplace.json` entry — and the two must match. Nothing enforces this but `claude plugin validate` and review.
 
@@ -22,12 +22,13 @@ claude-marketplace/
 │   └── <plugin>/
 │       ├── .claude-plugin/
 │       │   └── plugin.json           # plugin identity + version
+│       ├── evals/<case>/             # eval cases for `claude plugin eval` (prompt.md + graders/)
 │       └── skills/
 │           └── <skill>/
 │               ├── SKILL.md          # the capability
 │               ├── references/       # optional deep-dive docs (progressive disclosure)
 │               ├── templates/        # optional output templates
-│               └── evals/evals.json  # optional trigger/quality evals
+│               └── evals/evals.json  # legacy eval notes; no runner reads them
 ├── docs/                             # this living documentation
 ├── README.md
 ├── NOTICE                            # third-party attribution (marketing-skills)

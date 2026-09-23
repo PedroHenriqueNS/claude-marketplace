@@ -38,7 +38,7 @@ Keep these files short. If a rule keeps getting ignored, the file is probably to
 ### Working in this repo
 
 - **Explore → plan → implement → commit.** Use plan mode when a change spans multiple files or the approach is unclear; skip it for trivial edits (typo, version bump, a single link).
-- **Give Claude a check it can run.** Here that check is `claude plugin validate` (plus any `evals/evals.json`). Show the validate output as evidence — don't assert "it's valid" without running it. See [Testing](#testing).
+- **Give Claude a check it can run.** Here that check is `claude plugin validate`, plus `claude plugin eval` where a plugin has eval cases. Show the validate output as evidence — don't assert "it's valid" without running it. See [Testing](#testing).
 - **Be specific.** Scope the task (which plugin, which skill), point to the file or existing pattern to follow, and for a fix describe the symptom + what "fixed" looks like.
 - **Course-correct early; keep sessions focused.** `/clear` between unrelated tasks, `/compact` on long ones. Commit in small, descriptive steps.
 - **Add an adversarial review before "done."** Run the bundled `/code-review` skill (reviews the diff in a fresh subagent) for correctness before treating work as complete.
@@ -100,7 +100,8 @@ claude plugin validate ./plugins/<name>   # a single plugin + its skills
 
 - Run the compliance script + the relevant `validate` after any manifest or skill change; both must pass before commit. The compliance script exits non-zero on a hard failure (size warnings don't fail).
 - The judgment-based best-practice rules a script can't measure (`description` quality, progressive disclosure) are audited by the `skill-auditor` plugin on demand — not part of the blocking gate.
-- Skills may carry `evals/evals.json` to guard triggering/quality — add or update these when changing a skill's `description` or behavior.
+- Behavior evals live in `plugins/<name>/evals/<case>/` (`prompt.md` + `graders/*.md`) and run with `claude plugin eval ./plugins/<name> --trust-plugin --no-publish` (Claude Code ≥ 2.1.269), which scores each case with and without the plugin. Runs call the model on your plan, so they are manual, not a CI gate. An `--allow-tools` grant covers every case in a run; cases that need different grants carry tags and run separately. Grade long replies with `regex` graders and keep `llm` graders for short, concrete PASS/FAIL criteria — the default judge misreads long replies (see [PITFALLS.md](./PITFALLS.md)). Add or update cases when changing a skill's `description` or behavior.
+- `prompt-creator` is the pilot. The other plugins' per-skill `evals/evals.json` files are legacy: no runner reads them, so convert them to cases rather than extending them.
 
 ---
 
