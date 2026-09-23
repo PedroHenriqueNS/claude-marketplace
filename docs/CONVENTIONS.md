@@ -65,6 +65,7 @@ This repo has no application code. The "source" is Markdown skill content and JS
 Trunk-based on `main`. This is a small personal repo:
 
 - Work directly toward `main` (branch for anything non-trivial or risky).
+- A PRD still in planning (`docs/prds/`, `status: proposed`) commits directly to `main` — no branch, no PR. Only its implementation goes through a PR.
 - Adding a plugin is one atomic change: its folder (`plugin.json` + at least one `SKILL.md`) **and** its `marketplace.json` entry land together.
 - After any manifest change, run validation before committing (see Testing).
 - Do not push to a remote or create a GitHub repo unless explicitly asked.
