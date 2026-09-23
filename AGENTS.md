@@ -31,7 +31,7 @@ There is nothing to install or run. The loop is: edit Markdown/JSON → validate
 python3 scripts/check_compliance.py       # best-practices compliance gate (versions, descriptions, frontmatter, links)
 claude plugin validate .                  # validate the marketplace manifest
 claude plugin validate ./plugins/<name>   # validate one plugin + its skills
-claude plugin eval ./plugins/<name> --trust-plugin --no-publish   # behavior evals, by hand (costs model usage)
+claude plugin eval ./plugins/<name> --trust-plugin --no-publish   # behavior evals, by hand (costs model usage; per-plugin tool grants in CONVENTIONS › Testing)
 ```
 
 - **Add a plugin:** create `plugins/<name>/.claude-plugin/plugin.json` + at least one `skills/<skill>/SKILL.md`, then add the matching entry to `marketplace.json` — in the **same** change.
