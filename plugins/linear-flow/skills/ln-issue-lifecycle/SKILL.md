@@ -3,14 +3,14 @@ name: ln-issue-lifecycle
 description: >-
   Use for issue-shaped work in Linear the user has already named as such —
   "create an issue for…", "file a bug for…", "update ABC-123", "move it to a
-  different status", "add a label to it", "comment on that issue", "close these",
-  "break this into sub-issues", "attach it to the project", "groom the backlog",
-  "relabel these", or /ln-issue-lifecycle. Covers creating issues directly plus
-  every edit after: fields, labels, status, comments, sub-issues and parent
-  links, and reviewed bulk changes. Do NOT trigger when the shape is unclear and
-  needs deciding (that is ln-triage), for project or discovery work
-  (ln-project-lifecycle), or for a status move driven by branch or PR state
-  (ln-ship-loop).
+  different status", "add a label to it", "comment on that issue", "close these
+  Linear issues", "break this into sub-issues", "attach it to the project",
+  "groom the Linear backlog", "relabel these Linear issues", or
+  /ln-issue-lifecycle. Covers creating issues directly plus every edit after:
+  fields, labels, status, comments, sub-issues and parent links, and reviewed
+  bulk changes. Do NOT trigger when the shape is unclear and needs deciding
+  (that is ln-triage), for project or discovery work (ln-project-lifecycle), or
+  for a status move driven by branch or PR state (ln-ship-loop).
 ---
 
 # Issue lifecycle

@@ -15,7 +15,8 @@ Markdown (skill content + docs), JSON (manifests), validated by the Claude Code 
 ```
 .claude-plugin/marketplace.json   # catalog: name "pedrohenriquens", owner, 11 plugins
 plugins/<name>/.claude-plugin/plugin.json   # one plugin's identity + version
-plugins/<name>/skills/<skill>/SKILL.md      # the capability (+ optional references/ templates/ evals/)
+plugins/<name>/skills/<skill>/SKILL.md      # the capability (+ optional references/ templates/; legacy evals/)
+plugins/<name>/evals/<case>/                # eval cases for `claude plugin eval` (prompt-creator, linear-flow)
 docs/                             # living documentation (start at SUMMARY.md)
 README.md · NOTICE · .gitignore · .gitattributes
 ```
@@ -27,13 +28,14 @@ The three manifest layers (marketplace → plugin → skill) and the install-tim
 There is nothing to install or run. The loop is: edit Markdown/JSON → validate → commit.
 
 ```
-python3 scripts/check_compliance.py       # best-practices compliance gate (versions, frontmatter, links)
+python3 scripts/check_compliance.py       # best-practices compliance gate (versions, descriptions, frontmatter, links)
 claude plugin validate .                  # validate the marketplace manifest
 claude plugin validate ./plugins/<name>   # validate one plugin + its skills
+claude plugin eval ./plugins/<name> --trust-plugin --no-publish   # behavior evals, by hand (costs model usage; per-plugin tool grants in CONVENTIONS › Testing)
 ```
 
 - **Add a plugin:** create `plugins/<name>/.claude-plugin/plugin.json` + at least one `skills/<skill>/SKILL.md`, then add the matching entry to `marketplace.json` — in the **same** change.
-- **Bump a version:** change it in BOTH `plugin.json` and the `marketplace.json` entry (they must match).
+- **Bump a version or edit a plugin description:** change it in BOTH `plugin.json` and the `marketplace.json` entry (they must match).
 - **Install locally to test:** `/plugin marketplace add <path>` then `/plugin install <name>@pedrohenriquens`.
 
 ## Coding conventions
@@ -52,11 +54,11 @@ The single source of truth is [docs/CONVENTIONS.md](./docs/CONVENTIONS.md). High
 
 ## Testing expectations
 
-No test framework. The gate is `python3 scripts/check_compliance.py` + `claude plugin validate` — run both after any manifest or skill change and ensure they pass before committing (CI runs the same in `.github/workflows/validate.yml`). Skills may carry `evals/evals.json`; update them when changing a skill's `description` or behavior. Deep best-practice review is the `skill-auditor` plugin, on demand.
+No test framework. The gate is `python3 scripts/check_compliance.py` + `claude plugin validate` — run both after any manifest or skill change and ensure they pass before committing (CI runs the same in `.github/workflows/validate.yml`). Behavior evals live in `plugins/<name>/evals/` and run by hand with `claude plugin eval` ([CONVENTIONS.md › Testing](./docs/CONVENTIONS.md#testing)); update them when changing a skill's `description` or behavior. Per-skill `evals/evals.json` files are legacy and unrunnable: convert them, don't extend them. Deep best-practice review is the `skill-auditor` plugin, on demand.
 
 ## Known pitfalls
 
-Reserved name prefixes, version-drift between the two manifests, relative `source` paths, derived-content licensing, and line endings — all documented with fixes in [docs/PITFALLS.md](./docs/PITFALLS.md). Read it before your first manifest change.
+Reserved name prefixes, version and description drift between the two manifests, relative `source` paths, derived-content licensing, line endings, the eval runner's defaults, and personal skills hiding bundled ones — all documented with fixes in [docs/PITFALLS.md](./docs/PITFALLS.md). Read it before your first manifest change.
 
 ## Documentation maintenance
 
@@ -70,6 +72,6 @@ These files are living documents. When you make changes to this project, update 
 - Scope or requirements change → update `docs/PRD.md` and `docs/SUMMARY.md`
 - New coding rule, banned shortcut, or workflow convention → add to `docs/CONVENTIONS.md` (THE source of truth — never bury rules in commit messages, AGENTS.md prose, or private notes)
 - Phase reached or priorities shifted → update `docs/ROADMAP.md`
-- Switching the target Claude model → re-run `update-for-model` to rewrite `docs/MODEL-NOTES.md` (currently tuned for Claude Opus 5); never hand-edit it into a second model's notes
+- Switching the target Claude model → re-run `update-for-model` to rewrite `docs/MODEL-NOTES.md` (currently tuned for Claude Opus 5.5); never hand-edit it into a second model's notes
 
 If you skip a doc update, note why in the commit message.

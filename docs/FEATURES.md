@@ -1,6 +1,6 @@
 # Features
 
-A "feature" in this repo is a **plugin**. Each ships a marketplace catalog entry plus one or more skills. Eleven plugins ship 61 skills between them: eight are at `0.1.0`, `project-initializer` and `linear-flow` are at `0.2.0`, and `prompt-creator` is at `0.3.0`. The marketplace itself (the catalog that makes them installable) is the twelfth, cross-cutting feature.
+A "feature" in this repo is a **plugin**. Each ships a marketplace catalog entry plus one or more skills. Eleven plugins ship 61 skills between them: three are at `0.1.0`, `nestjs-api-architect` is at `0.1.1`, `to-prd`, `azure-devops-card`, `skill-auditor` and `marketing-skills` are at `0.2.0`, `project-initializer` is at `0.2.1`, `linear-flow` is at `0.3.0`, and `prompt-creator` is at `0.3.1`. The marketplace itself (the catalog that makes them installable) is the twelfth, cross-cutting feature.
 
 ## The marketplace catalog
 
@@ -12,7 +12,7 @@ A "feature" in this repo is a **plugin**. Each ships a marketplace catalog entry
 ## Best-practices compliance gate
 
 - **Purpose:** enforce the rule that every skill follows Claude Code best practices (`docs/CONVENTIONS.md`) — audit the existing plugins to a clean baseline, then gate every change so nothing merges below the bar.
-- **Behavior:** CI (GitHub Actions) runs `claude plugin validate` per plugin, a `plugin.json`↔`marketplace.json` version-sync check, and a mechanical `SKILL.md` lint as the hard gate; `skill-auditor` provides the deeper judgment-based audit. Verification seam is per-plugin.
+- **Behavior:** CI (GitHub Actions) runs `claude plugin validate` per plugin, `plugin.json`↔`marketplace.json` version- and description-sync checks, and a mechanical `SKILL.md` lint (frontmatter, the Agent Skills `name`/`description` limits, dead links) as the hard gate; `skill-auditor` provides the deeper judgment-based audit. Verification seam is per-plugin.
 - **Implementation:** specced in [docs/prds/best-practices-compliance-gate.md](./prds/best-practices-compliance-gate.md). `scripts/check_compliance.py` + `.github/workflows/validate.yml`; supersedes the `docs/PRD.md` "no CI yet" non-goal for validation.
 - **Status:** in-progress. Mechanical gate shipped and green across all 11 plugins (0 failures); CI workflow in place (activates once the repo has a remote — Phase 1). Remaining: the deep per-skill `skill-auditor` audit of the 61 skills.
 
@@ -23,28 +23,28 @@ A "feature" in this repo is a **plugin**. Each ships a marketplace catalog entry
   - `project-initializer` — triggered by explicit phrases ("init this project", "scaffold docs for agents"). Surveys the repo, detects stack and event-broker usage, then creates only the docs that don't already exist (skip-and-report). Includes a diagramming policy (Mermaid only, earns-its-place).
   - `update-for-model` — triggered by explicit re-tune intent ("update the docs for Opus 5", "tune AGENTS.md for Sonnet 5"). **Asks which Claude model to target — never infers it from the session's own model** — then fetches Anthropic's live docs for it (models overview → prompting-best-practices hub → that model's own `prompting-claude-<slug>` page → migration guide → Claude Code model-config), extracts only what differs for that model, surveys the existing living docs, and writes `docs/MODEL-NOTES.md`. In-place edits to `AGENTS.md`/`CLAUDE.md`/`docs/*` are **proposed for approval first** and always link to `MODEL-NOTES.md` rather than inlining detail. Re-invoking for a different model rewrites the file wholesale and reports the delta. Anthropic Claude models only. Same live-fetch contract as `prompt-creator`: fetch every invocation, bundled date-stamped fallback, staleness warning when the fetch fails.
 - **Implementation:** `plugins/project-initializer/skills/project-initializer/SKILL.md` + `templates/generate-events-catalog.md`; `plugins/project-initializer/skills/update-for-model/SKILL.md` + `references/model-tuning-sources.md` (offline fallback: URL map + extraction checklist, deliberately a method rather than a per-model snapshot) + `templates/model-notes.md` + `evals/evals.json` (6 evals incl. two negative triggers).
-- **Status:** shipped at `0.2.0`. (This very docs set was produced by `project-initializer`.)
+- **Status:** shipped at `0.2.1`, which points `update-for-model` at `platform.claude.com` instead of the `docs.claude.com` URLs that now redirect. (This very docs set was produced by `project-initializer`.)
 
 ## to-prd
 
 - **Purpose:** turn the current conversation into a feature-level PRD and publish it.
 - **Behavior:** distills the chat into a PRD and publishes to the issue tracker, falling back to `docs/prds/`. Reads project-initializer living docs for context.
 - **Implementation:** `plugins/to-prd/skills/to-prd/SKILL.md`.
-- **Status:** shipped.
+- **Status:** shipped at `0.2.0`, whose user-story section asks for one story per scenario instead of pressing for volume ([prompt audit](./audits/prompt-audit-2026-09-23.md)).
 
 ## azure-devops-card
 
 - **Purpose:** draft Azure DevOps work-item titles and markdown descriptions in Brazilian Portuguese.
 - **Behavior:** produces titles in the `[categoria][FRONTEND|BACKEND]` pattern with matching descriptions (pt-BR).
 - **Implementation:** `plugins/azure-devops-card/skills/azure-devops-card/SKILL.md`.
-- **Status:** shipped.
+- **Status:** shipped at `0.2.0`, which drops a redundant "verify for real" line from its pre-delivery checklist ([prompt audit](./audits/prompt-audit-2026-09-23.md)).
 
 ## skill-auditor
 
 - **Purpose:** audit and improve Claude skills against Claude Code best practices.
-- **Behavior:** checks frontmatter, triggering quality, leanness, and progressive disclosure; recommends fixes.
+- **Behavior:** checks frontmatter, triggering quality, leanness, and progressive disclosure; recommends fixes. Context cost and usage come from the built-in `/skill-doctor` report rather than estimates, and model-tuned wording findings come from the bundled `/claude-api prompt-audit`; the skill keeps the project-fit judgment, adoption picks, and new-skill drafts.
 - **Implementation:** `plugins/skill-auditor/skills/skill-auditor/SKILL.md`.
-- **Status:** shipped.
+- **Status:** shipped at `0.2.0`, which replaced its estimates with the `/skill-doctor` and `prompt-audit` reports.
 
 ## tsconfig-upgrade
 
@@ -58,7 +58,7 @@ A "feature" in this repo is a **plugin**. Each ships a marketplace catalog entry
 - **Purpose:** build, maintain, and scaffold NestJS APIs as a Domain-Driven Design (DDD) layered system — generalizing the production `gigabase-api-core` conventions into reusable, project-neutral patterns. Supersedes the generic community `nestjs-best-practices` skill where they conflict.
 - **Behavior:** a main reference skill (auto-triggers on NestJS/DDD work) carrying a layer map, quick-ref rules table, supersede table, plus 25 on-demand rule files and 52 `.ts` templates (including Kubernetes liveness/readiness health probes and a standardized Prometheus `/metrics` endpoint with HTTP RED metrics); and five scaffolding skills — bootstrap an API foundation, add a feature module, a use-case service, a shared repository/gateway operation, or a TypeORM migration.
 - **Implementation:** `plugins/nestjs-api-architect/skills/nestjs-api-architect/SKILL.md` (+ `rules/`, `templates/`) and `scaffold-nestjs-api`, `add-nestjs-module`, `add-nestjs-use-case`, `add-nestjs-shared-op`, `add-nestjs-migration`.
-- **Status:** shipped.
+- **Status:** shipped at `0.1.1` (its two manifest descriptions synced).
 
 ## test-optimizer
 
@@ -78,21 +78,21 @@ A "feature" in this repo is a **plugin**. Each ships a marketplace catalog entry
 
 - **Purpose:** rewrite a rough prompt the user intends to give Claude Code into one that follows the official [best-practices doc](https://code.claude.com/docs/en/best-practices) — always grounded in the live page, which it re-fetches on every invocation.
 - **Behavior:** auto-triggers on "improve/rewrite this prompt", "make this prompt better" (also manual `/prompt-creator`). Fetches three URLs fresh each time — the best-practices page (the rubric) plus [model-config](https://code.claude.com/docs/en/model-config) and [sub-agents](https://code.claude.com/docs/en/sub-agents) for model and effort selection — each falling back to a bundled date-stamped reference with a staleness warning if its fetch fails. Then **names the request's shape out loud** — one-shot task, bug, large feature, exploratory, or unattended run — so the user can correct it before the rewrite. A *large feature* still yields a prompt, never a hand-off: the guidance's interview kickoff prompt adapted to that feature, ending in a spec to execute in a fresh session. When something the rewrite depends on is ambiguous it asks **one question per message**, multiple choice where the options are knowable, and holds back the clear parts until the unclear ones resolve (never guesses). **Assigns models explicitly whenever the rewritten prompt dispatches work** — subagents, parallel agents, or a workflow — naming a model per agent with one clause of justification each, so no dispatched agent silently inherits the main session's model; a single-agent prompt is left alone and gains no model line it doesn't need. It never picks the session's own model and never executes the dispatch. Delivers the rewritten prompt in a copy-paste-ready block, **a line naming the guidance actually used** (live URL + fetch date, or the fallback plus its staleness warning), a "what changed & why" list tied to specific rules (model assignments included), and an offer to run it now or in a fresh session. The rubric lives in one place — the body points at the fetched page rather than restating it. Does not execute the task itself and does not cover system prompts for the user's own LLM apps.
-- **Implementation:** `plugins/prompt-creator/skills/prompt-creator/SKILL.md` + `references/best-practices-checklist.md` (offline fallback, structured around the live page's ten body sections) + `references/model-selection.md` (offline fallback for the two model pages: alias and effort tables, the four-step subagent model-resolution order, and an explicit note on what those pages do *not* say) + `evals/evals.json` (8 evals incl. a negative trigger, a skill-absent baseline arm, a fan-out case that must assign models, and a single-agent case that must not).
-- **Status:** shipped at `0.3.0`, which added explicit model assignment for prompts that dispatch work. `0.2.0` applied all seven proposals (P1–P7) in [prompt-creator-superpowers-lessons.md](./prds/prompt-creator-superpowers-lessons.md); its four rejected proposals stay rejected.
+- **Implementation:** `plugins/prompt-creator/skills/prompt-creator/SKILL.md` + `references/best-practices-checklist.md` (offline fallback, structured around the live page's ten body sections) + `references/model-selection.md` (offline fallback for the two model pages: alias and effort tables, the four-step subagent model-resolution order, and an explicit note on what those pages do *not* say) + plugin-root `evals/` — 7 cases for `claude plugin eval`, incl. a negative trigger, an `offline` case run without the WebFetch grant so the fallback fires, a fan-out case that must assign models, and a single-agent case that must not. The old skill-absent case is now the runner's built-in no-plugin arm.
+- **Status:** shipped at `0.3.1`, which moved the evals to `claude plugin eval` and refreshed the model fallback for Opus 5.5 (its effort levels and `medium` default, effort caps, forks, `omitClaudeMd`). `0.3.0` added explicit model assignment for prompts that dispatch work. `0.2.0` applied all seven proposals (P1–P7) in [prompt-creator-superpowers-lessons.md](./prds/prompt-creator-superpowers-lessons.md); its four rejected proposals stay rejected.
 
 ## linear-flow
 
 - **Purpose:** drive Linear through its MCP tools using the user's own workspace conventions, so day-to-day tracking doesn't mean restating those conventions every session. A prompt layer over the tools — it does not reimplement the Linear API.
 - **Behavior:** five skills, all prefixed `ln-`. `ln-triage` takes a rough description, decides project-vs-issue by the workspace's rule (asking when genuinely ambiguous), and creates it. `ln-whats-next` is read-only and answers "what should I work on", ranking in-progress → blocked → near-delivery → current-client and grouping by client/project. `ln-ship-loop` reads branch, commits, and PR to find or create the matching issue, attach the PR, and propose the status move — it never commits, pushes, or opens PRs. Attaching a PR anywhere in the plugin first asks what it *is* to the issue — resolves, contributes to, or merely related — which titles the link and caps how far the status proposal may go; a project PR routes to an issue under it, since not every MCP server exposes a project link. `ln-project-lifecycle` and `ln-issue-lifecycle` are the symmetric pair for work whose shape is already known, covering creation plus every later edit; the issue side adds comments, sub-issues, and bulk grooming behind a hard "never write to a set you haven't listed back" guard. Every mutating call is shown and confirmed first.
 - **Config contract:** ships generic — no team key, client name, or label string anywhere in it. Workspace knowledge splits in two: *discoverable* values (teams, statuses, labels, templates) are read live from the Linear tools at use time, never hardcoded; *judgment* rules (project-vs-issue, naming patterns, description shapes, status meanings) resolve from `~/.claude/linear-conventions.md` if it exists, else the bundled `references/conventions.md`, else the user is asked. That split is what makes the plugin shippable to anyone.
-- **Implementation:** `plugins/linear-flow/skills/ln-{triage,whats-next,ship-loop,project-lifecycle,issue-lifecycle}/SKILL.md` + `evals/evals.json` each; plugin-root `references/{conventions,linear-mcp,pr-relations}.md` and `templates/{workspace-conventions,project-description,discovery-description}.md` shared across skills; skill-local `ln-issue-lifecycle/references/bulk-grooming.md`.
+- **Implementation:** `plugins/linear-flow/skills/ln-{triage,whats-next,ship-loop,project-lifecycle,issue-lifecycle}/SKILL.md` + `evals/evals.json` each; plugin-root `evals/` with four negative cases for `claude plugin eval` (the bare phrases "close these", "relabel these", "groom the backlog" and "track this" in GitHub or local-file contexts must fire no `ln-*` skill); plugin-root `references/{conventions,linear-mcp,pr-relations}.md` and `templates/{workspace-conventions,project-description,discovery-description}.md` shared across skills; skill-local `ln-issue-lifecycle/references/bulk-grooming.md`.
 - **Requires:** a Linear MCP server configured in the session. The only plugin here with a runtime dependency — see [STACK.md](./STACK.md).
-- **Status:** shipped at `0.2.0` (gained the PR relation gate).
+- **Status:** shipped at `0.3.0`, which anchors the four trigger phrases above to Linear in the `ln-issue-lifecycle` and `ln-triage` descriptions. `0.2.0` gained the PR relation gate.
 
 ## marketing-skills
 
 - **Purpose:** a bundle of 41 cross-referencing marketing skills — SEO, AI search (AEO/GEO), CRO, analytics, schema, copywriting, ads, email, social, PR, pricing, and more.
 - **Behavior:** each skill is independently triggerable and links to siblings; many carry `references/` deep-dive docs.
 - **Implementation:** `plugins/marketing-skills/skills/<skill>/SKILL.md`. **Derived** from a third-party repo — see [../NOTICE](../NOTICE) and review the upstream license before public distribution.
-- **Status:** shipped.
+- **Status:** shipped at `0.2.0`: manifest descriptions synced, and four fixes from the [prompt audit](./audits/prompt-audit-2026-09-23.md) (a wrong context-file path in `seo-audit`, textbook definitions trimmed from `marketing-psychology`, two volatile specifics marked for re-checking).

@@ -38,7 +38,7 @@ Keep these files short. If a rule keeps getting ignored, the file is probably to
 ### Working in this repo
 
 - **Explore → plan → implement → commit.** Use plan mode when a change spans multiple files or the approach is unclear; skip it for trivial edits (typo, version bump, a single link).
-- **Give Claude a check it can run.** Here that check is `claude plugin validate` (plus any `evals/evals.json`). Show the validate output as evidence — don't assert "it's valid" without running it. See [Testing](#testing).
+- **Give Claude a check it can run.** Here that check is `claude plugin validate`, plus `claude plugin eval` where a plugin has eval cases. Show the validate output as evidence — don't assert "it's valid" without running it. See [Testing](#testing).
 - **Be specific.** Scope the task (which plugin, which skill), point to the file or existing pattern to follow, and for a fix describe the symptom + what "fixed" looks like.
 - **Course-correct early; keep sessions focused.** `/clear` between unrelated tasks, `/compact` on long ones. Commit in small, descriptive steps.
 - **Add an adversarial review before "done."** Run the bundled `/code-review` skill (reviews the diff in a fresh subagent) for correctness before treating work as complete.
@@ -55,6 +55,8 @@ This repo has no application code. The "source" is Markdown skill content and JS
 - **Where `references/`/`templates/` live**: **skill-local by default** (`skills/<skill>/references/`) — that is the common case and matches most plugins here. Put them at the **plugin root** (`plugins/<name>/references/`) only when two or more skills in that plugin share the same file, linked as `../../references/<file>.md`. Copying one reference into several skill folders is banned: the copies drift on the first edit. `linear-flow` is the worked example of both halves.
 - **No persona preambles, no non-standard frontmatter, no dead repo-relative links** in skills (these were stripped from derived content — don't reintroduce them; see [PITFALLS.md](./PITFALLS.md)).
 - **Versions**: a plugin's `version` appears in both its `plugin.json` and its `marketplace.json` entry. They MUST match — bump both in the same commit.
+- **Descriptions**: the same holds for a plugin's `description` — identical in both manifests, changed in the same commit. The Installed tab and `claude plugin details` show the marketplace one (Claude Code 2.1.265+).
+- **Agent Skills spec limits** ([specification](https://agentskills.io/specification)): a `SKILL.md` `name` is 1–64 lowercase letters, digits and single inner hyphens, equal to its directory name; its `description` is at most 1,024 characters.
 - **Marketplace `name`**: never starts with `claude-`/`anthropic-` (reserved). Current name: `pedrohenriquens`.
 - **`source` paths**: relative to repo root (`./plugins/<name>`); keep them in lockstep with folder names.
 
@@ -93,14 +95,15 @@ Follow [Conventional Commits](https://www.conventionalcommits.org/). Types in us
 There is no test framework. Validation is the gate — run it locally exactly as CI does (`.github/workflows/validate.yml`):
 
 ```
-python3 scripts/check_compliance.py       # version-sync, frontmatter, dead links, reserved names
+python3 scripts/check_compliance.py       # version/description sync, frontmatter + spec limits, dead links, reserved names
 claude plugin validate .                  # the marketplace manifest
 claude plugin validate ./plugins/<name>   # a single plugin + its skills
 ```
 
 - Run the compliance script + the relevant `validate` after any manifest or skill change; both must pass before commit. The compliance script exits non-zero on a hard failure (size warnings don't fail).
 - The judgment-based best-practice rules a script can't measure (`description` quality, progressive disclosure) are audited by the `skill-auditor` plugin on demand — not part of the blocking gate.
-- Skills may carry `evals/evals.json` to guard triggering/quality — add or update these when changing a skill's `description` or behavior.
+- Behavior evals live in `plugins/<name>/evals/<case>/` (`prompt.md` + `graders/*.md`) and run with `claude plugin eval ./plugins/<name> --trust-plugin --no-publish` (Claude Code ≥ 2.1.269), which scores each case with and without the plugin. Runs call the model on your plan, so they are manual, not a CI gate. An `--allow-tools` grant covers every case in a run; cases that need different grants carry tags and run separately. Grade long replies with `regex` graders and keep `llm` graders for short, concrete PASS/FAIL criteria — the default judge misreads long replies (see [PITFALLS.md](./PITFALLS.md)). Add or update cases when changing a skill's `description` or behavior.
+- `prompt-creator` is the pilot: run `--tag online --allow-tools "WebFetch(domain:code.claude.com)"`, then `--tag offline` with no grant. Without the grant its online cases take the fallback path and fail. `linear-flow` carries four negative cases (`--ablation none` is enough for them). Every per-skill `evals/evals.json` is legacy: no runner reads them, so convert them to cases rather than extending them.
 
 ---
 
@@ -121,6 +124,7 @@ These files are living documents. When you change the project, update the releva
 - Scope or requirements change → `docs/PRD.md` and `docs/SUMMARY.md`.
 - New coding rule, banned shortcut, or workflow convention → add HERE (the source of truth).
 - Phase reached or priorities shifted → `docs/ROADMAP.md`.
+- An audit run (a tool's report plus this repo's triage of it) → `docs/audits/<tool>-<YYYY-MM-DD>.md`, linked from the ROADMAP item it serves.
 
 If you skip a doc update, note why in the commit message.
 

@@ -9,8 +9,12 @@ docs/prds/best-practices-compliance-gate.md.
 Hard failures (exit 1):
   - marketplace `name` uses a reserved claude-*/anthropic-* prefix
   - a plugin's marketplace.json version != its plugin.json version
+  - a plugin's marketplace.json description != its plugin.json description
   - a plugin `source` path doesn't resolve
   - a SKILL.md is missing `name` or `description` frontmatter
+  - a SKILL.md breaks an Agent Skills spec limit (agentskills.io/specification):
+    `name` 1-64 lowercase letters/digits with single inner hyphens, equal to its
+    directory name; `description` at most 1,024 characters
   - a repo-relative link (./ or ../) in a SKILL.md points at a missing file
 
 Warnings (exit 0): SKILL.md over the size budget.
@@ -27,6 +31,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 SIZE_BUDGET = 20_000  # bytes; warning only — leanness target, not a hard gate
 LINK_RE = re.compile(r"\[[^\]]*\]\((<?[^)>]+)>?\)")
+NAME_RE = re.compile(r"[a-z0-9]+(?:-[a-z0-9]+)*")  # no leading, trailing, or doubled hyphen
+NAME_MAX, DESC_MAX = 64, 1024
 
 fails: list[str] = []
 warns: list[str] = []
@@ -68,6 +74,18 @@ def frontmatter(text: str) -> dict[str, str]:
     return out
 
 
+def spec_problems(name: str, description: str, dirname: str) -> list[str]:
+    """Agent Skills spec limits on `name` and `description` (agentskills.io/specification)."""
+    out = []
+    if name and (len(name) > NAME_MAX or not NAME_RE.fullmatch(name)):
+        out.append(f"`name` {name!r} breaks the spec: 1-{NAME_MAX} lowercase letters, digits, single inner hyphens")
+    if name and name != dirname:
+        out.append(f"`name` {name!r} doesn't match its directory {dirname!r}")
+    if len(description) > DESC_MAX:
+        out.append(f"`description` is {len(description)} characters, over the spec's {DESC_MAX}")
+    return out
+
+
 def check_skill(skill: Path) -> None:
     text = skill.read_text(encoding="utf-8")
     rel = skill.relative_to(ROOT)
@@ -76,6 +94,8 @@ def check_skill(skill: Path) -> None:
         fails.append(f"{rel}: missing `name` in frontmatter")
     if not fm.get("description"):
         fails.append(f"{rel}: missing `description` in frontmatter")
+    for problem in spec_problems(fm.get("name", ""), fm.get("description", ""), skill.parent.name):
+        fails.append(f"{rel}: {problem}")
     size = len(text.encode("utf-8"))
     if size > SIZE_BUDGET:
         warns.append(f"{rel}: {size} bytes over {SIZE_BUDGET} budget — consider progressive disclosure")
@@ -109,6 +129,9 @@ def main() -> int:
                 f"plugin `{pname}`: version drift — marketplace.json {entry.get('version')} "
                 f"!= plugin.json {pj.get('version')}"
             )
+        if pj.get("description") != entry.get("description"):
+            # the Installed tab shows the marketplace one (Claude Code 2.1.265+), plugin.json elsewhere
+            fails.append(f"plugin `{pname}`: description drift — marketplace.json and plugin.json differ")
 
     for skill in sorted(ROOT.glob("plugins/*/skills/**/SKILL.md")):
         check_skill(skill)
@@ -130,6 +153,12 @@ def _selftest() -> int:
     assert frontmatter('---\nname: x\ndescription: "hi"\n---\n')["description"] == "hi", "quoted"
     assert frontmatter("---\nname: x\ndescription: bare words\n---\n")["description"] == "bare words", "bare"
     assert frontmatter("---\nname: x\ndescription: >-\n---\n").get("description", "") == "", "empty block"
+    assert spec_problems("pdf-processing", "ok", "pdf-processing") == [], "valid name"
+    for bad in ("-pdf", "pdf-", "pdf--x", "PDF", "pdf_x", "a" * 65):
+        assert spec_problems(bad, "ok", bad), f"bad name {bad!r}"
+    assert spec_problems("pdf", "ok", "other"), "name != directory"
+    assert not spec_problems("pdf", "x" * DESC_MAX, "pdf"), "description at the cap"
+    assert spec_problems("pdf", "x" * (DESC_MAX + 1), "pdf"), "description over the cap"
     print("selftest ok")
     return 0
 

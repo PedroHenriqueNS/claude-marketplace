@@ -11,7 +11,7 @@
     {
       "id": 2,
       "name": "clear-issue-drafts-then-creates",
-      "prompt": "Track this: the date picker on the signup form shows the wrong month in December",
+      "prompt": "Track this in Linear: the date picker on the signup form shows the wrong month in December",
       "expected_output": "Should search for an existing issue first, classify as an issue (single execution item, a bug) and say what decided it, discover the team's real statuses and label groups via the Linear tools, then show the full draft — title per the workspace naming pattern, description containing only what the user gave, labels only where the input determines them, starting status — and create it only after approval, reporting the identifier and URL. Must NOT invent repro steps, severity, or an affected version, and must NOT create a label that does not already exist.",
       "files": []
     },

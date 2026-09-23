@@ -124,6 +124,8 @@ Generate original footage from text or image prompts. Use for B-roll, hero visua
 
 ### Model Comparison
 
+AI video model specs shift every few months — verify resolution, duration, and cost against each vendor's current docs before relying on this table.
+
 | Model | Resolution | Max Duration | Best For | Cost |
 |-------|-----------|-------------|----------|------|
 | **Veo 3** (Google) | Up to 1080p (4K varies) | Variable | Top overall quality, synced audio | API-based |

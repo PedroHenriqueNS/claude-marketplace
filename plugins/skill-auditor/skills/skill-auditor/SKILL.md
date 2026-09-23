@@ -23,6 +23,7 @@ Work through three phases in order. Show findings from Phase 1 to the user and w
 - Check `.claude/skills/`, `~/.claude/skills/`, `CLAUDE.md`, `.cursorrules`, and similar locations
 - For each skill found, summarize its purpose, trigger conditions, and instructions
 - Note dependencies or overlaps between skills
+- Measure instead of estimating: run `claude -p "/skill-doctor"` from the project directory (Claude Code v2.1.252+; it prints the report as text), or ask the user to run `/skill-doctor` and paste it. It lists each loaded skill's context cost, recent token use, use count, and last use
 
 **Identify workflows and pain points:**
 - Scan recent commits and PR descriptions for recurring tasks
@@ -39,12 +40,13 @@ For each existing skill, evaluate how well it fits the project:
 - **Clarity** — triggers specific enough to fire, broad enough not to miss cases
 - **Completeness** — no gaps, outdated examples, or missing edge cases
 - **Conflicts** — no contradictions with other skills or current conventions
-- **Redundancy** — doesn't duplicate another skill or well-known defaults
+- **Redundancy** — doesn't duplicate another skill or well-known defaults; a skill the `/skill-doctor` report shows as unused is a removal candidate — cite its numbers
 
 Then check it against the mechanics that decide whether a Claude Code skill actually *works* — these are the highest-leverage and the easiest to get wrong:
 - **Frontmatter** — valid YAML (malformed metadata silently disables model-triggering); `name` matches the directory; required `name` + `description` present.
 - **Description** — it is THE trigger mechanism. States both *what* the skill does and *when* to use it, with the natural phrasings a user would type — specific enough not to over-trigger, pushy enough not to under-trigger, dense rather than padded against the shared description budget. (Run `/doctor` to see if any descriptions are being shortened or dropped.)
-- **Context cost** — SKILL.md stays in context once triggered, so every line is recurring cost. Keep it lean (well under ~500 lines), imperative, and free of WHY-narration. Bulky reference material, large templates, and deterministic logic belong in `references/`/`assets/`/`scripts/`, loaded on demand — not inlined. Reference files over ~300 lines should carry a table of contents.
+- **Model fit** — run the bundled `/claude-api prompt-audit` (Claude Code v2.1.221+) over the skills and CLAUDE.md: it flags instructions written for older models and proposes fixes as a diff. Triage its findings into section A rather than judging model-tuned wording unaided. If the subcommand isn't recognized, a personal `claude-api` skill is probably shadowing the bundled one — tell the user.
+- **Context cost** — take each skill's listing cost and recent token use from the `/skill-doctor` report, not an estimate. SKILL.md stays in context once triggered, so every line is recurring cost. Keep it lean (well under ~500 lines), imperative, and free of WHY-narration. Bulky reference material, large templates, and deterministic logic belong in `references/`/`assets/`/`scripts/`, loaded on demand — not inlined. Reference files over ~300 lines should carry a table of contents.
 - **Invocation fit** — `disable-model-invocation: true` for deliberate manual-only actions; `context: fork` only when the skill doesn't need the live conversation.
 
 ### Phase 3: Recommendations

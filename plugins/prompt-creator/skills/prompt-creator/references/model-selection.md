@@ -1,6 +1,6 @@
 # Model and effort selection for dispatched work (offline fallback)
 
-> Distilled from <https://code.claude.com/docs/en/model-config> and <https://code.claude.com/docs/en/sub-agents> on 2026-09-09. This file is the **fallback only** — when the live fetch works, the live pages win. If you are reading this because a fetch failed, tell the user the guidance may be stale.
+> Distilled from <https://code.claude.com/docs/en/model-config> and <https://code.claude.com/docs/en/sub-agents> on 2026-09-23. This file is the **fallback only** — when the live fetch works, the live pages win. If you are reading this because a fetch failed, tell the user the guidance may be stale.
 
 The best-practices page is the prompt rubric, but it carries no model-tier guidance: its single mention of a tier is a bare `model: opus` line inside a subagent frontmatter example, never justified. The tiers, the effort scale, and the mechanism that resolves them live on the two pages above.
 
@@ -34,13 +34,15 @@ Effort is a **second, independent dial**: it controls adaptive reasoning — whe
 | Level | When to use it |
 |---|---|
 | `low` | Short, scoped, latency-sensitive tasks that are not intelligence-sensitive. |
-| `medium` | Cost-sensitive work that can trade off some intelligence. |
-| `high` | Balances token usage and intelligence. **The default** on every model except Opus 4.7. |
+| `medium` | Cost-sensitive work that can trade off some intelligence. The default on Opus 5.5. |
+| `high` | Balances token usage and intelligence. **The default** on every model except Opus 5.5 and Opus 4.7. |
 | `xhigh` | Deeper reasoning at higher token spend. The default on Opus 4.7. |
 | `max` | Demanding tasks; shows diminishing returns and is prone to overthinking. Test before adopting broadly. |
 | `ultracode` | A Claude Code setting, not a model level: `xhigh` reasoning plus a dynamic workflow planned per substantive task. |
 
-Effort support is per model, and **a model not listed as supporting effort does not support it at all** — Fable 5.1/5, Opus 5, Sonnet 5, Opus 4.8 and 4.7 take all five levels; Opus 4.6 and Sonnet 4.6 take all but `xhigh`; **Haiku is not on that list, so do not pair an effort level with Haiku.** An unsupported level falls back to the highest supported level at or below it. **The scale is calibrated per model**, so `high` on Sonnet 5 and `high` on Opus 5 are not the same underlying value — never justify a level by comparing across models.
+Effort support is per model, and **a model not listed as supporting effort does not support it at all** — Fable 5.1/5, Opus 5.5, Opus 5, Sonnet 5, Opus 4.8 and 4.7 take all five levels; Opus 4.6 and Sonnet 4.6 take all but `xhigh`; **Haiku is not on that list, so do not pair an effort level with Haiku.** An unsupported level falls back to the highest supported level at or below it. **The scale is calibrated per model**, so `high` on Sonnet 5 and `high` on Opus 5 are not the same underlying value — never justify a level by comparing across models.
+
+An assigned level can also run lower than named: a `maxEffortLevel` setting (Claude Code v2.1.267+, for every model or per model) or an organization's effort cap makes any higher level run at the cap — a subagent's or skill's `effort` frontmatter included.
 
 For one-off depth without changing a setting, the keyword `ultrathink` anywhere in a prompt requests deeper reasoning for that turn. Other phrasings ("think hard", "think more") are passed through as ordinary text and are **not** recognized — don't write them into a rewrite expecting an effect.
 
@@ -61,6 +63,8 @@ Related mechanics worth knowing before writing a claim about them:
 
 - `CLAUDE_CODE_SUBAGENT_MODEL` is only a **default**; a definition's `model` and a per-invocation parameter both beat it. To force one model across every subagent, teammate, and workflow agent, `CLAUDE_CODE_SUBAGENT_MODEL_FORCE=1` must be set as well — which then ignores every `model` field, built-ins included.
 - Values are checked against an organization's `availableModels` allowlist; a blocked family alias falls to the newest permitted version of that family, and anything else falls to the inherited model; in interactive sessions Claude Code shows a warning naming both.
+- A **fork** — the subagent type that inherits the whole conversation — runs on the main session's model, so name models for fresh subagents, not forks.
+- A family alias (`opus`, `sonnet`) named for a subagent resolves to the main conversation's exact model when the session is already on that family, not to the version the alias points to.
 - Subagents **inherit the main conversation's extended thinking** setting. There is no per-subagent thinking switch.
 - `/tasks` shows which model each running subagent is on, plus its effort level when the definition sets one. That is the check to write into a prompt whose model assignments matter.
 
@@ -84,7 +88,7 @@ These are worked examples of tiering by task, and they matter because a rewrite 
 - **general-purpose** — every subagent tool; follows the full §3 order.
 - **statusline-setup** runs on **Sonnet**; **claude-code-guide** runs on **Haiku**. Anthropic ships a docs-lookup agent on the cheapest tier and a config-writing agent on the middle one — the same reasoning a rewrite should apply.
 
-Explore and Plan skip CLAUDE.md and the parent session's git status to stay fast; every other built-in and custom subagent loads both.
+Explore and Plan skip CLAUDE.md and the parent session's git status to stay fast; every other built-in and custom subagent loads both, unless its definition sets `omitClaudeMd` (Claude Code v2.1.271+) to skip the user, project and local CLAUDE.md files.
 
 ## 6. When dispatching is right at all (`sub-agents` › Work with subagents)
 

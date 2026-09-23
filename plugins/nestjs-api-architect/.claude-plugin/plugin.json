@@ -1,7 +1,7 @@
 {
   "name": "nestjs-api-architect",
-  "version": "0.1.0",
-  "description": "Domain-Driven Design (DDD) architecture and best practices for building, maintaining, and scaffolding production NestJS APIs — layered domain/application/infrastructure structure, use-case services, per-operation repositories/gateways, transactional outbox, spot-safe idempotency.",
+  "version": "0.1.1",
+  "description": "Domain-Driven Design (DDD) architecture and best practices for building, maintaining, and scaffolding production NestJS APIs — layered domain/application/infrastructure structure, use-case services, per-operation repositories/gateways, transactional outbox, spot-safe idempotency. Supersedes the generic community nestjs-best-practices skill where they conflict.",
   "author": { "name": "PedroHenriqueNS" },
   "keywords": [
     "nestjs",

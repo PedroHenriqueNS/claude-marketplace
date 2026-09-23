@@ -180,7 +180,7 @@ G2 and Capterra (now owned by G2 as of Feb 2026) listings are **worthless withou
 ### Badges and paid plans
 
 - **"Users Love Us" badge** is still free: requires 20 reviews at 4.0+ average.
-- **Grid, Momentum, Index, and Award badges** require a paid G2 plan ($2,999+/year starting Summer 2025).
+- **Grid, Momentum, Index, and Award badges** require a paid G2 plan (verify the current price — it was $2,999+/year as of Summer 2025).
 - **Do not spend on paid G2 in year one.** The free listing + Users Love Us badge is sufficient.
 
 ### Cross-platform
