@@ -158,6 +158,8 @@ Six cases go in `plugins/project-initializer/evals/<case>/`, following the repo'
 
 The "Indicator" rows are `Skill` `tool_used` graders, which a two-arm run leaves unscored.
 
+> **Changed at build time (2026-10-27, owner's decision):** case 3's link grader is `(STACK|ROADMAP|FEATURES)[^\n]*link|link[^\n]*(STACK|ROADMAP|FEATURES)`, not the literal `@docs/(STACK|ROADMAP|FEATURES)`. In the first run the skill proposed the links correctly in every run but named the docs without the `@docs/` prefix, so the literal pattern was grading spelling, not the proposal.
+
 Run them by hand, as every eval in this repo is run, on Claude Code ≥ 2.1.269:
 
 ```
