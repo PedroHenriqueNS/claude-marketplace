@@ -1,6 +1,6 @@
 ---
 name: project-initializer
-description: Use this skill ONLY when the user explicitly asks to initialize, bootstrap, or scaffold a new project's agent documentation. Triggers are explicit phrases like "init this project", "initialize the project", "set up AGENTS.md and CLAUDE.md", "bootstrap project docs", "scaffold the docs", or references to running a custom /init workflow. Do NOT auto-trigger on empty projects, new git repos, or missing documentation — wait for the user to explicitly invoke this. Do NOT use for updating docs in established projects.
+description: Use this skill ONLY when the user explicitly asks to initialize, bootstrap, or scaffold a new project's agent documentation. Triggers are explicit phrases like "init this project", "initialize the project", "set up AGENTS.md and CLAUDE.md", "bootstrap project docs", "scaffold the docs", or references to running a custom /init workflow. Do NOT auto-trigger on empty projects, new git repos, or missing documentation — wait for the user to explicitly invoke this. Do NOT use for updating docs in established projects; that is the refresh-docs skill.
 ---
 
 # Project Initializer
@@ -20,67 +20,23 @@ Do not trigger based on context alone (empty folder, missing docs, new repo). Wa
 
 ## Files to create
 
-### Root-level
+Each file has a template in this plugin's `templates/` folder holding its skeleton, its format rules and any block that must be written verbatim. Read a file's template before writing that file, and follow it.
 
-**AGENTS.md** — Primary source of truth for any AI agent working on the project. Contains:
-- Project overview (one paragraph)
-- Tech stack summary (link to `docs/STACK.md` for details)
-- Repository structure and key directories
-- Development workflow (install, run, test, lint commands)
-- Coding conventions and style rules
-- Commit and PR conventions
-- Testing expectations
-- Known pitfalls reference (link to `docs/PITFALLS.md`)
-- Explicit `## Documentation maintenance` section (see below — non-negotiable)
+| File | Template | What it is |
+|---|---|---|
+| `CLAUDE.md` | [claude-md.md](../../templates/claude-md.md) | Claude Code's entry point; imports only the core docs, links the rest |
+| `AGENTS.md` | [agents-md.md](../../templates/agents-md.md) | Primary guide for any agent: hard constraints, structure, workflow, the Documentation maintenance map |
+| `docs/CONVENTIONS.md` | [conventions.md](../../templates/conventions.md) | Canonical coding rules; the size rule; where conventions live |
+| `docs/PITFALLS.md` | [pitfalls.md](../../templates/pitfalls.md) | One short rule per gotcha |
+| `docs/PITFALLS-HISTORY.md` | [pitfalls-history.md](../../templates/pitfalls-history.md) | The full story behind each rule; nothing imports it |
+| `docs/ARCHITECTURE.md` | [architecture.md](../../templates/architecture.md) | Structure, data flow, design decisions, a dated status line |
+| `docs/FEATURES.md` | [features.md](../../templates/features.md) | One block per feature, with PRD and fixed status |
+| `docs/ROADMAP.md` | [roadmap.md](../../templates/roadmap.md) | Phases with status and a **Done when:** line each |
+| `docs/STACK.md` | [stack.md](../../templates/stack.md) | Stack detail and a pins table from the manifests |
+| `docs/SUMMARY.md` | [summary.md](../../templates/summary.md) | Executive summary, dated status, top priorities |
+| `docs/PRD.md` | [prd.md](../../templates/prd.md) | Problem, users, goals, non-goals, metrics, constraints |
 
-**CLAUDE.md** — Claude Code's entry point. Stays lean, defers to AGENTS.md to avoid duplication:
-
-```markdown
-# CLAUDE.md
-
-This file provides guidance to Claude Code when working with this repository.
-
-**Primary reference:** See @AGENTS.md for the complete guide — project overview, stack, workflows, conventions, and pitfalls.
-
-## Claude-specific notes
-
-[Any Claude Code-specific preferences, tool usage patterns, or behaviors that don't belong in AGENTS.md. Leave empty with a TODO if nothing specific yet.]
-
-## Living documentation
-
-Keep these files current as the project evolves:
-- @AGENTS.md
-- @docs/ARCHITECTURE.md
-- @docs/CONVENTIONS.md
-- @docs/FEATURES.md
-- @docs/PITFALLS.md
-- @docs/PRD.md
-- @docs/ROADMAP.md
-- @docs/STACK.md
-- @docs/SUMMARY.md
-
-Update relevant docs whenever making changes that affect architecture, features, stack, conventions, or reveal new pitfalls.
-```
-
-### docs/ folder
-
-**docs/ARCHITECTURE.md** — How the system is structured. Components, data flow, key design decisions, module boundaries. Use Mermaid diagrams for topology, but only where they earn their place — see "Diagramming policy" below. The default for structure is prose, tables, and ASCII trees; a Mermaid diagram is the exception reserved for flows where ordering or branching carries the meaning.
-
-**docs/CONVENTIONS.md** — Canonical home for project coding rules. Every rule that applies across the codebase (naming, call-site patterns, error shapes, banned shortcuts, library choices, branching/PR workflow) goes here. The file is the single source of truth — when AGENTS.md, CLAUDE.md, inline comments, or anyone's private notes contradict it, this file wins. New conventions land HERE in the same PR that establishes them, never buried in commit messages or AI-assistant private memory.
-
-**docs/FEATURES.md** — What the product does. One section per feature: purpose, user-facing behavior, implementation notes, status (planned / in-progress / shipped).
-
-**docs/PITFALLS.md** — Gotchas and non-obvious constraints — *past failures* and how they were resolved. Things that would trip up a new contributor or agent. Growing list; each entry dated. Distinct from CONVENTIONS.md, which captures forward-looking rules; PITFALLS.md captures the failure modes that motivated them.
-
-**docs/PRD.md** — Product Requirements Document. Problem being solved, target users, goals, non-goals, success metrics, constraints. High-level and stable.
-
-**docs/ROADMAP.md** — Phased plan: what ships in each phase, what's deferred, what's currently in-flight. Updated whenever priorities shift, milestones are reached, or new work is scoped.
-
-**docs/STACK.md** — Detailed tech stack. Languages, frameworks, libraries with versions, infrastructure, external services, dev tools. The "what we use and why" document.
-
-**docs/SUMMARY.md** — Short executive summary. What this project is in 3–5 sentences, current status, top priorities. First doc anyone should read.
-
-**docs/EVENTS.md** — *Conditional, only when the project touches Kafka or RabbitMQ as a producer OR consumer.* Cross-service catalog of every routing key / topic this service **publishes** (with the consumer queues across services that subscribe to each one) **and every routing key / topic this service consumes** (with the producing service identified). See "Conditional file: docs/EVENTS.md" below for the full detection + template.
+**docs/EVENTS.md** — *Conditional, only when the project touches Kafka or RabbitMQ as a producer OR consumer.* Cross-service catalog of every routing key / topic this service **publishes** (with the consumer queues across services that subscribe to each one) **and every routing key / topic this service consumes** (with the producing service identified). See "Conditional file: docs/EVENTS.md" below.
 
 ## Diagramming policy
 
@@ -109,11 +65,11 @@ When in doubt, prefer prose. Most architecture is adequately conveyed without a 
 ### Step 1: Survey the project
 
 Before writing anything, inspect the working directory:
-- Check which target files already exist (AGENTS.md, CLAUDE.md, docs/ARCHITECTURE.md, docs/CONVENTIONS.md, docs/FEATURES.md, docs/PITFALLS.md, docs/PRD.md, docs/ROADMAP.md, docs/STACK.md, docs/SUMMARY.md, and — if step 1.5 triggers — docs/EVENTS.md)
-- Read any existing README, source code, or config files (package.json, pyproject.toml, Cargo.toml, go.mod, etc.) to understand the stack
+- Check which target files already exist (every file in the table above, and — if step 1.5 triggers — docs/EVENTS.md)
+- Read any existing README, source code, or config files (package.json, pyproject.toml, Cargo.toml, go.mod, etc.) to understand the stack and its pinned versions
 - Identify language/framework from file extensions and configs
 - Detect monorepo shape: is there a `packages/`, `apps/`, `services/`, or sibling-services layout? If yes, plan to scaffold per-scope CONVENTIONS.md (root + each service + infrastructure layer if present) — see "Monorepo layout" below.
-- If the project is empty or unclear, ask the user for: project name, one-sentence purpose, and intended tech stack before proceeding
+- If the project is empty or unclear, ask the user for: project name, one-sentence purpose, and intended tech stack before proceeding. Ask too for any hard constraints, and whether the roadmap's phases are sequential, when the answers can't be read from the repo.
 
 ### Step 1.5: Detect event-broker traffic (Kafka / RabbitMQ producers OR consumers)
 
@@ -145,24 +101,28 @@ Build a list of:
 
 - Only create files in `TO_CREATE`
 - Report `TO_SKIP` files to the user at the end so they know what was preserved
-- If the user wants existing files updated, they can ask in a follow-up — that's out of scope for this skill
+- If the user wants existing files reviewed or updated, that is out of scope here: point them at the `refresh-docs` skill in this plugin
 
 ### Step 3: Generate content
 
-For each file in `TO_CREATE`, write real content — not empty scaffolds. Pull from:
+For each file in `TO_CREATE`, write real content — not empty scaffolds — in the shape its template sets. Pull from:
 - Information gathered in Step 1
 - Answers to clarifying questions
 - Reasonable inferences from the stack (e.g., Next.js → include standard Next.js conventions; Python → include venv/uv/poetry notes based on what's present)
 
 When writing ARCHITECTURE.md, apply the "Diagramming policy" above: identify the one or two flows that genuinely warrant a diagram, render those as Mermaid with a paired Constraints prose list, and leave everything else as prose, tables, or ASCII trees. Do not diagram for the sake of having a diagram.
 
-Mark genuinely unknown sections with `> TODO: [specific question]` so the user knows exactly what to fill in. Do not invent facts to fill gaps.
+Mark genuinely unknown sections with `> TODO: [specific question]` so the user knows exactly what to fill in. Do not invent facts to fill gaps — hard constraints, pins and status lines included.
 
 ### Step 4: Cross-link
 
-Every doc references related docs using relative links. AGENTS.md and CLAUDE.md both point to the `docs/` folder. When information belongs in multiple places, put the detail in one file and link from the others. No duplication.
+Every doc references related docs using relative links. AGENTS.md and CLAUDE.md both point to the `docs/` folder. When information belongs in multiple places, put the detail in one file and link from the others. No duplication: the Documentation maintenance map lives only in AGENTS.md, and CONVENTIONS.md links to it.
 
-### Step 5: Initialize git (if not already)
+### Step 5: Check sizes
+
+Count the lines of every file you generated (`wc -l`, or read the file where the shell isn't available). Each file that CLAUDE.md imports (`AGENTS.md`, `docs/CONVENTIONS.md`, `docs/PITFALLS.md`) must be under 200 lines; if one is not, move detail into a linked file that nothing imports, then count again.
+
+### Step 6: Initialize git (if not already)
 
 If there's no `.git` directory:
 - Run `git init`
@@ -172,97 +132,14 @@ If there's no `.git` directory:
 
 Do NOT create a GitHub repo or push. If the user wants that, they'll ask.
 
-### Step 6: Report
+### Step 7: Report
 
 Output a summary containing:
 - Tree view of files created
 - List of files skipped (already existed)
+- The line count of each imported file, and a note that Claude Code's combined-size warning, at startup and in `/status`, is the check for the whole imported set
 - Any TODOs left for the user to fill in
 - Git status (initialized / already existed / committed)
-
-## Required content: Documentation maintenance section
-
-Every AGENTS.md this skill creates must include this exact section verbatim. This is the mechanism that keeps the docs alive — without it, they rot.
-
-```markdown
-## Documentation maintenance
-
-These files are living documents. When you make changes to this project, update the relevant docs in the same commit:
-
-- Architectural change → update `docs/ARCHITECTURE.md`
-- Architectural change that alters a flow depicted in a Mermaid diagram → update that diagram in the SAME commit (a stale diagram misleads agents because it looks authoritative). Diagram topology only; keep constraints in the prose beside it.
-- New feature or feature change → update `docs/FEATURES.md`
-- Discovered a gotcha → add to `docs/PITFALLS.md`
-- Stack change (new dep, version bump, service) → update `docs/STACK.md`
-- Scope or requirements change → update `docs/PRD.md` and `docs/SUMMARY.md`
-- New coding rule, banned shortcut, or workflow convention → add to `docs/CONVENTIONS.md` (THE source of truth — never bury rules in commit messages, AGENTS.md prose, or private notes)
-- Phase reached or priorities shifted → update `docs/ROADMAP.md`
-
-If you skip a doc update, note why in the commit message.
-```
-
-## Required content: CONVENTIONS.md scaffold
-
-Every CONVENTIONS.md this skill creates must include this header verbatim plus stack-appropriate rule placeholders. This establishes the file as the single source of truth from day one.
-
-```markdown
-# <Project Name> — Conventions
-
-Canonical home for project coding rules. Every rule that applies across the codebase lives here — naming, call-site patterns, error shapes, banned shortcuts, library choices, branching and PR workflow, anything else.
-
-When a rule conflicts with what's in `AGENTS.md`, `CLAUDE.md`, the spec docs, or any inline comment, **this file wins**. The other files should be updated to match.
-
-New conventions land HERE in the same PR that establishes them — never in commit messages, AI-assistant private notes, or buried inline comments.
-
----
-
-## Languages and code style
-
-> TODO: Document the project's language conventions (TypeScript strictness, Python type hints, Go style, etc.). Include any banned features (e.g. "no `any`", "no global state in services").
-
----
-
-## Branching and PR workflow
-
-> TODO: Document the branching model (trunk-based / GitFlow / roadmap-branch / etc.) and PR target rules.
-
----
-
-## Conventional Commits
-
-> TODO: List allowed types (feat / fix / chore / docs / refactor / test / etc.) and scopes for this project.
-
----
-
-## Testing
-
-> TODO: Document the test layout, runner, and minimum coverage expectations.
-
----
-
-## Diagramming
-
-> Mermaid only (plain text → agent-readable, diffable, renders for humans; never an exported image). Diagram a flow only when it has branching, ordering that matters, or 4+ non-obvious relationships AND is stable. Otherwise use prose, tables, or ASCII trees. Topology goes in the diagram; constraints ("idempotent", "never retry on 4xx") go in prose beside it. Derive strictly from code, cap ~7 nodes (split bigger flows), and update any diagram in the same commit as the code change it depicts.
-
----
-
-## Documentation maintenance
-
-> TODO: Lift the same map from AGENTS.md so contributors see it here too.
-
----
-
-## Where conventions live
-
-| Scope | File |
-|---|---|
-| This file | Project-wide coding rules |
-| Past failures + fixes | `docs/PITFALLS.md` |
-
-When establishing a new convention (in code review, brainstorming, direct user instruction), add it HERE in the same PR.
-```
-
-For monorepos, this header gets duplicated (with adjusted scope) at each layer — see "Monorepo layout" below.
 
 ## Conditional file: `docs/EVENTS.md` (Kafka / RabbitMQ producers OR consumers)
 
@@ -273,8 +150,8 @@ When events-active, write `docs/EVENTS.md` by following `<this-skill-dir>/templa
 Three things are specific to running it inside an initialization:
 
 - You're creating `docs/CONVENTIONS.md` in this same run, so append the template's "## Event catalog" block to it directly — the template's Phase 4.1 "stop and ask before creating CONVENTIONS.md" guard is for retrofitting an existing repo, not for a fresh scaffold.
-- Add `- @docs/EVENTS.md` to the CLAUDE.md "Living documentation" list (alphabetical position) when you create CLAUDE.md.
-- Don't run the template's Phase 4.4 (standalone commit) — `docs/EVENTS.md` is part of the single initial commit in Step 5.
+- CLAUDE.md is written from [claude-md.md](../../templates/claude-md.md) in this same run, so its `docs/EVENTS.md` link is already there; skip the template's Phase 4.2 CLAUDE.md step.
+- Don't run the template's Phase 4.4 (standalone commit) — `docs/EVENTS.md` is part of the single initial commit in Step 6.
 
 ## Monorepo layout
 
@@ -287,9 +164,7 @@ If the project has multiple services / apps / packages, scaffold a CONVENTIONS.m
 └── <service-or-app>/docs/CONVENTIONS.md         # per service/app
 ```
 
-Each scope's CONVENTIONS.md links to the others ("repo-level lives at /docs/CONVENTIONS.md; infrastructure rules at /infrastructure/docs/CONVENTIONS.md") so readers can navigate. Service-level rules override repo-level rules for that service when they conflict — say so explicitly in the service-level file's header.
-
-If a service is pre-scaffold (directory exists but no source yet), a CONVENTIONS.md is still valuable: it captures forward-looking rules so the first scaffold pass and every subsequent contribution land on the right conventions from day one. End the file with an "Open decisions for scaffold time" section listing TBDs (package manager, styling library, test layout, etc.) that get moved into the body once decided.
+Use each scope directory as the survey found it. The root file's "Where conventions live" table gets one row per scoped file, and the scoped files' headers say they override the root for their scope — both as [conventions.md](../../templates/conventions.md) sets out. Only the root file is imported.
 
 ## Rules
 
@@ -301,7 +176,8 @@ The behavior is specified in the steps above; these invariants are restated as a
 - **No empty scaffolds** — every section has real content or an explicit TODO.
 - **Stack-aware** — tailor conventions and `.gitignore` to the detected stack.
 - **Diagrams earn their place** — Mermaid only, and only for branching/ordering/non-obvious-relationship flows that are stable; prose, tables, and ASCII trees are the default. Topology in the diagram, constraints in prose beside it. See "Diagramming policy".
-- **Living docs are non-negotiable** — the maintenance section goes into AGENTS.md verbatim, AND CONVENTIONS.md is created with the canonical-source-of-truth header verbatim.
+- **Living docs are non-negotiable** — the maintenance map goes into AGENTS.md verbatim, AND CONVENTIONS.md is created with the canonical-source-of-truth header verbatim, from their templates.
+- **Import only the core** — CLAUDE.md imports `AGENTS.md`, `docs/CONVENTIONS.md` and `docs/PITFALLS.md`; every other living doc is a link, and each imported file stays under 200 lines.
 - **Conventions live in `docs/CONVENTIONS.md`, never in private notes** — a new rule lands in the doc in the same PR; the doc is what survives session boundaries for every contributor, human or AI.
 - **Per-scope CONVENTIONS.md for monorepos** — root + each service + infrastructure layer; cross-link so readers can navigate.
 - **Local git only** — never push to a remote or create a GitHub repo unprompted.
