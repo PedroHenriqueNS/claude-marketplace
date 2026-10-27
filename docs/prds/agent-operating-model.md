@@ -1,5 +1,5 @@
 ---
-status: proposed
+status: implemented
 ---
 
 # agent-operating-model: set up a project's agent operating model
@@ -193,6 +193,8 @@ claude plugin eval ./plugins/agent-operating-model --trust-plugin --no-publish -
 | 6 | `negative-init-project` | none | "Init this project" does not fire the skill. |
 
 **Before building case 3,** verify that a headless run granted `Write` can create files under `.claude/agents/`, which may be a protected path. If it can't, case 3 grades the `Write` calls' inputs in the `trace` instead of the files.
+
+**Build deviations (2026-10-27).** Checked against the live plugin-evals page and a probe run: headless runs deny writes under `.claude/` even with `Write(.claude/**)` granted, so case 3 grades `.claude/agents/` through `tool_used: Write` inputs (the fallback above), and the agent files were validated by rebuilding them from those inputs. `regex` graders take `flags: i` instead of inline `(?i)` and have no `min`, so "at least three `Signal:` lines" is a repeated group. The full-model-ID check looks at `Write` inputs, since the trace's metadata names the session model by full ID. One command with `--ablation with-without` replaces the separate case-3 run. Details in [PITFALLS](../PITFALLS.md) (2026-10-27) and [CONVENTIONS › Testing](../CONVENTIONS.md#testing).
 
 After case 3, run `claude plugin validate .claude/agents` once by hand inside a run kept with `--keep-temp`. The command accepts an agents directory from Claude Code 2.1.233. At build time, confirm exact grader keys, `file_exists` glob support and `case.yaml` fields against the live [plugin-evals](https://code.claude.com/docs/en/plugin-evals) page.
 

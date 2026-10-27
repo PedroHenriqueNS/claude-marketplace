@@ -81,6 +81,13 @@
       "version": "0.3.0",
       "description": "Drive Linear through its MCP tools using your own workspace conventions — triage rough work into the right project or issue, decide what to work on next, bind branches and PRs to issues, and manage issue and project lifecycles.",
       "author": { "name": "PedroHenriqueNS" }
+    },
+    {
+      "name": "agent-operating-model",
+      "source": "./plugins/agent-operating-model",
+      "version": "0.1.0",
+      "description": "Set up an agent operating model for any project — reads the repo, sizes a team of leads and specialists from concrete signals, proposes it in one message, and after one approval writes docs/OPERATING-MODEL.md, the .claude/agents/ files, and a CLAUDE.md pointer, with per-task model and effort rules and a floor in every agent file.",
+      "author": { "name": "PedroHenriqueNS" }
     }
   ]
 }

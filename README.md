@@ -19,6 +19,7 @@ A personal [Claude Code plugin marketplace](https://code.claude.com/docs/en/plug
 | [`context-handoff`](plugins/context-handoff) | Write a cold-start `HANDOFF.md` before `/clear`/`/compact` so a fresh session resumes in ~30s. |
 | [`prompt-creator`](plugins/prompt-creator) | Rewrite a rough prompt into a best-practice one, grounded in the live Claude Code best-practices doc. |
 | [`linear-flow`](plugins/linear-flow) | Drive Linear from your own workspace conventions — triage, what's next, branch/PR sync, issue & project lifecycles. Requires a Linear MCP server. |
+| [`agent-operating-model`](plugins/agent-operating-model) | Set up a project's agent operating model — leads and specialists sized from repo signals, per-task model/effort rules with a floor in every agent file, written after one approval. |
 
 ## Layout
 

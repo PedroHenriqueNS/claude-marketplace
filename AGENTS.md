@@ -4,7 +4,7 @@ Primary source of truth for any AI agent (or human) working on **claude-marketpl
 
 ## Project overview
 
-`claude-marketplace` is a personal [Claude Code plugin marketplace](https://code.claude.com/docs/en/plugin-marketplaces) — a single-repo catalog that owns and distributes eleven Claude Code plugins. There is no application code, build step, or runtime: the project is Markdown skill content plus JSON manifests, made installable by `.claude-plugin/marketplace.json`. See [docs/SUMMARY.md](./docs/SUMMARY.md) for the 30-second version.
+`claude-marketplace` is a personal [Claude Code plugin marketplace](https://code.claude.com/docs/en/plugin-marketplaces) — a single-repo catalog that owns and distributes twelve Claude Code plugins. There is no application code, build step, or runtime: the project is Markdown skill content plus JSON manifests, made installable by `.claude-plugin/marketplace.json`. See [docs/SUMMARY.md](./docs/SUMMARY.md) for the 30-second version.
 
 ## Tech stack
 
@@ -13,10 +13,10 @@ Markdown (skill content + docs), JSON (manifests), validated by the Claude Code 
 ## Repository structure
 
 ```
-.claude-plugin/marketplace.json   # catalog: name "pedrohenriquens", owner, 11 plugins
+.claude-plugin/marketplace.json   # catalog: name "pedrohenriquens", owner, 12 plugins
 plugins/<name>/.claude-plugin/plugin.json   # one plugin's identity + version
 plugins/<name>/skills/<skill>/SKILL.md      # the capability (+ optional references/ templates/; legacy evals/)
-plugins/<name>/evals/<case>/                # eval cases for `claude plugin eval` (prompt-creator, linear-flow)
+plugins/<name>/evals/<case>/                # eval cases for `claude plugin eval` (prompt-creator, linear-flow, agent-operating-model)
 docs/                             # living documentation (start at SUMMARY.md)
 README.md · NOTICE · .gitignore · .gitattributes
 ```

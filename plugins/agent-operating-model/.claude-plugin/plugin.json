@@ -1,0 +1,7 @@
+{
+  "name": "agent-operating-model",
+  "version": "0.1.0",
+  "description": "Set up an agent operating model for any project — reads the repo, sizes a team of leads and specialists from concrete signals, proposes it in one message, and after one approval writes docs/OPERATING-MODEL.md, the .claude/agents/ files, and a CLAUDE.md pointer, with per-task model and effort rules and a floor in every agent file.",
+  "author": { "name": "PedroHenriqueNS" },
+  "keywords": ["agents", "subagents", "operating-model", "leads", "specialists", "delegation", "model", "effort"]
+}
