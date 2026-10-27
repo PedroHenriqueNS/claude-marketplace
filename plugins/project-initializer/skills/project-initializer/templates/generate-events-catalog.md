@@ -353,7 +353,7 @@ silently create a conventions file from scratch.
   one-line pointer: `For the per-event catalog, see [EVENTS.md](EVENTS.md).`
 - `AGENTS.md` "Documentation maintenance" section — add this bullet:
   `- New subscription against this service's events, OR new/renamed published <routing-key|topic>, OR new/renamed consumed <routing-key|topic> (this service binding to upstream events) → update docs/EVENTS.md`
-- `CLAUDE.md` "Living documentation" list (if present) — add `- @docs/EVENTS.md` in alphabetical position.
+- `CLAUDE.md` "Living documentation" list (if present) — add `- [docs/EVENTS.md](docs/EVENTS.md)` in alphabetical position. Make it a plain link, not an `@` import: imports load in full into every session at launch.
 
 ### 4.3 Verify
 

@@ -4,10 +4,9 @@ Claude Code's entry point. It stays lean and defers to `AGENTS.md`.
 
 Format rules:
 
-- Write the block below verbatim, filling the bracketed note.
+- Write the block below verbatim, filling the bracketed note. The one line to drop is `docs/EVENTS.md`, unless the project is events-active; when it is, the line stays a link.
 - The "Living documentation" list imports only the core: `AGENTS.md`, `docs/CONVENTIONS.md` and `docs/PITFALLS.md`. Claude Code expands every import at launch, in full, in every session, so every other living doc is a plain Markdown link on the same list.
 - The sentence above the list says why. Keep it as visible Markdown: HTML comments are stripped before the file reaches Claude.
-- Include the `docs/EVENTS.md` line only when the project is events-active. It stays a link.
 - `docs/MODEL-NOTES.md` is never written at init time; `update-for-model` adds it to the core imports later.
 - Imports added by other tools or plugins are theirs; leave them as they are.
 

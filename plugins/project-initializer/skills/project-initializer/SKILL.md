@@ -120,7 +120,7 @@ Every doc references related docs using relative links. AGENTS.md and CLAUDE.md 
 
 ### Step 5: Check sizes
 
-Count the lines of every file you generated (`wc -l`). Each file that CLAUDE.md imports (`AGENTS.md`, `docs/CONVENTIONS.md`, `docs/PITFALLS.md`) must be under 200 lines; if one is not, move detail into a linked file that nothing imports, then count again.
+Count the lines of every file you generated (`wc -l`, or read the file where the shell isn't available). Each file that CLAUDE.md imports (`AGENTS.md`, `docs/CONVENTIONS.md`, `docs/PITFALLS.md`) must be under 200 lines; if one is not, move detail into a linked file that nothing imports, then count again.
 
 ### Step 6: Initialize git (if not already)
 
@@ -150,7 +150,7 @@ When events-active, write `docs/EVENTS.md` by following `<this-skill-dir>/templa
 Three things are specific to running it inside an initialization:
 
 - You're creating `docs/CONVENTIONS.md` in this same run, so append the template's "## Event catalog" block to it directly — the template's Phase 4.1 "stop and ask before creating CONVENTIONS.md" guard is for retrofitting an existing repo, not for a fresh scaffold.
-- In CLAUDE.md, `docs/EVENTS.md` is a plain Markdown link on the "Living documentation" list (alphabetical position), as [claude-md.md](../../templates/claude-md.md) shows — not the import form the events template's Phase 4.2 uses.
+- CLAUDE.md is written from [claude-md.md](../../templates/claude-md.md) in this same run, so its `docs/EVENTS.md` link is already there; skip the template's Phase 4.2 CLAUDE.md step.
 - Don't run the template's Phase 4.4 (standalone commit) — `docs/EVENTS.md` is part of the single initial commit in Step 6.
 
 ## Monorepo layout

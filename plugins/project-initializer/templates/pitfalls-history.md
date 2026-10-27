@@ -7,21 +7,13 @@ Format rules:
 - Each entry sits under the same heading text as its rule in `PITFALLS.md`.
 - Each entry records symptom, cause, fix and dates. Nothing is cut from a story when its rule is shortened.
 - Append; never delete an entry whose rule is still in `PITFALLS.md`.
+- Entry shape: `## <same heading as the rule>`, then **Date:**, **Symptom:**, **Cause:** and **Fix:** (with commits or PRs), one paragraph each.
+- A new project gets the skeleton below as is, with no placeholder entry.
 
 ````markdown
 # Pitfalls — history
 
 The full story behind each rule in [PITFALLS.md](./PITFALLS.md). Read an entry when its rule is not enough to decide.
-
-## <Short name of the gotcha>
-
-**Date:** YYYY-MM-DD
-
-**Symptom:** <what went wrong, as observed>
-
-**Cause:** <why it happened>
-
-**Fix:** <what resolved it, with commits or PRs>
 
 > TODO: Add the first story with the first entry in PITFALLS.md.
 ````

@@ -22,9 +22,9 @@ Primary source of truth for any AI agent (or human) working on **<Project Name>*
 
 These rules override every other consideration, including speed and convenience:
 
-1. <A rule from the survey or the user's answers.>
+1. <A rule from the survey or the user's answers — one numbered item per rule. When none are known, replace this list with the TODO below.>
 
-> TODO: List the rules that must never be broken (for example data that must never leave the region, or an API that must stay backward compatible). Leave this TODO in place until the user names them.
+> TODO: List the rules that must never be broken (for example data that must never leave the region, or an API that must stay backward compatible).
 
 ## Tech stack
 
