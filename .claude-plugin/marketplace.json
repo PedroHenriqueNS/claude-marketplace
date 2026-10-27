@@ -8,8 +8,8 @@
     {
       "name": "project-initializer",
       "source": "./plugins/project-initializer",
-      "version": "0.2.1",
-      "description": "Scaffold a project's living agent documentation — AGENTS.md, CLAUDE.md, and docs/* — with maintenance conventions baked in, and re-tune it for a specific Claude model.",
+      "version": "0.3.0",
+      "description": "Scaffold a project's living agent documentation — AGENTS.md, CLAUDE.md, and docs/* — with maintenance conventions baked in, refresh an existing set that has grown or drifted, and re-tune it for a specific Claude model.",
       "author": { "name": "PedroHenriqueNS" }
     },
     {

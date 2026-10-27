@@ -23,6 +23,7 @@ claude-marketplace/
 │       ├── .claude-plugin/
 │       │   └── plugin.json           # plugin identity + version
 │       ├── evals/<case>/             # eval cases for `claude plugin eval` (prompt.md + graders/; optional case.yaml, scaffold.sh, history.jsonl)
+│       ├── templates/                # optional, shared by two or more of the plugin's skills
 │       └── skills/
 │           └── <skill>/
 │               ├── SKILL.md          # the capability

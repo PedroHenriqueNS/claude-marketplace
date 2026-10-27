@@ -1,5 +1,5 @@
 ---
-status: proposed
+status: implemented
 ---
 
 # Living-docs lessons for `project-initializer`, and a `refresh-docs` skill
