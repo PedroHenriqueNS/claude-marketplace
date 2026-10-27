@@ -80,3 +80,13 @@ Gotchas and non-obvious constraints — past failures and how they were resolved
 The first pilot run also showed the default judge (haiku) failing compliant 3–4 KB replies and passing violating ones on the same rubric. The runner's docs say to suspect the judge first when a skill fires but the with/without delta is negative.
 
 **Apply:** check `claude --version` is ≥ 2.1.269 before debugging a suite, and run evals with `--trust-plugin --no-publish`. Read a failing run's reply (the `evidence` field in `results/<run>/aggregate-result.json`) before blaming the skill, and move long-reply checks to `regex` graders.
+
+## 2026-10-27 — Headless eval runs cannot write under `.claude/`
+
+**Symptom:** in a `claude plugin eval` run granted `Write`, a write to `.claude/agents/<name>.md` is denied ("don't ask" permission mode), while `CLAUDE.md` and `docs/` in the same run are written. Granting `Write(.claude/**)` and `Edit(.claude/**)` explicitly did not change it (probe, Claude Code 2.1.280). Separately, `regex` graders reject inline `(?i)`; case-insensitivity goes in `flags: i`, and there is no `min`/`max` on a regex — a repeated group such as `(X[\s\S]*?){3}` asserts "at least three".
+
+**Resolution:** `agent-operating-model`'s `approved-writes-files` case grades the agent files through `tool_used: Write` with an `input_match` on `.claude/agents/`, and its model- and effort-floor checks match those same `Write` inputs, anchored on `"file_path"`. A regex over the whole `trace` would pass on the templates the skill reads, which hold `model: opus` themselves. The generated agent files were validated by rebuilding them from those inputs and running `claude plugin validate` on the directory. A check for full model IDs must look at `Write` inputs, not the whole `trace`: the trace's own metadata names the session model by full ID.
+
+A recorded `history_file` also carries the recorder's environment (sandbox paths, plugin names, the account e-mail in the session context). Scrub it before committing, and ignore the UUID-named transcript the runner writes beside it. It also pins the recorder's plugin path: on the resumed turn the skill reads its templates from a path that does not exist in the run, so the case's prompt asks for the skill to be loaded again.
+
+**Apply:** a case that expects files under `.claude/` grades the tool calls, not `file_exists`. Confirm grader keys on the live [plugin-evals](https://code.claude.com/docs/en/plugin-evals) page before writing them.

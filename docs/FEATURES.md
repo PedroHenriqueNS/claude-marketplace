@@ -1,6 +1,6 @@
 # Features
 
-A "feature" in this repo is a **plugin**. Each ships a marketplace catalog entry plus one or more skills. Eleven plugins ship 61 skills between them: three are at `0.1.0`, `nestjs-api-architect` is at `0.1.1`, `to-prd`, `azure-devops-card`, `skill-auditor` and `marketing-skills` are at `0.2.0`, `project-initializer` is at `0.2.1`, `linear-flow` is at `0.3.0`, and `prompt-creator` is at `0.3.1`. The marketplace itself (the catalog that makes them installable) is the twelfth, cross-cutting feature.
+A "feature" in this repo is a **plugin**. Each ships a marketplace catalog entry plus one or more skills. Twelve plugins ship 62 skills between them: four are at `0.1.0`, `nestjs-api-architect` is at `0.1.1`, `to-prd`, `azure-devops-card`, `skill-auditor` and `marketing-skills` are at `0.2.0`, `project-initializer` is at `0.2.1`, `linear-flow` is at `0.3.0`, and `prompt-creator` is at `0.3.1`. The marketplace itself (the catalog that makes them installable) is the thirteenth, cross-cutting feature.
 
 ## The marketplace catalog
 
@@ -14,7 +14,7 @@ A "feature" in this repo is a **plugin**. Each ships a marketplace catalog entry
 - **Purpose:** enforce the rule that every skill follows Claude Code best practices (`docs/CONVENTIONS.md`) — audit the existing plugins to a clean baseline, then gate every change so nothing merges below the bar.
 - **Behavior:** CI (GitHub Actions) runs `claude plugin validate` per plugin, `plugin.json`↔`marketplace.json` version- and description-sync checks, and a mechanical `SKILL.md` lint (frontmatter, the Agent Skills `name`/`description` limits, dead links) as the hard gate; `skill-auditor` provides the deeper judgment-based audit. Verification seam is per-plugin.
 - **Implementation:** specced in [docs/prds/best-practices-compliance-gate.md](./prds/best-practices-compliance-gate.md). `scripts/check_compliance.py` + `.github/workflows/validate.yml`; supersedes the `docs/PRD.md` "no CI yet" non-goal for validation.
-- **Status:** in-progress. Mechanical gate shipped and green across all 11 plugins (0 failures); CI workflow in place (activates once the repo has a remote — Phase 1). Remaining: the deep per-skill `skill-auditor` audit of the 61 skills.
+- **Status:** in-progress. Mechanical gate shipped and green across all 12 plugins (0 failures); CI workflow in place (activates once the repo has a remote — Phase 1). Remaining: the deep per-skill `skill-auditor` audit of the 62 skills.
 
 ## project-initializer
 
@@ -89,6 +89,13 @@ A "feature" in this repo is a **plugin**. Each ships a marketplace catalog entry
 - **Implementation:** `plugins/linear-flow/skills/ln-{triage,whats-next,ship-loop,project-lifecycle,issue-lifecycle}/SKILL.md` + `evals/evals.json` each; plugin-root `evals/` with four negative cases for `claude plugin eval` (the bare phrases "close these", "relabel these", "groom the backlog" and "track this" in GitHub or local-file contexts must fire no `ln-*` skill); plugin-root `references/{conventions,linear-mcp,pr-relations}.md` and `templates/{workspace-conventions,project-description,discovery-description}.md` shared across skills; skill-local `ln-issue-lifecycle/references/bulk-grooming.md`.
 - **Requires:** a Linear MCP server configured in the session. The only plugin here with a runtime dependency — see [STACK.md](./STACK.md).
 - **Status:** shipped at `0.3.0`, which anchors the four trigger phrases above to Linear in the `ln-issue-lifecycle` and `ln-triage` descriptions. `0.2.0` gained the PR relation gate.
+
+## agent-operating-model
+
+- **Purpose:** set up a project's agent operating model — a main session acting as CEO, leads per area, specialists, a fixed report format, per-task model and effort rules, and a review cadence — generalized from the model the owner runs in another project, without its personal setup or its area list. Specced in [docs/prds/agent-operating-model.md](./prds/agent-operating-model.md) (decisions D1–D16).
+- **Behavior:** one skill, `setup-operating-model`, auto-triggered by explicit requests only ("set up an agent team / operating model for this project", "which agents does this project need", "create leads and specialists"); single-subagent requests and doc scaffolding are excluded. It reads the repo for signals (apps and stacks, delivery, risk data, non-code folders, existing agents), counts justified areas and picks a tier — Small (1–2 areas, no leads), Medium (3–5), Large (6+). It asks at most three questions, one per message, skipping any the request already answers, then proposes the whole model in one message: a `Tier:` line, every area and agent ending in ``Signal: `<path>` ``, and the files it will write. Only after one "yes" does it write `docs/OPERATING-MODEL.md`, the justified `.claude/agents/*.md` files and an "Operating model" pointer section in `CLAUDE.md`; an existing file changes only through an approved per-file diff. Every agent file carries a `model`/`effort` floor by role (lead `opus`/`medium`, reviewer `opus`/`high`, logic specialist `opus`/`medium`, mechanical specialist `sonnet`/`medium`; never `haiku`), models by alias only. Language, shell tooling and owner-contact style are inherited from the existing `CLAUDE.md` files; Portuguese projects get `lider-`/`especialista-` file names. On a project that already has agents it switches to update mode: keep / adjust / new / unused, diffs only, nothing deleted.
+- **Implementation:** `plugins/agent-operating-model/skills/setup-operating-model/SKILL.md` + `references/{sizing-signals,model-effort,update-mode}.md` + `templates/{operating-model,lead,specialist,claude-md-section}.md`; plugin-root `evals/` with six cases (Small and Medium sizing, approved writes resumed from a recorded `history.jsonl`, update mode, two negative triggers), four of them with a `scaffold.sh` fixture.
+- **Status:** shipped at `0.1.0`.
 
 ## marketing-skills
 

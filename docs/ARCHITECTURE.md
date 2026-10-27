@@ -17,12 +17,12 @@ The key non-obvious fact: a plugin's `version` and `description` are each writte
 ```
 claude-marketplace/
 ├── .claude-plugin/
-│   └── marketplace.json              # catalog: name "pedrohenriquens", owner, 11 plugins
+│   └── marketplace.json              # catalog: name "pedrohenriquens", owner, 12 plugins
 ├── plugins/
 │   └── <plugin>/
 │       ├── .claude-plugin/
 │       │   └── plugin.json           # plugin identity + version
-│       ├── evals/<case>/             # eval cases for `claude plugin eval` (prompt.md + graders/)
+│       ├── evals/<case>/             # eval cases for `claude plugin eval` (prompt.md + graders/; optional case.yaml, scaffold.sh, history.jsonl)
 │       └── skills/
 │           └── <skill>/
 │               ├── SKILL.md          # the capability
