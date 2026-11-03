@@ -1,5 +1,5 @@
 ---
-description: A monorepo with two apps, CI, infra, auth and a marketing folder sizes to Medium or Large. Every area and agent cites its signal path, and nothing is written before approval.
+description: A monorepo with two apps, CI, infra, auth and a marketing folder sizes to Medium or Large. Every area and agent cites its signal path, the Files list names its practices files, and nothing is written before approval.
 tags: [positive]
 max_turns: 40
 timeout_seconds: 900

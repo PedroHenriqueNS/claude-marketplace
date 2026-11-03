@@ -14,7 +14,7 @@ description: >-
 
 # Set up an agent operating model
 
-Generate a project's agent operating model: a main session acting as CEO, leads per area, specialists, a fixed report format, per-task model and effort rules with a floor in every agent file, and a review cadence. Read, ask little, propose once, write after one "yes".
+Generate a project's agent operating model: a main session acting as CEO, leads per area, specialists, a fixed report format, per-task model and effort rules with a floor in every agent file, a review cadence, and per-area practices for how agents work on each kind of thing. Read, ask little, propose once, write after one "yes".
 
 ## Step 1 — Read the project
 
@@ -28,11 +28,13 @@ From the `CLAUDE.md` files, note what the environment already decides and inheri
 
 - **Language.** The owner's language sets the language of reports, questions and headings, and the agent file names: Portuguese → `lider-<area>.md` / `especialista-<tarefa>.md`; any other → `lead-<area>.md` / `specialist-<task>.md`.
 - **Shell and context tooling rules.** If a `CLAUDE.md` already has rules for shell commands or for reading files, the protocol points at them; never copy them. If none exist, write nothing about it.
-- **Owner-contact style.** Use the environment's own and never override it. If it has none, offer the contact-style default in Step 4, off until the owner says yes.
+- **Owner working style.** Use the environment's own and never override it. Offer the items of [references/owner-working-style.md](references/owner-working-style.md) that it does not settle in Step 4, each off until the owner turns it on.
 
 ## Step 2 — Size the model
 
-Count justified areas and pick the tier from the table in [references/sizing-signals.md](references/sizing-signals.md): Small (1–2, no leads), Medium (3–5), Large (6+). Code volume only breaks a tie at a boundary. Every area and every agent must trace to a signal; drop anything that doesn't. An area the owner names in answer to question 2 counts, with ``Signal: `owner answer, question 2` `` (or its ROADMAP path).
+Count justified areas and pick the tier from the table in [references/sizing-signals.md](references/sizing-signals.md): Small (1–2, no leads), Medium (3–5), Large (6+). Code volume only breaks a tie at a boundary. Every area and every agent must trace to a signal; drop anything that doesn't. **Each lead owns exactly one area and each specialist does one kind of work:** never merge areas into one lead or kinds of work into one specialist. An area the owner names in answer to question 2 counts, with ``Signal: `owner answer, question 2` `` (or its ROADMAP path).
+
+Map the justified areas to their practices files (`docs/practices/<area>.md`: how agents work on screens, APIs, deploys, security, legal texts, marketing, product) with the table in [references/practices.md](references/practices.md).
 
 ## Step 3 — Ask at most three questions
 
@@ -62,11 +64,13 @@ Editable defaults
 - Worktrees: read-only work only (change if your tooling allows agents to commit there)
 - Periodic agent review: off until you say yes; <weekly | from commit rhythm> when on
 - Security posture: <pre-launch (guards only for production, real users' data, money or a hard constraint) | in production | off>
-- Owner-contact style (only when the environment sets none): off until you say yes — one decision per question, 2–4 options with the recommended one first; a question about a visual detail comes with the images; your step list holds only your actions, apart from what agents do; a task reaches you only validated, in one list; an answer to your "why…" starts with what was wrong in the action
+- Owner working style (items the environment does not settle), each off until you turn it on: <numbered item names from references/owner-working-style.md>
+- Area practice options, each off until you turn it on: <the options of the proposed practices files, one line each>
 - <other defaults>
 
 Files
 - create docs/OPERATING-MODEL.md
+- create docs/practices/<area>.md  (one line per practices file)
 - create .claude/agents/<name>.md  (one line per agent)
 - create|change CLAUDE.md — adds the "Operating model" pointer section
 ```
@@ -75,8 +79,9 @@ For a `CLAUDE.md` that already exists, show the section's diff right after the b
 
 ## Step 5 — Write, after one "yes"
 
-- `docs/OPERATING-MODEL.md` from [templates/operating-model.md](templates/operating-model.md); drop the lead layer and its sections for Small tier, and fill the security posture and owner-contact parts from the approved defaults.
-- One `.claude/agents/` file per approved agent, from [templates/lead.md](templates/lead.md) or [templates/specialist.md](templates/specialist.md). Every file sets its `model` and `effort` floor. Reviewers and auditors also set `disallowedTools: Edit, Write, NotebookEdit`.
+- `docs/OPERATING-MODEL.md` from [templates/operating-model.md](templates/operating-model.md); drop the lead layer and its sections for Small tier, and fill the security posture and owner working style parts from the approved defaults.
+- One `docs/practices/<area>.md` per approved practices file, from [templates/practices/](templates/practices/), keeping only the options turned on ([references/practices.md](references/practices.md) § Writing them).
+- One `.claude/agents/` file per approved agent, from [templates/lead.md](templates/lead.md) or [templates/specialist.md](templates/specialist.md), each listing its area's practices files under **Read first**. Every `description` is one line of at most about 160 characters, since the Agent tool lists every description on every turn. Every file sets its `model` and `effort` floor. Reviewers and auditors also set `disallowedTools: Edit, Write, NotebookEdit`.
 - The pointer section from [templates/claude-md-section.md](templates/claude-md-section.md), always in `CLAUDE.md` (even when it only imports `AGENTS.md`); create `CLAUDE.md` with only that section if it is missing.
 - **Never overwrite an existing file** without showing its diff and getting an OK for that file (the `CLAUDE.md` diff shown in the proposal counts).
 - Name models by alias only (`opus`, `sonnet`, `haiku`), never by full model ID.

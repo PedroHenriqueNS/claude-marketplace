@@ -9,7 +9,7 @@ Read every existing agent file and the existing protocol, then size the project 
 | Bucket | Meaning |
 |---|---|
 | **Keep** | Still justified by a signal; no change needed. |
-| **Adjust** | Still justified, but needs a targeted change (for example a missing `model`/`effort` floor the protocol does not rule out, a renamed path). |
+| **Adjust** | Still justified, but needs a targeted change (for example a missing `model`/`effort` floor the protocol does not rule out, a renamed path). A lead covering several areas, or a specialist covering several kinds of work, is an Adjust item: propose splitting it, with the new agents as New items. |
 | **New** | A justified area or task with no agent yet. |
 | **Unused** | No current signal justifies it. |
 
@@ -22,6 +22,6 @@ The proposal keeps the Step 4 shape, with the agent list grouped under the four 
 - An existing file changes only through a diff the owner approved for that file.
 - **Nothing is deleted.** An Unused agent becomes a removal suggestion in the report; the owner removes it.
 - Agents not in the generated format are **adopted**, never reformatted to the template. A targeted diff (such as adding a floor) is fine.
-- New agents are written from the templates as in a first run.
+- New agents are written from the templates as in a first run. So is a justified `docs/practices/<area>.md` that does not exist yet, listed as a New item.
 - If the existing protocol already covers a rule, leave it; propose a diff only for a missing or contradicting rule.
 - **An owner decision recorded in the existing protocol beats a plugin default.** If the protocol says agent files carry no `model`/`effort` (the spawner decides), a missing floor is **not** an Adjust item; mention the plugin's floor once in the report, as an option.

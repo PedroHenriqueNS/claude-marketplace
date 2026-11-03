@@ -1,5 +1,5 @@
 ---
-description: A single-app repo with no infra sizes to the Small tier. The skill proposes two to four specialists and no lead, and writes nothing before approval.
+description: A single-app repo with no infra sizes to the Small tier. The skill proposes one specialist per kind of work, at least two, and no lead, and writes nothing before approval.
 tags: [positive]
 max_turns: 40
 timeout_seconds: 900
