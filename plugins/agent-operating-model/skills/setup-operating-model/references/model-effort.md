@@ -1,12 +1,15 @@
 # Model and effort
 
-Source: the Claude Code [sub-agents](https://code.claude.com/docs/en/sub-agents) page, checked 2026-10-26. Re-check it before changing this file.
+Source: the Claude Code [sub-agents](https://code.claude.com/docs/en/sub-agents) page, checked 2026-10-26 and again 2026-11-03. Re-check it before changing this file.
 
 ## How Claude Code resolves them
 
 - **Model:** a per-invocation `model` parameter beats the agent file's `model`, which beats `CLAUDE_CODE_SUBAGENT_MODEL`. With none set, the agent inherits the main conversation's model.
 - **Effort:** a per-invocation `effort` parameter overrides the file's `effort` field and needs Claude Code 2.1.292 or later. `CLAUDE_CODE_EFFORT_LEVEL` overrides both.
 - A family alias blocked by an organization allowlist resolves to that family's newest permitted version.
+- **Resume:** a finished subagent resumed with `SendMessage` runs in the background; a per-invocation `effort` stays in effect when it is resumed.
+- **Limits (defaults):** at most 20 subagents running in a session (`CLAUDE_CODE_MAX_CONCURRENT_SUBAGENTS`), and nesting up to three layers below the main conversation (`CLAUDE_CODE_MAX_SUBAGENT_SPAWN_DEPTH`). At the depth limit the `Agent` tool is withheld.
+- As of 2026-11-03 there is no setting that makes a spawn require `model`, so the floor below is still needed.
 
 ## The rule: the dispatcher chooses, the file holds a floor
 
@@ -24,3 +27,4 @@ Every generated agent file also sets a floor in its frontmatter, so a spawn that
 - `haiku` is never a floor. A dispatcher may pick it explicitly, only for a checkable lookup or for running a gate and summarizing it.
 - Name models by alias (`opus`, `sonnet`, `haiku`), never by full ID, so the files don't go stale at each release.
 - When unsure whether a specialist is logic or mechanical, use the logic floor.
+- On a re-run, an existing protocol that records the owner's choice of no floor in agent files wins: see [update-mode.md](update-mode.md) § Writing rules.

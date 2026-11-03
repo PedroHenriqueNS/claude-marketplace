@@ -28,7 +28,7 @@ From the `CLAUDE.md` files, note what the environment already decides and inheri
 
 - **Language.** The owner's language sets the language of reports, questions and headings, and the agent file names: Portuguese → `lider-<area>.md` / `especialista-<tarefa>.md`; any other → `lead-<area>.md` / `specialist-<task>.md`.
 - **Shell and context tooling rules.** If a `CLAUDE.md` already has rules for shell commands or for reading files, the protocol points at them; never copy them. If none exist, write nothing about it.
-- **Owner-contact style.** Use the environment's own; build none in.
+- **Owner-contact style.** Use the environment's own and never override it. If it has none, offer the contact-style default in Step 4, off until the owner says yes.
 
 ## Step 2 — Size the model
 
@@ -61,6 +61,8 @@ Agents
 Editable defaults
 - Worktrees: read-only work only (change if your tooling allows agents to commit there)
 - Periodic agent review: off until you say yes; <weekly | from commit rhythm> when on
+- Security posture: <pre-launch (guards only for production, real users' data, money or a hard constraint) | in production | off>
+- Owner-contact style (only when the environment sets none): off until you say yes — one decision per question, 2–4 options with the recommended one first; a question about a visual detail comes with the images; your step list holds only your actions, apart from what agents do; a task reaches you only validated, in one list; an answer to your "why…" starts with what was wrong in the action
 - <other defaults>
 
 Files
@@ -73,11 +75,11 @@ For a `CLAUDE.md` that already exists, show the section's diff right after the b
 
 ## Step 5 — Write, after one "yes"
 
-- `docs/OPERATING-MODEL.md` from [templates/operating-model.md](templates/operating-model.md); drop the lead layer and its sections for Small tier.
+- `docs/OPERATING-MODEL.md` from [templates/operating-model.md](templates/operating-model.md); drop the lead layer and its sections for Small tier, and fill the security posture and owner-contact parts from the approved defaults.
 - One `.claude/agents/` file per approved agent, from [templates/lead.md](templates/lead.md) or [templates/specialist.md](templates/specialist.md). Every file sets its `model` and `effort` floor. Reviewers and auditors also set `disallowedTools: Edit, Write, NotebookEdit`.
 - The pointer section from [templates/claude-md-section.md](templates/claude-md-section.md), always in `CLAUDE.md` (even when it only imports `AGENTS.md`); create `CLAUDE.md` with only that section if it is missing.
 - **Never overwrite an existing file** without showing its diff and getting an OK for that file (the `CLAUDE.md` diff shown in the proposal counts).
 - Name models by alias only (`opus`, `sonnet`, `haiku`), never by full model ID.
 - If a write is denied, stop that write: no retry by another route or tool. Finish the rest, then report the denial text and the files not written, and let the owner pick the fix.
 
-Close with a short report: files written, files skipped and why, and the editable defaults still open.
+Close with a short report: files written, files skipped and why, and the editable defaults still open. As the owner's next step, suggest spawning each new agent once with a trivial read-only task, to learn whether a definition is refused before real work depends on it; don't spawn them yourself. Add the notes from [references/practice-notes.md](references/practice-notes.md) that fit the project.
