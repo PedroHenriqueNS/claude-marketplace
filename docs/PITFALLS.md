@@ -90,3 +90,11 @@ The first pilot run also showed the default judge (haiku) failing compliant 3–
 A recorded `history_file` also carries the recorder's environment (sandbox paths, plugin names, the account e-mail in the session context). Scrub it before committing, and ignore the UUID-named transcript the runner writes beside it. It also pins the recorder's plugin path: on the resumed turn the skill reads its templates from a path that does not exist in the run, so the case's prompt asks for the skill to be loaded again.
 
 **Apply:** a case that expects files under `.claude/` grades the tool calls, not `file_exists`. Confirm grader keys on the live [plugin-evals](https://code.claude.com/docs/en/plugin-evals) page before writing them.
+
+## 2026-11-03 — A recorded proposal goes stale when the skill changes
+
+**Symptom:** after `agent-operating-model` `0.3.0` added practices files and the one-area-per-lead rule, `approved-writes-files` wrote nothing in two of three runs. The resumed turn reloads the current skill, sees that the `0.2.0` proposal recorded in `history.jsonl` no longer matches what it would write, and asks for a new "yes", which is the right behavior (nothing unapproved gets written).
+
+**Resolution:** re-recorded the history from a `monorepo-proposes-leads` run of the new skill (`--case monorepo-proposes-leads --runs 1 --keep-temp`; the transcript is under the kept sandbox's `config/projects/`). The scrub dropped the `session_context` and `sandbox_instructions` attachments and re-linked their children's `parentUuid`, mapped the plugin path to `/path/to/claude-marketplace/plugins` and home paths to `/path/to/home`, and checked for zero e-mail or user-path hits.
+
+**Apply:** a change to what the skill proposes or writes means re-recording `approved-writes-files/history.jsonl` in the same change.
