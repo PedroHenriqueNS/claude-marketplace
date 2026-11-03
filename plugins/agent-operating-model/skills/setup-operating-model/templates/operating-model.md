@@ -3,7 +3,8 @@ Template for docs/OPERATING-MODEL.md. Fill every {{placeholder}}; delete these c
 Write it in the owner's language (headings included). For a Small-tier project, remove
 the Leads row, the Areas table's Lead column, the Lead rotation rule and lead-specific lines.
 When headings are translated, update the in-file anchor (#report-format-…) and the
-"§ <section>" names cited in the agent files and the CLAUDE.md pointer to match.
+"§ <section>" names cited in the agent files, the practices files and the CLAUDE.md pointer
+to match. Drop the docs/practices paragraph under Areas when no practices file was approved.
 Values marked "default — tune" are starting values the owner adjusts. A section marked
 "(optional)" stays only when the proposal's editable default turned it on.
 -->

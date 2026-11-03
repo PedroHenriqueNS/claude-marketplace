@@ -33,5 +33,5 @@ Lines marked `(option: <name>)` in a template are off by default. List each opti
 ## Writing them
 
 - Where the project's own `CONVENTIONS.md` or docs already hold a rule, the practices file points at it instead of restating it, and the project's rule wins on conflict.
-- Drop a section whose work the project does not have (for example, Tenants in a single-tenant API).
-- In update mode, a justified practices file that does not exist yet is a **New** item; an existing one changes only through an approved diff.
+- Drop a section whose work the project does not have (for example, Tenants in a single-tenant API), and a heading an option left empty.
+- In update mode, follow [update-mode.md](update-mode.md).
