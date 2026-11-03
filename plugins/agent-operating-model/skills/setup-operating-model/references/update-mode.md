@@ -22,6 +22,6 @@ The proposal keeps the Step 4 shape, with the agent list grouped under the four 
 - An existing file changes only through a diff the owner approved for that file.
 - **Nothing is deleted.** An Unused agent becomes a removal suggestion in the report; the owner removes it.
 - Agents not in the generated format are **adopted**, never reformatted to the template. A targeted diff (such as adding a floor) is fine.
-- New agents are written from the templates as in a first run.
+- New agents are written from the templates as in a first run. So is a justified `docs/practices/<area>.md` that does not exist yet, listed as a New item.
 - If the existing protocol already covers a rule, leave it; propose a diff only for a missing or contradicting rule.
 - **An owner decision recorded in the existing protocol beats a plugin default.** If the protocol says agent files carry no `model`/`effort` (the spawner decides), a missing floor is **not** an Adjust item; mention the plugin's floor once in the report, as an option.

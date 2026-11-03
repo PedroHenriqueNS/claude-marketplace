@@ -42,4 +42,4 @@ Libraries shared by several apps belong to the area of their main consumer, not 
 - **Small tier:** two to four specialists, chosen by the work the repo shows: typically one per stack, plus a read-only reviewer. No lead.
 - **Medium and Large:** one lead per area. Each lead gets the specialists its area's signals justify — never a specialist "for later". Add one read-only reviewer for quality (or a quality lead in Large tier) and a risk reviewer when the risk area exists.
 - Every agent's line in the proposal ends in `Signal: \`<path>\``. An agent you cannot tie to a path is not proposed.
-- Only when a design or UI area is justified, its specialist's Rules get: "Compare captures with a pixel-diff script first; read only the cropped region it names, scaled down; never read a full-page capture whole."
+- How each area's agents work is not written into their Rules: it goes in the area's practices file ([practices.md](practices.md)), which they read first.

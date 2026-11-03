@@ -248,6 +248,14 @@ Made by the owner on 2026-10-26, one question at a time:
 | D15 | Tier thresholds | By count of justified areas: 1–2 small, 3–5 medium, 6+ large |
 | D16 | Floor values | Lead `opus`/`medium`, reviewer `opus`/`high`, logic specialist `opus`/`medium`, mechanical specialist `sonnet`/`medium`; never `haiku` |
 
+Added by the owner on 2026-11-03 (plugin `0.3.0`), after a second reading of everything he taught Linkeza's agents: its `CLAUDE.md`, `AGENTS.md`, `docs/**`, the apps' conventions, the design README, the 41 agent files and the project memory. `0.2.0` had read only the operating model's history, reviews and incidents.
+
+| # | Question | Decision |
+|---|---|---|
+| D17 | Teachings on how to work on a kind of thing | One `docs/practices/<area>.md` per justified area (UI, design, backend, delivery, security, legal, marketing, product), read first by that area's agents; the protocol stays general |
+| D18 | D6 revisited | The owner's personal way of working is offered as an "owner working style" pack, item by item, each off until turned on; the environment's own rules still win |
+| D19 | Area options | Owner-taste rules (bottom drawers on phones, motion on every state change, AI-visibility readings, a coverage baseline, minimal cost, telemetry off) are options in the proposal, off by default |
+
 ## Further Notes
 
 - The tier thresholds (D15) are starting values, tuned with evals 1 and 2. The lead-rotation numbers (5 MB / 150 turns) are Linkeza's measurements. Neither is a fact about every project.
