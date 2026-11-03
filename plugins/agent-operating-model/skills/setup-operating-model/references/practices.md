@@ -1,6 +1,6 @@
 # Area practices
 
-How agents should work on a kind of thing (screens for non-expert users, APIs, deploys, legal texts…), generalized from the owner's teachings in a project that ran a generated model. The plugin is not present when the agents work, so these rules are written into the project as `docs/practices/<area>.md`, one file per justified area, from [../templates/practices/](../templates/practices/). The leads and specialists of that area list the file under **Read first**. The protocol (`docs/OPERATING-MODEL.md`) stays general.
+How agents should work on a kind of thing (screens for non-expert users, APIs, deploys, legal texts…), generalized from the owner's teachings in a project that ran a generated model. The plugin is not present when the agents work, so these rules are written into the project as `docs/practices/<area>.md`, one file per justified area, from [../templates/practices/](../templates/practices/). The lead of that area reads the file first; its specialists read the sections their brief names. The protocol (`docs/OPERATING-MODEL.md`) stays general.
 
 ## Which files a project gets
 

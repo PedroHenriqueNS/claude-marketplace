@@ -9,7 +9,7 @@ Read every existing agent file and the existing protocol, then size the project 
 | Bucket | Meaning |
 |---|---|
 | **Keep** | Still justified by a signal; no change needed. |
-| **Adjust** | Still justified, but needs a targeted change (for example a missing `model`/`effort` floor the protocol does not rule out, a renamed path). |
+| **Adjust** | Still justified, but needs a targeted change (for example a missing `model`/`effort` floor the protocol does not rule out, a renamed path). A lead covering several areas, or a specialist covering several kinds of work, is an Adjust item: propose splitting it, with the new agents as New items. |
 | **New** | A justified area or task with no agent yet. |
 | **Unused** | No current signal justifies it. |
 

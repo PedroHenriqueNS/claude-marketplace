@@ -255,6 +255,9 @@ Added by the owner on 2026-11-03 (plugin `0.3.0`), after a second reading of eve
 | D17 | Teachings on how to work on a kind of thing | One `docs/practices/<area>.md` per justified area (UI, design, backend, delivery, security, legal, marketing, product), read first by that area's agents; the protocol stays general |
 | D18 | D6 revisited | The owner's personal way of working is offered as an "owner working style" pack, item by item, each off until turned on; the environment's own rules still win |
 | D19 | Area options | Owner-taste rules (bottom drawers on phones, motion on every state change, AI-visibility readings, a coverage baseline, minimal cost, telemetry off) are options in the proposal, off by default |
+| D20 | Agent scope | Each lead owns exactly one area and each specialist does one kind of work; never merged. Small tier drops its 2–4 cap (one specialist per kind of work, Medium suggested above four); update mode proposes splitting a multi-area agent. Tier thresholds unchanged. Raised from a third project whose generated leads each covered several areas |
+| D21 | Adversarial review | Domain work is reviewed in its own area, by a fresh lead instance and specialists who did not write it, never by the quality lead |
+| D22 | Token cost of D17–D20 | Measured: +0.9k tokens per spawn for the protocol, +0.3k–1.4k for an area's practices file. Guards: one-line descriptions of at most ~160 characters (the Agent tool lists them every turn), specialists read only the practices sections their brief names, dispatch only the specialists a task needs, and the periodic review compares cost per task before and after an organization change |
 
 ## Further Notes
 

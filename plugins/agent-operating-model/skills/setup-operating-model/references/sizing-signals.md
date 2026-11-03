@@ -31,7 +31,7 @@ Libraries shared by several apps belong to the area of their main consumer, not 
 
 | Tier | Justified areas | Shape |
 |---|---|---|
-| Small | 1–2 | No leads. The main session dispatches two to four specialists directly. |
+| Small | 1–2 | No leads. The main session dispatches one specialist per kind of work directly. |
 | Medium | 3–5 | One lead per area, each with its specialists. |
 | Large | 6+ | Same shape as Medium, with more areas. |
 
@@ -39,7 +39,8 @@ Libraries shared by several apps belong to the area of their main consumer, not 
 
 ## Picking agents
 
-- **Small tier:** two to four specialists, chosen by the work the repo shows: typically one per stack, plus a read-only reviewer. No lead.
-- **Medium and Large:** one lead per area. Each lead gets the specialists its area's signals justify — never a specialist "for later". Add one read-only reviewer for quality (or a quality lead in Large tier) and a risk reviewer when the risk area exists.
+- **One area per lead, one kind of work per specialist.** A lead owns exactly one justified area; a specialist does one kind of work (hosting, CI, an API client, SEO, legal text…). Never merge two areas into one lead or two kinds of work into one specialist; when the signals show more work, propose more agents.
+- **Small tier:** one specialist per kind of work the repo shows, plus a read-only reviewer. No lead. Above four specialists, the proposal says so and suggests the Medium tier.
+- **Medium and Large:** one lead per area. Each lead gets one specialist per kind of work its area's signals justify — never a specialist "for later". Add one read-only reviewer for quality (or a quality lead in Large tier) and a risk reviewer when the risk area exists.
 - Every agent's line in the proposal ends in `Signal: \`<path>\``. An agent you cannot tie to a path is not proposed.
 - How each area's agents work is not written into their Rules: it goes in the area's practices file ([practices.md](practices.md)), which they read first.

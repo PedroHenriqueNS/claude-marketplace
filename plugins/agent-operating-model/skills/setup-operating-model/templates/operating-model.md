@@ -29,7 +29,7 @@ Values marked "default — tune" are starting values the owner adjusts. A sectio
 |---|---|---|---|
 | {{area}} | `{{lead}}` | `{{specialist}}`, … | `{{path}}` |
 
-How agents work on each kind of thing lives in `docs/practices/`: {{`ui.md` (screens), `backend.md` (APIs and data), … — one entry per practices file}}. The lead and specialists of an area read its file first; reviewers judge by it.
+How agents work on each kind of thing lives in `docs/practices/`: {{`ui.md` (screens), `backend.md` (APIs and data), … — one entry per practices file}}. The lead of an area reads its file first; a specialist reads the sections its brief names; reviewers judge by the whole file.
 
 ## Models and effort
 
@@ -108,11 +108,12 @@ Before the main session or a lead changes, fixes or dispatches work on anything 
 ### Execution pace
 
 - **Fewer turns.** Every model call starts from a fixed base (the imported docs, tools and skills), so the number of turns is the cost. Batch independent tool calls in one message. Resume a finished agent on the same thread instead of spawning anew, until rotation calls for a fresh one. An agent reports once, at the end of its task. No polling by repeated calls: wait with one command that ends on the condition.
+- **Dispatch only what the task needs.** One task of one kind of work goes to one specialist. Splitting agents by area and kind of work does not mean more spawns: never spawn every specialist of an area "for coverage".
 - **Stop rule.** After two rounds in which the measured number does not move toward the goal, the agent stops and reports options; no third round without the main session's OK.
 
 ### Briefs
 
-- A brief points at a rule or a plan section by its line range; it never copies it. Copies drift.
+- A brief points at a rule or a plan section by its line range; it never copies it. Copies drift. A brief to a specialist names the sections of the practices files it needs the same way.
 - A brief never tells an agent to get around a tool's protection.
 - A brief states the goal and what is ruled out, not a hypothesis: a brief that carries a hypothesis tends to come back confirmed.
 - A brief passes an owner's choice with its intent and says what not to take literally. A question about a tone or a feeling names the effect in plain words, never a metaphor an agent could build literally.
@@ -122,6 +123,8 @@ Before the main session or a lead changes, fixes or dispatches work on anything 
 
 ### Review cadence
 
+- **One owner each:** a lead owns exactly one area and a specialist does one kind of work. New work outside every agent's scope gets a new agent, not a wider one.
+- **Adversarial review of domain work** runs in the area that owns it: a fresh instance of that area's lead, plus specialists who did not write the work. It never goes to the quality lead or reviewer.
 - **Per task, by risk:** a read-only reviewer per task where production personal data, money, auth or a hard constraint is involved (test data in local or staging does not count). Low-risk tracks get one reviewer per group of tasks.
 - A finding that is only wording is fixed directly, without a new review round.
 - Reviewers and auditors are read-only agents (`disallowedTools: Edit, Write, NotebookEdit`).
@@ -174,7 +177,7 @@ Nobody but the owner does these. Agents prepare the exact steps and drafts; the 
 
 - It runs only on the owner's yes, in a separate session, conducted by {{the quality lead | a read-only reviewer the main session spawns for it}}.
 - It covers the period's agent transcripts (summarized by a script, not read whole), commits, reports and denials.
-- It delivers `docs/agent-reviews/YYYY-MM-DD.md` with fixed parts: the status of the previous review's items and of open incidents (held / partly / not held, with evidence); problems, highest impact first (agent, problem, evidence, proposed fix); cost by agent (runs, turns, tokens, active hours, from the transcripts by a script); what worked; not covered. Unused agent files are listed as removal candidates.
+- It delivers `docs/agent-reviews/YYYY-MM-DD.md` with fixed parts: the status of the previous review's items and of open incidents (held / partly / not held, with evidence); problems, highest impact first (agent, problem, evidence, proposed fix); cost by agent (runs, turns, tokens, active hours, from the transcripts by a script); what worked; not covered. Unused agent files are listed as removal candidates. After a change to the organization (agents split, merged or added), it compares cost per task (tokens, turns) before and after, and proposes a rollback when cost rose with no gain.
 - **Incident records**, whether the review is on or off: a failure the owner calls serious gets a record in `docs/agent-reviews/incidents/YYYY-MM-DD-<slug>.md` the same day (timeline, causes, what changed, proposals). The next review dissects it first, with its measured cost.
 - **A proposal closes only in a tracked file.** Each proposal of a review or an incident record is either applied in the docs or the agent files, with the owner's yes, or listed as declined. A note in a session's memory does not close it.
 - Fixes land item by item, only with the owner's approval.
