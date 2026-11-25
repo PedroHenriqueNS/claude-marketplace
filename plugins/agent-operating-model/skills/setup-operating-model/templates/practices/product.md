@@ -24,6 +24,10 @@ Read by every lead and specialist who does customer research, finance, support o
 - Help content matches the product exactly, and promises nothing beyond the published terms.
 - A request outside the product's scope is logged as a request, with no date promised. What isn't known is said plainly.
 
+## Plans
+
+- A business or product plan is a hypothesis, not an implementation plan. A line of it becomes a product rule only with its consequence for the customer stated and the owner's yes; until then it is (proposed).
+
 ## Phases
 
 - Each phase starts only when the previous one's numeric gate, set beforehand, is met; each gate also says what happens when it is missed.

@@ -24,6 +24,7 @@ Lines marked `(option: <name>)` in a template are off by default. List each opti
 | Option | File | What it adds |
 |---|---|---|
 | `mobile-drawers` | `ui.md` | Bottom drawers instead of modals on phones; zoned dense dialogs on desktop |
+| `keep-overscroll` | `ui.md` | The page's vertical overscroll stays on (pull-to-refresh); only inner scroll containers contain it |
 | `motion` | `ui.md` | Every state change animates; reduced motion gets a crossfade; measured under CPU throttling |
 | `ai-visibility` | `marketing.md` | A monthly reading of a fixed question set in public AI assistants |
 | `coverage-baseline` | `backend.md` | Coverage measured as a baseline first, gated in the next milestone |

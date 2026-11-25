@@ -19,6 +19,7 @@ Read by every lead and specialist who touches auth, personal data or payments, a
 - Agents receive counts, never rows or exports of personal data. A script over real data prints counts and ids only.
 - Logs and failure reports carry codes, ids and durations: never what a user typed, never a third party's raw error message.
 - An admin command over personal data runs as a dry run by default.
+- The owner's personal data (e-mail, phone, address, documents) is never in a tracked file: code, docs, runbooks, fixtures or commit messages. A runbook says "your personal account"; the main session names the account in its message. Every reviewer checks the diff for it.
 
 ## Security testing
 
