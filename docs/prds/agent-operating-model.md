@@ -98,10 +98,10 @@ Every other open point goes into the proposal as an editable default, never as a
 - **Dispatch defaults:**
   - Prefer resuming an agent with `SendMessage` over spawning a new one (:51).
   - A lead waits for every child it spawned before handing back (:52, review 2026-10-18 item 4). Linkeza phrases this as "children in the foreground". Spawns from an interactive session go to the background by default, and changing that takes a settings change, which is owner-only. So the generic rule is about waiting for children, not about a run mode.
-- **Lead rotation:** a fresh lead at each plan stop point, or past a size or turn threshold measured without images (:53). The 5 MB / 150-turn values are Linkeza's measurements; the template marks them as defaults to tune.
+- **Lead rotation:** a fresh lead at each plan stop point, or past a size or turn threshold measured without images (:53). The 5 MB / 150-turn values are Linkeza's measurements; the template marks them as defaults to tune. Superseded in part by D26: since `0.4.0` the size counts the conversation only.
 - **Briefs** point at a rule or plan section by line range and never copy it, and they end with a pointer to the report format (:124-127).
 - **Classifier denial:** the agent stops. It doesn't reword and retry, switch tools or hand the action to another agent. It returns the denial text, and the owner picks the fix (:92-100).
-- **One writer at a time** in the main checkout (:181). Whether worktrees are also restricted to read-only work depends on the project's tooling; in Linkeza, agents' `git` calls inside worktrees were refused. The proposal sets this as an editable default ("worktrees for read-only work"), not as a question.
+- **One writer at a time** in the main checkout (:181). Whether worktrees are also restricted to read-only work depends on the project's tooling; in Linkeza, agents' `git` calls inside worktrees were refused. The proposal sets this as an editable default ("worktrees for read-only work"), not as a question. Superseded by D26: since `0.4.0` the main checkout stays on the default branch and every task branch lives in its own worktree, created by the dispatcher (the default becomes "one per task branch").
 - **Owner-only actions** (:198-206): creating third-party accounts or domains, spending money, publishing or sending anything, pushing or merging the default branch, and changing `.claude/` configuration or permissions. The owner's answer to question 3 extends the list.
 - **Read-only agents** (reviewers, auditors) set `disallowedTools: Edit, Write, NotebookEdit`.
 - **Agent file skeleton:**
@@ -245,7 +245,7 @@ Made by the owner on 2026-10-26, one question at a time:
 | D10 | Re-run | Update mode: classify, diff, never delete |
 | D11 | Triggering | Auto on a narrow description, plus the manual slash command |
 | D12 | Names | Plugin `agent-operating-model`, skill `setup-operating-model` |
-| D13 | Evals | The six cases above |
+| D13 | Evals | The six cases above (nine since `0.4.0`, [Behavior evals](#behavior-evals)) |
 | D14 | Agent file names | In the project's language |
 | D15 | Tier thresholds | By count of justified areas: 1–2 small, 3–5 medium, 6+ large |
 | D16 | Floor values | Lead `opus`/`medium`, reviewer `opus`/`high`, logic specialist `opus`/`medium`, mechanical specialist `sonnet`/`medium`; never `haiku` |

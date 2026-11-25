@@ -65,7 +65,7 @@ Agents
 Editable defaults
 - Worktrees: one per task branch, created by the dispatcher (change to read-only if your tooling refuses `git` there)
 - Decision register: <on (Medium and Large) | off (Small)> — docs/decisions/, an index loaded every session and one file per area, read on demand; turn it off if you don't want it
-- Usage pause: off until you turn it on (pause dispatches near the plan's usage limit)
+- Usage pause (option `usage-pause` of the protocol): off until you turn it on (pause dispatches near the plan's usage limit)
 - Periodic agent review: off until you say yes; <weekly | from commit rhythm> when on
 - Security posture: <pre-launch (guards only for production, real users' data, money or a hard constraint) | in production | off>
 - Owner working style (items the environment does not settle), each off until you turn it on: <numbered item names from references/owner-working-style.md>
@@ -84,8 +84,8 @@ For a `CLAUDE.md` that already exists, show the section's diff right after the b
 
 ## Step 5 — Write, after one "yes"
 
-- `docs/OPERATING-MODEL.md` from [templates/operating-model.md](templates/operating-model.md); drop the lead layer and its sections for Small tier, and fill the security posture and owner working style parts from the approved defaults. Its § The hand-back script gets the script from [references/practice-notes.md](references/practice-notes.md) § The hand-back script, with the project's transcript folder filled in. With the register off, drop § The decision register and its mentions.
-- With the register on: `docs/decisions/` from [templates/decisions/](templates/decisions/) — `INDEX.md` with one row per justified area, `resources.md` with a row per resource the repo or the owner's answers name, and each area file and `history.md` with only a heading.
+- `docs/OPERATING-MODEL.md` from [templates/operating-model.md](templates/operating-model.md); drop the lead layer and its sections for Small tier (keep § The hand-back script; the dispatch table's lead rows read "a specialist"), and fill the security posture and owner working style parts from the approved defaults. Its § The hand-back script gets the script from [references/practice-notes.md](references/practice-notes.md) § The hand-back script, with the project's transcript folder filled in. With the register off, drop § The decision register and its mentions.
+- With the register on: `docs/decisions/` from [templates/decisions/](templates/decisions/) — `INDEX.md` with one row per justified area, `resources.md` with a row per resource the repo or the owner's answers name, and each area file and `history.md` with only a heading and the entry format.
 - One `docs/practices/<area>.md` per approved practices file, from [templates/practices/](templates/practices/), keeping only the options turned on ([references/practices.md](references/practices.md) § Writing them).
 - One `.claude/agents/` file per approved agent, from [templates/lead.md](templates/lead.md) or [templates/specialist.md](templates/specialist.md), each listing its area's practices files under **Read first**. Every `description` is one line of at most about 160 characters, since the Agent tool lists every description on every turn. Every file sets its `model` and `effort` floor. Reviewers and auditors also set `disallowedTools: Edit, Write, NotebookEdit`.
 - The pointer section from [templates/claude-md-section.md](templates/claude-md-section.md), always in `CLAUDE.md` (even when it only imports `AGENTS.md`); create `CLAUDE.md` with only that section if it is missing. With the register on it imports `@docs/decisions/INDEX.md`, the index only, never an area file.

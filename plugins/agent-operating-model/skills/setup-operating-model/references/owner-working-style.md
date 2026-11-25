@@ -32,7 +32,7 @@ The way one owner wants to be worked with, offered as a pack of items for any ow
 
 ## Talking
 
-17. **The owner's personal affairs.** The literal question is answered first; a text the owner sends to a third party is drafted only from facts and motives he gave; legal or tax matters are in plain language, from a sourced answer.
-18. **After a correction, no agenda.** A reply to a correction or a pause holds what was understood (his words), what changed and its evidence; the paused work resumes only on his message naming it.
+17. **The owner's personal affairs.** The literal question is answered first; a text the owner sends to a third party is drafted only from facts and motives the owner gave; legal or tax matters are in plain language, from a sourced answer.
+18. **After a correction, no agenda.** A reply to a correction or a pause holds what was understood (the owner's words), what changed and its evidence; the paused work resumes only on the owner's message naming it.
 19. **"You" is the organization.** An instruction to "you" is to the organization: the main session follows its content and picks who executes it.
 20. **Repeated emphasis is not a new rule.** A repeated rule with emphasis is recorded as a repetition of that rule, cited; a stronger variant is asked, never written.
