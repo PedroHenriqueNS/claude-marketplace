@@ -9,7 +9,9 @@ description: >-
   .claude/agents/ files and a CLAUDE.md pointer only after approval. Also re-runs on a
   project that already has agents, proposing only the delta. Do NOT use to create one
   single subagent ("create a code-reviewer subagent"), and NOT to initialize or scaffold
-  project docs ("init this project") — that belongs to project-initializer — and NOT for Claude Code's experimental agent teams (multi-session) feature.
+  project docs ("init this project") — that belongs to project-initializer — NOT to add
+  or edit one rule in an existing CLAUDE.md ("add one line to CLAUDE.md so my main session
+  stops browsing"), and NOT for Claude Code's experimental agent teams (multi-session) feature.
 ---
 
 # Set up an agent operating model
@@ -61,7 +63,9 @@ Agents
 - <file name> (<lead|specialist|reviewer>, model <alias> / effort <level>) — <one line>. Signal: `<path>`
 
 Editable defaults
-- Worktrees: read-only work only (change if your tooling allows agents to commit there)
+- Worktrees: one per task branch, created by the dispatcher (change to read-only if your tooling refuses `git` there)
+- Decision register: <on (Medium and Large) | off (Small)> — docs/decisions/, an index loaded every session and one file per area, read on demand; turn it off if you don't want it
+- Usage pause (option `usage-pause` of the protocol): off until you turn it on (pause dispatches near the plan's usage limit)
 - Periodic agent review: off until you say yes; <weekly | from commit rhythm> when on
 - Security posture: <pre-launch (guards only for production, real users' data, money or a hard constraint) | in production | off>
 - Owner working style (items the environment does not settle), each off until you turn it on: <numbered item names from references/owner-working-style.md>
@@ -71,6 +75,7 @@ Editable defaults
 Files
 - create docs/OPERATING-MODEL.md
 - create docs/practices/<area>.md  (one line per practices file)
+- create docs/decisions/INDEX.md, resources.md, history.md, <area>.md  (only when the register is on; one area file per justified area)
 - create .claude/agents/<name>.md  (one line per agent)
 - create|change CLAUDE.md — adds the "Operating model" pointer section
 ```
@@ -79,12 +84,13 @@ For a `CLAUDE.md` that already exists, show the section's diff right after the b
 
 ## Step 5 — Write, after one "yes"
 
-- `docs/OPERATING-MODEL.md` from [templates/operating-model.md](templates/operating-model.md); drop the lead layer and its sections for Small tier, and fill the security posture and owner working style parts from the approved defaults.
+- `docs/OPERATING-MODEL.md` from [templates/operating-model.md](templates/operating-model.md); drop the lead layer and its sections for Small tier (keep § The hand-back script; the dispatch table's lead rows read "a specialist"), and fill the security posture and owner working style parts from the approved defaults. Its § The hand-back script gets the script from [references/practice-notes.md](references/practice-notes.md) § The hand-back script, with the project's transcript folder filled in. With the register off, drop § The decision register and its mentions.
+- With the register on: `docs/decisions/` from [templates/decisions/](templates/decisions/) — `INDEX.md` with one row per justified area, `resources.md` with a row per resource the repo or the owner's answers name, and each area file and `history.md` with only a heading and the entry format.
 - One `docs/practices/<area>.md` per approved practices file, from [templates/practices/](templates/practices/), keeping only the options turned on ([references/practices.md](references/practices.md) § Writing them).
 - One `.claude/agents/` file per approved agent, from [templates/lead.md](templates/lead.md) or [templates/specialist.md](templates/specialist.md), each listing its area's practices files under **Read first**. Every `description` is one line of at most about 160 characters, since the Agent tool lists every description on every turn. Every file sets its `model` and `effort` floor. Reviewers and auditors also set `disallowedTools: Edit, Write, NotebookEdit`.
-- The pointer section from [templates/claude-md-section.md](templates/claude-md-section.md), always in `CLAUDE.md` (even when it only imports `AGENTS.md`); create `CLAUDE.md` with only that section if it is missing.
+- The pointer section from [templates/claude-md-section.md](templates/claude-md-section.md), always in `CLAUDE.md` (even when it only imports `AGENTS.md`); create `CLAUDE.md` with only that section if it is missing. With the register on it imports `@docs/decisions/INDEX.md`, the index only, never an area file.
 - **Never overwrite an existing file** without showing its diff and getting an OK for that file (the `CLAUDE.md` diff shown in the proposal counts).
 - Name models by alias only (`opus`, `sonnet`, `haiku`), never by full model ID.
 - If a write is denied, stop that write: no retry by another route or tool. Finish the rest, then report the denial text and the files not written, and let the owner pick the fix.
 
-Close with a short report: files written, files skipped and why, and the editable defaults still open. As the owner's next step, suggest spawning each new agent once with a trivial read-only task, to learn whether a definition is refused before real work depends on it; don't spawn them yourself. Add the notes from [references/practice-notes.md](references/practice-notes.md) that fit the project.
+Close with a short report: files written, files skipped and why, and the editable defaults still open. As the owner's next step, suggest spawning each new agent once with a trivial read-only task, to learn whether a definition is refused before real work depends on it; don't spawn them yourself. Add the notes from [references/practice-notes.md](references/practice-notes.md) that fit the project. When the project has browser or web tools, offer that file's hook as an owner step, its JSON in the report; **never write `.claude/settings.json` yourself** — no `Write` or `Edit` to a `.claude/settings*.json` path: settings are owner-only.

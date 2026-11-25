@@ -14,6 +14,8 @@ Read by every lead and specialist who writes copy, works on search or AI visibil
 - A current limit is never stated as permanent: say it is not offered today, never that the product cannot do it. Never claim a scope (markets, launch order, billing timing) the owner did not state.
 - A promise that carries conditions appears only in the FAQ and the Terms, never in a headline or next to a price.
 - Each promise lives in one designated place, with one text.
+- Outside legal pages, no copy may alarm the visitor without reason, above all where the job is to attract; where the point is to warn (a payment due, a delete button) it stays as strong as it must.
+- No text a visitor reads names the owner as a person; it speaks as the team, except where a law requires the name.
 
 ## Numbers and claims
 

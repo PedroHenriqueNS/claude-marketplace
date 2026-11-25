@@ -14,6 +14,7 @@ Read by every lead and specialist who writes or reviews server code, data or int
 - Single responsibility: a controller maps the route, reads the request and calls one use case; one use case per service; one operation per repository or gateway.
 - One gateway is the only code that talks to each outside system. A vendor's SDK is imported only in that boundary folder (enforced by lint where possible).
 - The backend alone decides what is valid. Client checks exist for speed, may be looser, and lose when the two disagree.
+- A line of a scope's conventions that departs from the plugin or skill the scope follows says so, with the owner's words and date; an unmarked departure is a finding.
 - Business limits, prices and previews are computed once in the backend; the UI shows the API's values and keeps no copy.
 
 ## Integrations

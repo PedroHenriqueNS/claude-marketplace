@@ -18,6 +18,9 @@ Read by every lead and specialist who touches CI, releases, deploys, infrastruct
 
 - CI runs only what a change touches (and what depends on it). The full verification runs locally, and passes before a pull request leaves draft.
 - An agent pushes once per finished task or round of fixes, so one push means one CI run.
+- One pull request per feature for its documents and one for its code; small fixes found along the way batch into the open pull request or one per stop point.
+- Nobody disables a git hook in any form (`--no-verify`, a hooks-path override, an environment variable); a hook that blocks an agent is reported.
+- A CI run takes its slowest job's time: each touched package's tests run in a job of their own, side by side, never one after another in one job.
 - A timeout or limit is never raised to make a run pass. Going over it is a defect to find and fix in the same branch: a slow run is read package by package, never accepted.
 - Rules that code can't show (config flags, the script names a runbook calls) are held by a config test.
 

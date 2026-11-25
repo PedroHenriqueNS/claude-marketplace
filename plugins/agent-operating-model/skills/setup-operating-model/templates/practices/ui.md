@@ -19,6 +19,9 @@ Read by every lead and specialist who builds or reviews a screen. A rule here is
 - Text exists only to lead to the action or to answer a doubt the screen itself raises; everything else goes.
 - Text that must exist (legal summaries, explanations of a state) is placed creatively: progressive reveal, a tooltip, the button's own microcopy, inline on demand. Never blocks of text.
 - Excess text is flagged before the owner sees the screen, with a shorter option.
+- Check the phone width first: how much of each card is text before its main element. Secondary text moves into an info icon, a tooltip, a disclosure or direct labels; never deleted, never below 11 px, reachable by keyboard and touch.
+- Outside legal pages, no text, notice or alert may alarm the user without reason; where the point is to warn (a payment due, a delete button) it stays as strong as it must.
+- No text a user reads names the owner as a person; it speaks as the team, except where a law requires the name.
 
 ## States
 
@@ -36,6 +39,8 @@ Read by every lead and specialist who builds or reviews a screen. A rule here is
 
 - Checks on a real device (in-app browsers included) are listed apart from the automated tests. A step that needs the owner's phone says so.
 - (option: mobile-drawers) On a phone, never a modal: a drawer that opens from the bottom, draggable and able to cover the whole screen. A drawer that must not close easily (payment) is not draggable, ignores an outside tap and closes only by an explicit button. On desktop, a dense dialog is wider and split into zones of different weight, so the important items stand out; it fits the viewport.
+
+- (option: keep-overscroll) The page's vertical overscroll is never turned off (it is the phone's pull-to-refresh); only inner scroll containers may contain it.
 
 ## Motion
 

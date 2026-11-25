@@ -98,3 +98,11 @@ A recorded `history_file` also carries the recorder's environment (sandbox paths
 **Resolution:** re-recorded the history from a `monorepo-proposes-leads` run of the new skill (`--case monorepo-proposes-leads --runs 1 --keep-temp`; the transcript is under the kept sandbox's `config/projects/`). The scrub dropped the `session_context` and `sandbox_instructions` attachments and re-linked their children's `parentUuid`, mapped the plugin path to `/path/to/claude-marketplace/plugins` and home paths to `/path/to/home`, and checked for zero e-mail or user-path hits.
 
 **Apply:** a change to what the skill proposes or writes means re-recording `approved-writes-files/history.jsonl` in the same change.
+
+## 2026-11-25 — A grader anchored to a bucket word misses changes shown as diff lines
+
+**Symptom:** `rerun-applies-0-4-deltas` scored below 1.00 with the plugin: its three `adjusts-*` regexes required the word "adjust" within 600 characters of the expected change, but the answer showed the 0.4.0 corrections only as `+` lines of a diff of the protocol, with no "Adjust" heading near them.
+
+**Resolution:** each pattern takes either form, `(?:adjust[\s\S]{0,600}|(?:^|\n)[ \t]*\+[^\n]*)(<change>)`. Re-run on 2026-11-25 (`--runs 1`): 1.00 with the plugin, 0.17 without.
+
+**Apply:** a grader for "the answer proposes change X" matches every form the answer can take (a heading, a bullet, a diff `+` line), and is proved against a real trace that should pass and a counterexample that should fail before it is committed.
