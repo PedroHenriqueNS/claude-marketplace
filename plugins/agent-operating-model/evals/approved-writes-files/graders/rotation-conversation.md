@@ -1,5 +1,5 @@
 ---
 type: tool_used
 tool: Write
-input_match: '^(?=[\s\S]*"file_path"\s*:\s*"[^"]*OPERATING-MODEL\.md")[\s\S]*conversation'
+input_match: '^(?=[\s\S]*"file_path"\s*:\s*"[^"]*OPERATING-MODEL\.md")[\s\S]*(of conversation|conversation only)'
 ---

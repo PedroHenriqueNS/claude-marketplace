@@ -1,5 +1,5 @@
 ---
 type: regex
-pattern: 'adjust[\s\S]{0,400}(4 min|270|wait)'
+pattern: 'adjust[\s\S]{0,600}(4 min|270)'
 flags: i
 ---

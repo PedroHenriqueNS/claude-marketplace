@@ -1,5 +1,5 @@
 ---
 type: regex
-pattern: '^(?![\s\S]*create\s+docs/decisions)'
+pattern: '^(?![\s\S]*(?:^|\n)[ \t>*-]*create[ \t]+docs/decisions)'
 flags: i
 ---
